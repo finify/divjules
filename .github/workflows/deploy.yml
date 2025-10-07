@@ -64,21 +64,21 @@ jobs:
         if: github.ref == 'refs/heads/staging'
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: ${{ secrets.CPANEL_HOST }}
-          username: ${{ secrets.CPANEL_USER }}
-          password: ${{ secrets.CPANEL_PASSWORD }}
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           local-dir: public/build/
-          server-dir: ${{ secrets.STAGING_PATH }}/public/build/
+          server-dir: public/build/
     
       - name: Deploy Only `public/build` Folder via FTP (Production)
         if: github.ref == 'refs/heads/master'
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: ${{ secrets.CPANEL_HOST }}
-          username: ${{ secrets.CPANEL_USER }}
-          password: ${{ secrets.CPANEL_PASSWORD }}
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           local-dir: public/build/
-          server-dir: domains/${{ secrets.PRODUCTION_ROOT }}/public_html/public/build/
+          server-dir: public/build/
 
       - name: Laravel Setup via SSH
         uses: appleboy/ssh-action@master
