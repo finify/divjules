@@ -34,9 +34,9 @@ jobs:
             BRANCH=$(echo ${{ github.ref }} | sed 's#refs/heads/##')
             DIRROOT=${{ github.ref == 'refs/heads/staging' && secrets.STAGING_ROOT || secrets.PRODUCTION_ROOT }}
             
-
-            # mkdir -p $DIR
-            cd domains/$DIRROOT/public_html
+            cd domains/$DIRROOT
+            mkdir -p $DIR
+            cd $DIR
 
             echo "Checking if Git repository exists in $DIR.."
             if [ ! -d .git ]; then
@@ -68,7 +68,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: public/build/
-          server-dir: public/build/
+          server-dir: ../${{ secrets.STAGING_PATH }}/public/build/
     
       - name: Deploy Only `public/build` Folder via FTP (Production)
         if: github.ref == 'refs/heads/master'
@@ -78,7 +78,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: public/build/
-          server-dir: public/build/
+          server-dir: ../${{ secrets.PRODUCTION_PATH }}/public/build/
 
       - name: Laravel Setup via SSH
         uses: appleboy/ssh-action@master
@@ -93,24 +93,24 @@ jobs:
             BRANCH=$(echo ${{ github.ref }} | sed 's#refs/heads/##')
 
             
-            cd domains/$DIRROOT/public_html
+            cd domains/$DIRROOT
 
             #setup simlink to public and other things
             if [ ! -f .divjulessetup ]; then
               touch .divjulessetup
-              # rm -rf $DIRROOT 
+              # rm -rf public_html 
 
-              # ln -s $DIR/public $DIRROOT
+              ln -s $DIR/public public_html
 
-              chmod 755
-              chmod 755 public
-              chmod 755 storage
-              chmod 644 public/index.php
+              chmod 755 $DIR
+              chmod 755 $DIR/public
+              chmod 755 $DIR/storage
+              chmod 644 $DIR/public/index.php
 
             fi
 
             
-            # cd $DIR
+            cd $DIR
             git checkout $BRANCH
             git pull origin $BRANCH
 
@@ -144,8 +144,9 @@ jobs:
             DIRROOT=${{ github.ref == 'refs/heads/staging' && secrets.STAGING_ROOT || secrets.PRODUCTION_ROOT }}
             
 
-            # cd $DIR
-            cd domains/$DIRROOT/public_html
+            
+            cd domains/$DIRROOT
+            cd $DIR
             git checkout $BRANCH
             git pull origin $BRANCH
             
