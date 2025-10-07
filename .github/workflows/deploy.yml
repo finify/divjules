@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      #setup php with composer ,npm and yarn  ,
+      #setup php with composer ,npm and yarn ,
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
