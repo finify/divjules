@@ -51,7 +51,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          composer install --no-dev --optimize-autoloader
+          composer update --no-dev --optimize-autoloader
           npm install
 
       - name: Build Assets
@@ -150,7 +150,7 @@ jobs:
             git pull origin $BRANCH
             
             #install composer
-            composer install
+            composer update
 
             #Setting up laravel
             php artisan migrate --force
