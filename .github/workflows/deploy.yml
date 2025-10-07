@@ -26,7 +26,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.CPANEL_HOST }}
-          port: 21098
+          port: 65002
           username: ${{ secrets.CPANEL_USER }}
           password: ${{ secrets.CPANEL_PASSWORD }}
           script: |
@@ -84,7 +84,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.CPANEL_HOST }}
-          port: 21098  # Specify your custom SSH port
+          port: 65002  # Specify your custom SSH port
           username: ${{ secrets.CPANEL_USER }}
           password: ${{ secrets.CPANEL_PASSWORD }}
           script: |
@@ -135,7 +135,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.CPANEL_HOST }}
-          port: 21098  # Specify your custom SSH port
+          port: 65002  # Specify your custom SSH port
           username: ${{ secrets.CPANEL_USER }}
           password: ${{ secrets.CPANEL_PASSWORD }}
           script: |
