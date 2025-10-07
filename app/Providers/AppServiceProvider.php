@@ -22,5 +22,15 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+
+        // Override dimension validation to accept any image size
+        \Illuminate\Support\Facades\Validator::replacer('dimensions', function ($message, $attribute, $rule, $parameters) {
+            return $message;
+        });
+
+        \Illuminate\Support\Facades\Validator::extendImplicit('dimensions', function ($attribute, $value, $parameters, $validator) {
+            // Always pass dimension validation
+            return true;
+        });
     }
 }

@@ -31,6 +31,8 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $table = 'fblog_posts';
+
     protected $fillable = [
         'title',
         'slug',

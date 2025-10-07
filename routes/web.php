@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,35 +13,22 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */ 
+ Volt::route('/', 'home.index')->name('home.index');
+Volt::route('/about', 'home.about')->name('home.about');
+Volt::route('/contact', 'home.contact')->name('home.contact');
+Volt::route('/apply', 'home.apply')->name('home.apply');
+#blog routes
+Volt::route('/blog', 'home.blog')->name('home.blog');
+Volt::route('/blog/{slug}', 'blog.show')->name('blog.show');
+#blog routes end
 
-Route::group(['namespace' => 'App\Http\Controllers'], function()
-{  
-    // Route::get('/', function () {
-    //     return redirect('/commingsoon');
-        
-    //     // return redirect()->intended('/');
-    // });
-    // Route::get('/commingsoon', 'HomeController@commingsoon')->name('home.commingsoon');
-    Route::get('/', 'HomeController@index')->name('home.index');
-    Route::get('/about', 'HomeController@about')->name('home.about');
+#courses routes
+Volt::route('/courses', 'home.courses')->name('home.courses');
+Volt::route('/courses/{course:slug}', 'courses.show')->name('courses.show');
+#courses routes end
 
-    Route::get('/contact', 'HomeController@contact')->name('home.contact');
-    Route::post('/contact', 'HomeController@contactform')->name('home.contactform');
+#universities routes
+Volt::route('/universities', 'home.universities')->name('home.universities');
+Volt::route('/universities/{university:slug}', 'universities.show')->name('universities.show');
+#universities routes end
 
-    Route::get('/assetmanagement', 'HomeController@assetmanagement')->name('home.assetmanagement');
-    Route::get('/principalconsulting', 'HomeController@principalconsulting')->name('home.principalconsulting');
-    Route::get('/greenrealty', 'HomeController@greenrealty')->name('home.greenrealty');
-    Route::get('/article', 'HomeController@article')->name('home.article');
-
-    Route::get('/whistle-blower', 'HomeController@whistle')->name('home.whistle');
-    Route::get('/legal', 'HomeController@legal')->name('home.legal');
-    Route::get('/privacy', 'HomeController@privacy')->name('home.privacy');
-
-    Route::get('/welcome', 'HomeController@welcome')->name('home.welcome');
-    Route::get('/inflation', 'HomeController@inflation')->name('home.welcome');
-    Route::get('/shifting', 'HomeController@shifting')->name('home.shifting');
-
-    Route::get('/februaryreport', 'HomeController@februaryreport')->name('home.februaryreport');
-
-
-});

@@ -18,7 +18,7 @@ return [
         'prefix' => 'fblog_', // prefix for all blog tables
     ],
     'route' => [
-        'prefix' => 'blogs',
+        'prefix' => 'fblog',
         'middleware' => ['web'],
         //        'home' => [
         //            'name' => 'filamentblog.home',
@@ -38,9 +38,9 @@ return [
     ],
     'seo' => [
         'meta' => [
-            'title' => 'Filament Blog',
-            'description' => 'This is filament blog seo meta description',
-            'keywords' => [],
+            'title' => 'Blog & News - Study Abroad Updates',
+            'description' => 'Stay updated with the latest insights, tips, and news about studying abroad',
+            'keywords' => ['study abroad', 'university', 'education', 'scholarships', 'international students'],
         ],
     ],
 
