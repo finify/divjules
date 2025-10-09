@@ -98,7 +98,7 @@ jobs:
             #setup simlink to public and other things
             if [ ! -f .divjulessetup ]; then
               touch .divjulessetup
-              # rm -rf public_html 
+              rm -rf public_html 
 
               ln -s $DIR/public public_html
 

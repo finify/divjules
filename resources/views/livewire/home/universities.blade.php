@@ -1,13 +1,100 @@
 <?php
 
 use Livewire\Volt\Component;
-use Livewire\Attributes\{Layout, Title};
+use Livewire\Attributes\{Layout, Title, Url};
+use Livewire\WithPagination;
+use App\Models\University;
 
-new 
+new
 #[Layout('components.layouts.home')]
-#[Title('Home')]
+#[Title('Partner Universities')]
 class extends Component {
-    //
+    use WithPagination;
+
+    #[Url]
+    public $country = '';
+
+    #[Url]
+    public $type = '';
+
+    #[Url]
+    public $ranking = '';
+
+    #[Url]
+    public $search = '';
+
+    public $showFilters = false;
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedCountry()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedType()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedRanking()
+    {
+        $this->resetPage();
+    }
+
+    public function clearFilters()
+    {
+        $this->reset(['country', 'type', 'ranking', 'search']);
+        $this->resetPage();
+    }
+
+    public function with(): array
+    {
+        $query = University::query()
+            ->active()
+            ->with('courses')
+            ->withCount('courses');
+
+        if ($this->search) {
+            $query->where(function($q) {
+                $q->where('name', 'like', '%' . $this->search . '%')
+                  ->orWhere('city', 'like', '%' . $this->search . '%')
+                  ->orWhere('description', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        if ($this->country) {
+            $query->where('country', $this->country);
+        }
+
+        if ($this->type) {
+            $query->where('type', $this->type);
+        }
+
+        if ($this->ranking) {
+            match($this->ranking) {
+                'top100' => $query->where('ranking', '<=', 100)->whereNotNull('ranking'),
+                'top500' => $query->whereBetween('ranking', [101, 500]),
+                default => null,
+            };
+        }
+
+        $universities = $query->ordered()->paginate(12);
+
+        $countries = University::active()
+            ->select('country')
+            ->distinct()
+            ->orderBy('country')
+            ->pluck('country', 'country');
+
+        return [
+            'universities' => $universities,
+            'countries' => $countries,
+        ];
+    }
 }; ?>
 
 <div>
@@ -15,29 +102,57 @@ class extends Component {
     <section class="bg-gradient-to-r from-purple-600 to-indigo-600 pt-32 pb-16 px-4 mt-20">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">Partner Universities</h1>
-            <p class="text-xl">Explore 150+ world-class institutions across the globe</p>
+            <p class="text-xl">Explore world-class institutions across the globe</p>
         </div>
     </section>
 
+    <!-- Mobile Filter Toggle Button -->
+    <div class="md:hidden sticky top-20 z-40 bg-white shadow-md px-4 py-3">
+        <button
+            wire:click="$toggle('showFilters')"
+            class="w-full flex items-center justify-between px-4 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+            <span class="flex items-center">
+                <i class="fas fa-filter mr-2"></i>
+                Filters
+                @if($country || $type || $ranking || $search)
+                    <span class="ml-2 bg-white text-purple-600 text-xs px-2 py-1 rounded-full">
+                        Active
+                    </span>
+                @endif
+            </span>
+            <i class="fas fa-chevron-{{ $showFilters ? 'up' : 'down' }}"></i>
+        </button>
+    </div>
+
     <!-- Filter Section -->
-    <section class="py-8 px-4 bg-white shadow-md sticky top-20 z-40">
+    <section class="py-8 px-4 bg-white shadow-md {{ $showFilters ? '' : 'hidden md:block' }} sticky top-36 md:top-20 z-30">
         <div class="max-w-7xl mx-auto">
             <div class="grid md:grid-cols-4 gap-4">
+                <!-- Search -->
+                <div class="md:col-span-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                    <input
+                        type="text"
+                        wire:model.live.debounce.300ms="search"
+                        placeholder="Search universities..."
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                </div>
+
+                <!-- Country -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Country</label>
-                    <select id="country-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    <select wire:model.live="country" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
                         <option value="">All Countries</option>
-                        <option value="uk">United Kingdom</option>
-                        <option value="usa">United States</option>
-                        <option value="canada">Canada</option>
-                        <option value="australia">Australia</option>
-                        <option value="germany">Germany</option>
+                        @foreach($countries as $key => $value)
+                            <option value="{{ $key }}">{{ $value }}</option>
+                        @endforeach
                     </select>
                 </div>
 
+                <!-- Type -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">University Type</label>
-                    <select id="type-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    <select wire:model.live="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
                         <option value="">All Types</option>
                         <option value="research">Research University</option>
                         <option value="public">Public University</option>
@@ -45,284 +160,123 @@ class extends Component {
                     </select>
                 </div>
 
+                <!-- Ranking -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Ranking</label>
-                    <select id="ranking-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    <select wire:model.live="ranking" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
                         <option value="">All Rankings</option>
-                        <option value="top50">Top 50</option>
                         <option value="top100">Top 100</option>
-                        <option value="top200">Top 200</option>
+                        <option value="top500">Top 500</option>
                     </select>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
-                    <input type="text" id="search-input" placeholder="Search universities..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                <!-- Clear Filters -->
+                <div class="flex items-end">
+                    <button
+                        wire:click="clearFilters"
+                        class="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition">
+                        Clear Filters
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Universities Grid -->
-    <section class="py-16 px-4">
+    <section class="py-16 px-4 bg-gray-50">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-8">
-                <p class="text-gray-600"><span id="results-count">24</span> universities found</p>
-            </div>
-
-            <div id="universities-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <!-- University Card 1 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover university-card" data-country="uk" data-type="research" data-ranking="top50">
-                    <div class="h-48 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
-                        <div class="text-center text-white">
-                            <h3 class="text-3xl font-bold">Oxford</h3>
-                            <p class="text-sm">University</p>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-semibold">UK</span>
-                            <span class="text-yellow-500"><i class="fas fa-star"></i> Rank #1</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">University of Oxford</h3>
-                        <p class="text-gray-600 mb-4">World-renowned research university with centuries of academic excellence.</p>
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>Oxford, United Kingdom</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mb-4">
-                            <i class="fas fa-graduation-cap mr-2"></i>
-                            <span>24,000+ Students</span>
-                        </div>
-                        <a href="#" class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">View Details</a>
-                    </div>
+            @if($universities->count() > 0)
+                <div class="mb-8">
+                    <p class="text-gray-600">{{ $universities->total() }} universities found</p>
                 </div>
 
-                <!-- University Card 2 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover university-card" data-country="uk" data-type="research" data-ranking="top50">
-                    <div class="h-48 bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center">
-                        <div class="text-center text-white">
-                            <h3 class="text-3xl font-bold">Cambridge</h3>
-                            <p class="text-sm">University</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach($universities as $university)
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <!-- University Banner -->
+                        <div class="h-48 bg-gradient-to-r from-purple-500 to-indigo-500 relative">
+                            @if($university->banner_image_url)
+                                <img src="{{ $university->banner_image_url }}" alt="{{ $university->name }}" class="w-full h-full object-cover">
+                            @endif
+                            @if($university->is_featured)
+                                <div class="absolute top-4 right-4 bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
+                                    Featured
+                                </div>
+                            @endif
+                        </div>
+
+                        <!-- University Logo -->
+                        <div class="relative px-6 -mt-12">
+                            <div class="bg-white w-24 h-24 rounded-full shadow-lg flex items-center justify-center p-2">
+                                @if($university->logo_url)
+                                    <img src="{{ $university->logo_url }}" alt="{{ $university->name }}" class="w-full h-full object-contain">
+                                @else
+                                    <i class="fas fa-university text-4xl text-purple-600"></i>
+                                @endif
+                            </div>
+                        </div>
+
+                        <!-- University Info -->
+                        <div class="p-6 pt-4">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $university->name }}</h3>
+
+                            <div class="flex items-center text-gray-600 text-sm mb-2">
+                                <i class="fas fa-map-marker-alt mr-2"></i>
+                                {{ $university->city ? $university->city . ', ' : '' }}{{ $university->country }}
+                            </div>
+
+                            @if($university->ranking)
+                                <div class="flex items-center text-gray-600 text-sm mb-3">
+                                    <i class="fas fa-trophy mr-2 text-yellow-500"></i>
+                                    Ranked #{{ $university->ranking }} globally
+                                </div>
+                            @endif
+
+                            @if($university->description)
+                                <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ $university->description }}</p>
+                            @endif
+
+                            <!-- Stats -->
+                            <div class="flex items-center justify-between text-sm text-gray-600 mb-4 pb-4 border-b">
+                                <div class="flex items-center">
+                                    <i class="fas fa-book mr-2 text-purple-600"></i>
+                                    {{ $university->courses_count }} Courses
+                                </div>
+                                <div class="bg-gray-100 px-3 py-1 rounded-full text-xs font-semibold">
+                                    {{ ucfirst($university->type) }}
+                                </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="flex gap-2">
+                                @if($university->website)
+                                    <a href="{{ $university->website }}" target="_blank" class="flex-1 text-center px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+                                        Visit Website
+                                    </a>
+                                @endif
+                                <button class="px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition">
+                                    <i class="fas fa-info-circle"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-semibold">UK</span>
-                            <span class="text-yellow-500"><i class="fas fa-star"></i> Rank #2</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">University of Cambridge</h3>
-                        <p class="text-gray-600 mb-4">One of the world's oldest and most prestigious universities.</p>
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>Cambridge, United Kingdom</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mb-4">
-                            <i class="fas fa-graduation-cap mr-2"></i>
-                            <span>23,000+ Students</span>
-                        </div>
-                        <a href="#" class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">View Details</a>
-                    </div>
+                    @endforeach
                 </div>
 
-                <!-- University Card 3 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover university-card" data-country="uk" data-type="research" data-ranking="top50">
-                    <div class="h-48 bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
-                        <div class="text-center text-white">
-                            <h3 class="text-3xl font-bold">Imperial</h3>
-                            <p class="text-sm">College London</p>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-semibold">UK</span>
-                            <span class="text-yellow-500"><i class="fas fa-star"></i> Rank #6</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Imperial College London</h3>
-                        <p class="text-gray-600 mb-4">Leading science, engineering, medicine and business institution.</p>
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>London, United Kingdom</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mb-4">
-                            <i class="fas fa-graduation-cap mr-2"></i>
-                            <span>17,000+ Students</span>
-                        </div>
-                        <a href="#" class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">View Details</a>
-                    </div>
+                <!-- Pagination -->
+                <div class="mt-12">
+                    {{ $universities->links() }}
                 </div>
-
-                <!-- University Card 4 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover university-card" data-country="uk" data-type="public" data-ranking="top50">
-                    <div class="h-48 bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center">
-                        <div class="text-center text-white">
-                            <h3 class="text-3xl font-bold">UCL</h3>
-                            <p class="text-sm">London</p>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-semibold">UK</span>
-                            <span class="text-yellow-500"><i class="fas fa-star"></i> Rank #8</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">University College London</h3>
-                        <p class="text-gray-600 mb-4">London's leading multidisciplinary university with global reputation.</p>
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>London, United Kingdom</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mb-4">
-                            <i class="fas fa-graduation-cap mr-2"></i>
-                            <span>42,000+ Students</span>
-                        </div>
-                        <a href="#" class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">View Details</a>
-                    </div>
+            @else
+                <div class="text-center py-16">
+                    <i class="fas fa-university text-6xl text-gray-300 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-700 mb-2">No Universities Found</h3>
+                    <p class="text-gray-500 mb-4">Try adjusting your filters or search criteria</p>
+                    <button wire:click="clearFilters" class="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+                        Clear All Filters
+                    </button>
                 </div>
-
-                <!-- University Card 5 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover university-card" data-country="uk" data-type="public" data-ranking="top50">
-                    <div class="h-48 bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center">
-                        <div class="text-center text-white">
-                            <h3 class="text-3xl font-bold">LSE</h3>
-                            <p class="text-sm">London School of Economics</p>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-semibold">UK</span>
-                            <span class="text-yellow-500"><i class="fas fa-star"></i> Rank #49</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">London School of Economics</h3>
-                        <p class="text-gray-600 mb-4">Specialist in social sciences with outstanding global reputation.</p>
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>London, United Kingdom</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mb-4">
-                            <i class="fas fa-graduation-cap mr-2"></i>
-                            <span>12,000+ Students</span>
-                        </div>
-                        <a href="#" class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">View Details</a>
-                    </div>
-                </div>
-
-                <!-- University Card 6 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover university-card" data-country="uk" data-type="public" data-ranking="top100">
-                    <div class="h-48 bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center">
-                        <div class="text-center text-white">
-                            <h3 class="text-3xl font-bold">Edinburgh</h3>
-                            <p class="text-sm">University</p>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-semibold">UK</span>
-                            <span class="text-yellow-500"><i class="fas fa-star"></i> Rank #15</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">University of Edinburgh</h3>
-                        <p class="text-gray-600 mb-4">Scotland's premier university with rich history of innovation.</p>
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>Edinburgh, United Kingdom</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mb-4">
-                            <i class="fas fa-graduation-cap mr-2"></i>
-                            <span>35,000+ Students</span>
-                        </div>
-                        <a href="#" class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">View Details</a>
-                    </div>
-                </div>
-
-                <!-- University Card 7 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover university-card" data-country="usa" data-type="private" data-ranking="top50">
-                    <div class="h-48 bg-gradient-to-br from-pink-500 to-pink-700 flex items-center justify-center">
-                        <div class="text-center text-white">
-                            <h3 class="text-3xl font-bold">Harvard</h3>
-                            <p class="text-sm">University</p>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold">USA</span>
-                            <span class="text-yellow-500"><i class="fas fa-star"></i> Rank #3</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Harvard University</h3>
-                        <p class="text-gray-600 mb-4">Prestigious Ivy League institution with unmatched academic excellence.</p>
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>Cambridge, Massachusetts</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mb-4">
-                            <i class="fas fa-graduation-cap mr-2"></i>
-                            <span>31,000+ Students</span>
-                        </div>
-                        <a href="#" class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">View Details</a>
-                    </div>
-                </div>
-
-                <!-- University Card 8 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover university-card" data-country="usa" data-type="private" data-ranking="top50">
-                    <div class="h-48 bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center">
-                        <div class="text-center text-white">
-                            <h3 class="text-3xl font-bold">MIT</h3>
-                            <p class="text-sm">Massachusetts Institute of Technology</p>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold">USA</span>
-                            <span class="text-yellow-500"><i class="fas fa-star"></i> Rank #5</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">MIT</h3>
-                        <p class="text-gray-600 mb-4">World leader in science, technology, and innovation.</p>
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>Cambridge, Massachusetts</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mb-4">
-                            <i class="fas fa-graduation-cap mr-2"></i>
-                            <span>11,000+ Students</span>
-                        </div>
-                        <a href="#" class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">View Details</a>
-                    </div>
-                </div>
-
-                <!-- University Card 9 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover university-card" data-country="canada" data-type="public" data-ranking="top100">
-                    <div class="h-48 bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center">
-                        <div class="text-center text-white">
-                            <h3 class="text-3xl font-bold">Toronto</h3>
-                            <p class="text-sm">University</p>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm font-semibold">Canada</span>
-                            <span class="text-yellow-500"><i class="fas fa-star"></i> Rank #21</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">University of Toronto</h3>
-                        <p class="text-gray-600 mb-4">Canada's top-ranked university with global research impact.</p>
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>Toronto, Canada</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mb-4">
-                            <i class="fas fa-graduation-cap mr-2"></i>
-                            <span>95,000+ Students</span>
-                        </div>
-                        <a href="#" class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">View Details</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Load More Button -->
-            <div class="text-center mt-12">
-                <button class="px-8 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-semibold">
-                    Load More Universities
-                </button>
-            </div>
+            @endif
         </div>
     </section>
 
@@ -331,7 +285,7 @@ class extends Component {
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Can't Find Your Ideal University?</h2>
             <p class="text-xl mb-8">Contact our expert counsellors for personalized recommendations</p>
-            <a href="contact.html" class="inline-block px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Get Free Consultation</a>
+            <a href="/contact" class="inline-block px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Get Free Consultation</a>
         </div>
     </section>
 </div>
