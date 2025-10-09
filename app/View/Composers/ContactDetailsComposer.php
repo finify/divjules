@@ -13,9 +13,10 @@ class ContactDetailsComposer
      */
     public function compose(View $view): void
     {
-        $contacts = Cache::remember('active_contact_details', 3600, function () {
-            return ContactDetail::active()->ordered()->get();
-        });
+        // $contacts = Cache::remember('active_contact_details', 3600, function () {
+        //     return ContactDetail::active()->ordered()->get();
+        // });
+        $contacts = ContactDetail::active()->ordered()->get();
 
         $view->with('contactDetails', $contacts);
     }

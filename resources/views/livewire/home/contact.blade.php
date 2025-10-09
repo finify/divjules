@@ -5,6 +5,7 @@ use Livewire\Attributes\{Layout, Title, Validate};
 use App\Models\ContactMessage;
 use App\Mail\ContactFormSubmitted;
 use Illuminate\Support\Facades\Mail;
+use App\Models\ContactDetail;
 
 new
 #[Layout('components.layouts.home')]
@@ -35,6 +36,13 @@ class extends Component {
     public $consent = false;
 
     public $submitted = false;
+
+    public $contactDetails = [];
+
+    public function mount()
+    {
+        $this->contactDetails = ContactDetail::active()->ordered()->get();
+    }
 
     public function submit()
     {
@@ -252,7 +260,7 @@ class extends Component {
     </section>
 
     <!-- Office Locations -->
-    <section class="py-20 px-4 bg-white">
+    {{-- <section class="py-20 px-4 bg-white">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Office Locations</h2>
@@ -363,7 +371,7 @@ class extends Component {
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- FAQ Section -->
     <section class="py-20 px-4 bg-gray-50">
