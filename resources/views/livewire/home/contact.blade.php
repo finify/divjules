@@ -1,13 +1,79 @@
 <?php
 
 use Livewire\Volt\Component;
-use Livewire\Attributes\{Layout, Title};
+use Livewire\Attributes\{Layout, Title, Validate};
+use App\Models\ContactMessage;
+use App\Mail\ContactFormSubmitted;
+use Illuminate\Support\Facades\Mail;
 
-new 
+new
 #[Layout('components.layouts.home')]
-#[Title('Home')]
+#[Title('Contact Us')]
 class extends Component {
-    //
+    #[Validate('required|string|max:191')]
+    public $first_name = '';
+
+    #[Validate('required|string|max:191')]
+    public $last_name = '';
+
+    #[Validate('required|email|max:191')]
+    public $email = '';
+
+    #[Validate('nullable|string|max:191')]
+    public $phone = '';
+
+    #[Validate('required|string')]
+    public $country = '';
+
+    #[Validate('required|string')]
+    public $interest = '';
+
+    #[Validate('required|string|min:10')]
+    public $message = '';
+
+    #[Validate('accepted')]
+    public $consent = false;
+
+    public $submitted = false;
+
+    public function submit()
+    {
+        $this->validate();
+
+        try {
+            // Create contact message
+            $contactMessage = ContactMessage::create([
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
+                'phone' => $this->phone,
+                'country' => $this->country,
+                'interest' => $this->interest,
+                'message' => $this->message,
+                'consent' => $this->consent,
+            ]);
+
+            // Try to send email to admin
+            try {
+                $adminEmail = config('mail.admin_email');
+                if ($adminEmail) {
+                    Mail::to($adminEmail)->send(new ContactFormSubmitted($contactMessage));
+                }
+            } catch (\Exception $mailException) {
+                // Log mail error but don't fail the submission
+                \Log::error('Contact form email error: ' . $mailException->getMessage());
+            }
+
+            $this->submitted = true;
+            $this->reset(['first_name', 'last_name', 'email', 'phone', 'country', 'interest', 'message', 'consent']);
+
+            session()->flash('success', 'Thank you for contacting us! We will get back to you soon.');
+
+        } catch (\Exception $e) {
+            \Log::error('Contact form submission error: ' . $e->getMessage());
+            session()->flash('error', 'There was an error sending your message. Please try again.');
+        }
+    }
 }; ?>
 
 <div>
@@ -26,74 +92,105 @@ class extends Component {
 
                 <!-- Contact Form -->
                 <div class="bg-white p-8 rounded-xl shadow-lg">
-                    <h2 class="text-3xl font-bold mb-6">Send Us a Message</h2>
-                    <form id="contact-form" class="space-y-6">
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
-                                <input type="text" id="firstName" name="firstName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    @if($submitted)
+                        <div class="text-center py-8">
+                            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
                             </div>
-                            <div>
-                                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
-                                <input type="text" id="lastName" name="lastName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Message Sent Successfully!</h3>
+                            <p class="text-gray-600 mb-6">Thank you for contacting us. We'll get back to you as soon as possible.</p>
+                            <button wire:click="$set('submitted', false)" class="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+                                Send Another Message
+                            </button>
+                        </div>
+                    @else
+                        <h2 class="text-3xl font-bold mb-6">Send Us a Message</h2>
+
+                        @if (session('error'))
+                            <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded">
+                                {{ session('error') }}
                             </div>
-                        </div>
+                        @endif
 
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                        </div>
+                        <form wire:submit="submit" class="space-y-6">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                                    <input type="text" wire:model.blur="first_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('first_name') border-red-500 @enderror">
+                                    @error('first_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                                    <input type="text" wire:model.blur="last_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('last_name') border-red-500 @enderror">
+                                    @error('last_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
 
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                                <input type="email" wire:model.blur="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('email') border-red-500 @enderror">
+                                @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
 
-                        <div>
-                            <label for="country" class="block text-sm font-medium text-gray-700 mb-2">Country *</label>
-                            <select id="country" name="country" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                                <option value="">Select your country</option>
-                                <option value="uk">United Kingdom</option>
-                                <option value="us">United States</option>
-                                <option value="canada">Canada</option>
-                                <option value="australia">Australia</option>
-                                <option value="india">India</option>
-                                <option value="nigeria">Nigeria</option>
-                                <option value="uae">United Arab Emirates</option>
-                                <option value="singapore">Singapore</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" wire:model.blur="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('phone') border-red-500 @enderror">
+                                @error('phone') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
 
-                        <div>
-                            <label for="interest" class="block text-sm font-medium text-gray-700 mb-2">I'm Interested In *</label>
-                            <select id="interest" name="interest" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                                <option value="">Select an option</option>
-                                <option value="undergraduate">Undergraduate Programs</option>
-                                <option value="postgraduate">Postgraduate Programs</option>
-                                <option value="pathway">Pathway Courses</option>
-                                <option value="consultation">Free Consultation</option>
-                                <option value="visa">Visa Assistance</option>
-                                <option value="other">Other Services</option>
-                            </select>
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Country *</label>
+                                <select wire:model.blur="country" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('country') border-red-500 @enderror">
+                                    <option value="">Select your country</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="United States">United States</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="India">India</option>
+                                    <option value="Nigeria">Nigeria</option>
+                                    <option value="United Arab Emirates">United Arab Emirates</option>
+                                    <option value="Singapore">Singapore</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                @error('country') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
 
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Your Message *</label>
-                            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"></textarea>
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">I'm Interested In *</label>
+                                <select wire:model.blur="interest" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('interest') border-red-500 @enderror">
+                                    <option value="">Select an option</option>
+                                    <option value="Undergraduate Programs">Undergraduate Programs</option>
+                                    <option value="Postgraduate Programs">Postgraduate Programs</option>
+                                    <option value="Pathway Courses">Pathway Courses</option>
+                                    <option value="Free Consultation">Free Consultation</option>
+                                    <option value="Visa Assistance">Visa Assistance</option>
+                                    <option value="Other Services">Other Services</option>
+                                </select>
+                                @error('interest') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
 
-                        <div class="flex items-start">
-                            <input type="checkbox" id="consent" name="consent" required class="mt-1 mr-3">
-                            <label for="consent" class="text-sm text-gray-600">
-                                I agree to receive information about courses and services from Divjules. We respect your privacy and will never share your details with third parties.
-                            </label>
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Your Message *</label>
+                                <textarea wire:model.blur="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('message') border-red-500 @enderror"></textarea>
+                                @error('message') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
 
-                        <button type="submit" class="w-full px-8 py-4 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
-                            Send Message
-                        </button>
-                    </form>
+                            <div class="flex items-start">
+                                <input type="checkbox" wire:model="consent" class="mt-1 mr-3">
+                                <label class="text-sm text-gray-600">
+                                    I agree to receive information about courses and services from Divjules. We respect your privacy and will never share your details with third parties. *
+                                </label>
+                            </div>
+                            @error('consent') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+
+                            <button type="submit" wire:loading.attr="disabled" class="w-full px-8 py-4 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition disabled:opacity-50">
+                                <span wire:loading.remove wire:target="submit">Send Message</span>
+                                <span wire:loading wire:target="submit">Sending...</span>
+                            </button>
+                        </form>
+                    @endif
                 </div>
 
                 <!-- Contact Information -->
@@ -102,50 +199,23 @@ class extends Component {
                         <h2 class="text-3xl font-bold mb-6">Contact Information</h2>
 
                         <div class="space-y-6">
-                            <div class="flex items-start">
-                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                    <i class="fas fa-phone text-purple-600"></i>
+                            @foreach($contactDetails as $contact)
+                                <div class="flex items-start">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                        <i class="fas {{ str_replace('heroicon-o-', 'fa-', $contact->icon ?? 'fa-circle') }} text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold mb-1">{{ $contact->label }}</h3>
+                                        @if($contact->is_clickable)
+                                            <a href="{{ $contact->link }}" class="text-gray-600 hover:text-purple-600 transition-colors">
+                                                {{ $contact->value }}
+                                            </a>
+                                        @else
+                                            <p class="text-gray-600">{!! $contact->formatted_value !!}</p>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 class="font-bold mb-1">Phone</h3>
-                                    <p class="text-gray-600">+44 (0) 20 1234 5678</p>
-                                    <p class="text-gray-600">+1 (555) 123-4567</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start">
-                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                    <i class="fas fa-envelope text-purple-600"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-bold mb-1">Email</h3>
-                                    <p class="text-gray-600">info@divjules.com</p>
-                                    <p class="text-gray-600">admissions@divjules.com</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start">
-                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                    <i class="fas fa-map-marker-alt text-purple-600"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-bold mb-1">Office Address</h3>
-                                    <p class="text-gray-600">123 Education Street</p>
-                                    <p class="text-gray-600">London, UK WC1A 1AA</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start">
-                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                    <i class="fas fa-clock text-purple-600"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-bold mb-1">Business Hours</h3>
-                                    <p class="text-gray-600">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                                    <p class="text-gray-600">Saturday: 10:00 AM - 4:00 PM</p>
-                                    <p class="text-gray-600">Sunday: Closed</p>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
 
                         <div class="mt-8 pt-8 border-t">

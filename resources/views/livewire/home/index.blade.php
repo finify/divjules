@@ -413,7 +413,7 @@ class extends Component {
             </script>
 
             <div class="text-center mt-12">
-                <a href="contact.html" class="inline-block px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">Share Your Success Story</a>
+                <a href="contact.html" class="inline-block px-8 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">Share Your Success Story</a>
             </div>
         </div>
     </section>

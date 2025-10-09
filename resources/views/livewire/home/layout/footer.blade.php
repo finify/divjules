@@ -45,9 +45,21 @@ use function Livewire\Volt\{state};
                 <div>
                     <h4 class="font-bold mb-4">Contact</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><i class="fas fa-phone mr-2"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-envelope mr-2"></i> info@divjules.com</li>
-                        <li><i class="fas fa-map-marker-alt mr-2"></i> 123 Education Street, London</li>
+                        @foreach($contactDetails->take(5) as $contact)
+                            <li class="flex items-start">
+                                @if($contact->is_clickable)
+                                    <a href="{{ $contact->link }}" class="hover:text-white transition-colors">
+                                        <i class="fas {{ str_replace('heroicon-o-', 'fa-', $contact->icon ?? 'fa-circle') }} mr-2 mt-1"></i>
+                                        {{ $contact->value }}
+                                    </a>
+                                @else
+                                    <span>
+                                        <i class="fas {{ str_replace('heroicon-o-', 'fa-', $contact->icon ?? 'fa-circle') }} mr-2 mt-1"></i>
+                                        {!! $contact->formatted_value !!}
+                                    </span>
+                                @endif
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

@@ -32,5 +32,8 @@ class AppServiceProvider extends ServiceProvider
             // Always pass dimension validation
             return true;
         });
+
+        // Register view composer for contact details
+        \Illuminate\Support\Facades\View::composer('*', \App\View\Composers\ContactDetailsComposer::class);
     }
 }
