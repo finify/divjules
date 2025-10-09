@@ -362,7 +362,7 @@ class extends Component {
                     <div class="flex-none w-[85%] snap-center group cursor-pointer" onclick="openVideoModal('{{ $testimonial->youtube_embed_url }}')">
                         <div class="relative overflow-hidden rounded-xl shadow-lg">
                             <img src="{{ $testimonial->display_thumbnail }}" alt="{{ $testimonial->student_name }}" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110 relative z-0">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center z-10">
+                            <div class="absolute inset-0 bg-none bg-opacity-40 flex items-center justify-center z-10">
                                 <div class="w-20 h-20 bg-white bg-opacity-90 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-125">
                                     <i class="fas fa-play text-purple-600 text-2xl ml-1"></i>
                                 </div>
@@ -413,7 +413,7 @@ class extends Component {
             </script>
 
             <div class="text-center mt-12">
-                <a href="contact.html" class="inline-block px-8 py-3 bg-red-300 text-white rounded-lg font-semibold hover:bg-red-300 transition">Share Your Success Story</a>
+                <a href="contact.html" class="inline-block px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">Share Your Success Story</a>
             </div>
         </div>
     </section>
