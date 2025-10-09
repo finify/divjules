@@ -244,7 +244,7 @@ class extends Component {
                     <div class="bg-gradient-to-br from-purple-600 to-indigo-600 p-8 rounded-xl shadow-lg text-white">
                         <h3 class="text-2xl font-bold mb-4">Book a Free Consultation</h3>
                         <p class="mb-6">Schedule a one-on-one session with our expert counsellors to discuss your study abroad plans.</p>
-                        <a href="apply.html" class="inline-block px-6 py-3 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Book Now</a>
+                        <a href="/apply" class="inline-block px-6 py-3 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Book Now</a>
                     </div>
                 </div>
             </div>

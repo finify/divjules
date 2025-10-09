@@ -55,7 +55,7 @@ use function Livewire\Volt\{state};
                 <a href="{{ route('home.about') }}" class="block px-3 py-2 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded">About Us</a>
                 <a href="{{ route('home.blog') }}" class="block px-3 py-2 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded">Blog</a>
                 <a href="{{ route('home.contact') }}" class="block px-3 py-2 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded">Contact</a>
-                <a href="{{ route('home.contact') }}" class="block px-3 py-2 bg-purple-600 text-white rounded text-center mt-4">Apply Now</a>
+                <a href="{{ route('home.apply') }}" class="block px-3 py-2 bg-purple-600 text-white rounded text-center mt-4">Apply Now</a>
             </div>
         </div>
     </nav>

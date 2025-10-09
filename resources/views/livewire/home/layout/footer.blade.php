@@ -25,20 +25,20 @@ use function Livewire\Volt\{state};
                 <div>
                     <h4 class="font-bold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li>
-                        <li><a href="universities.html" class="text-gray-400 hover:text-white">Universities</a></li>
-                        <li><a href="courses.html" class="text-gray-400 hover:text-white">Courses</a></li>
-                        <li><a href="blog.html" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="/about" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="/universities" class="text-gray-400 hover:text-white">Universities</a></li>
+                        <li><a href="/courses" class="text-gray-400 hover:text-white">Courses</a></li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white">Blog</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h4 class="font-bold mb-4">Services</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Free Consultation</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">University Selection</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Application Support</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Visa Assistance</a></li>
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Free Consultation</a></li>
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">University Selection</a></li>
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Application Support</a></li>
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Visa Assistance</a></li>
                     </ul>
                 </div>
 
@@ -65,7 +65,7 @@ use function Livewire\Volt\{state};
             </div>
 
             <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 Divjules. All rights reserved.</p>
+                <p>&copy; 2025 Divjules. All rights reserved.</p>
             </div>
         </div>
     </footer>

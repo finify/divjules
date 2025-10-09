@@ -41,10 +41,10 @@ class extends Component {
                         Expert guidance for your academic journey. Connect with top universities worldwide.
                     </p>
                     <div class="sliding-text flex flex-col sm:flex-row gap-4">
-                        <a href="apply.html" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition text-center shadow-lg">
+                        <a href="/apply" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition text-center shadow-lg">
                             Get Started
                         </a>
-                        <a href="contact.html" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition text-center">
+                        <a href="/contact" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition text-center">
                             Book Free Consultation
                         </a>
                     </div>
@@ -128,7 +128,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Business & Management</h3>
                     <p class="text-gray-600 text-sm mb-4">MBA, Finance, Marketing</p>
-                    <a href="courses.html" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -137,7 +137,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Computing & IT</h3>
                     <p class="text-gray-600 text-sm mb-4">Computer Science, Data Science</p>
-                    <a href="courses.html" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -146,7 +146,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Engineering</h3>
                     <p class="text-gray-600 text-sm mb-4">Mechanical, Civil, Electrical</p>
-                    <a href="courses.html" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -155,7 +155,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Health Sciences</h3>
                     <p class="text-gray-600 text-sm mb-4">Medicine, Nursing, Pharmacy</p>
-                    <a href="courses.html" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -164,7 +164,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Law</h3>
                     <p class="text-gray-600 text-sm mb-4">LLB, Corporate Law, International Law</p>
-                    <a href="courses.html" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -173,7 +173,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Arts & Humanities</h3>
                     <p class="text-gray-600 text-sm mb-4">Design, Media, Languages</p>
-                    <a href="courses.html" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -182,7 +182,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Science</h3>
                     <p class="text-gray-600 text-sm mb-4">Physics, Chemistry, Biology</p>
-                    <a href="courses.html" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -191,7 +191,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Education</h3>
                     <p class="text-gray-600 text-sm mb-4">Teaching, Training, Development</p>
-                    <a href="courses.html" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
             </div>
         </div>
@@ -247,7 +247,7 @@ class extends Component {
             </div>
 
             <div class="text-center mt-12">
-                <a href="universities.html" class="inline-block px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">View All Universities</a>
+                <a href="/universities" class="inline-block px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">View All Universities</a>
             </div>
         </div>
     </section>
@@ -412,9 +412,9 @@ class extends Component {
                 }
             </script>
 
-            <div class="text-center mt-12">
+            {{-- <div class="text-center mt-12">
                 <a href="contact.html" class="inline-block px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">Share Your Success Story</a>
-            </div>
+            </div> --}}
         </div>
     </section>
     @endif
@@ -641,10 +641,10 @@ class extends Component {
             <h2 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">Ready to Start Your Journey?</h2>
             <p class="text-xl md:text-2xl mb-10 text-purple-100">Book a free consultation with our expert counsellors today!</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="contact.html" class="px-10 py-5 bg-white text-purple-600 rounded-lg font-bold text-lg hover:bg-gray-100 transition shadow-2xl transform hover:scale-105">
+                <a href="/contact" class="px-10 py-5 bg-white text-purple-600 rounded-lg font-bold text-lg hover:bg-gray-100 transition shadow-2xl transform hover:scale-105">
                     <i class="fas fa-calendar-check mr-2"></i>Book Free Consultation
                 </a>
-                <a href="apply.html" class="px-10 py-5 bg-transparent border-3 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:text-purple-600 transition shadow-2xl transform hover:scale-105">
+                <a href="/apply" class="px-10 py-5 bg-transparent border-3 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:text-purple-600 transition shadow-2xl transform hover:scale-105">
                     <i class="fas fa-paper-plane mr-2"></i>Apply Now
                 </a>
             </div>

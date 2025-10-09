@@ -277,8 +277,8 @@ class extends Component {
             <h2 class="text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
             <p class="text-xl mb-8">Join thousands of successful students who trusted us with their education</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="contact.html" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Contact Us Today</a>
-                <a href="apply.html" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition">Start Application</a>
+                <a href="/contact" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Contact Us Today</a>
+                <a href="/apply" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition">Start Application</a>
             </div>
         </div>
     </section>
