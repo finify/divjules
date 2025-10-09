@@ -56,7 +56,7 @@ jobs:
 
       - name: Build Assets
         run: |
-          #copy vite.config.example.js to vite.config.js
+          #copy vite.config.example.js to vite.config.js 
           cp vite.config.example.js vite.config.js
           npm run build
 
