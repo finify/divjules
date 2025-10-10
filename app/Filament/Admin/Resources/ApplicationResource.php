@@ -214,7 +214,7 @@ class ApplicationResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            \App\Filament\Admin\Resources\ApplicationResource\RelationManagers\DocumentsRelationManager::class,
         ];
     }
 

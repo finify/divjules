@@ -4,6 +4,7 @@ use Livewire\Volt\Component;
 use Livewire\Attributes\{Layout, Title};
 use App\Models\School;
 use App\Models\VideoTestimonial;
+use App\Models\Testimonial;
 
 new
 #[Layout('components.layouts.home')]
@@ -14,6 +15,7 @@ class extends Component {
         return [
             'schools' => School::active()->ordered()->get(),
             'videoTestimonials' => VideoTestimonial::active()->ordered()->get(),
+            'testimonials' => Testimonial::approved()->ordered()->limit(6)->get(),
         ];
     }
 }; ?>
@@ -117,7 +119,7 @@ class extends Component {
     <section class="py-20 px-4 bg-gray-100">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Popular Courses</h2>
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Popular Faculties</h2>
                 <p class="text-xl text-gray-600">Explore our most sought-after academic programs</p>
             </div>
 
@@ -429,60 +431,6 @@ class extends Component {
         </div>
     </div>
 
-    <!-- Review Modal -->
-    <div id="reviewModal" class="review-modal">
-        <div class="review-modal-content">
-            <button onclick="closeReviewModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-3xl font-bold">&times;</button>
-
-            <h2 class="text-3xl font-bold text-gray-800 mb-2">Share Your Experience</h2>
-            <p class="text-gray-600 mb-8">Help future students by sharing your journey with Divjules</p>
-
-            <form id="reviewForm" class="space-y-6">
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Your Name *</label>
-                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="John Doe">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">University/College *</label>
-                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="University of London">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Your Email *</label>
-                    <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="john@example.com">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Rating *</label>
-                    <div class="flex gap-2" id="starRating">
-                        <i class="fas fa-star text-3xl text-gray-300 cursor-pointer hover:text-yellow-500" data-rating="1"></i>
-                        <i class="fas fa-star text-3xl text-gray-300 cursor-pointer hover:text-yellow-500" data-rating="2"></i>
-                        <i class="fas fa-star text-3xl text-gray-300 cursor-pointer hover:text-yellow-500" data-rating="3"></i>
-                        <i class="fas fa-star text-3xl text-gray-300 cursor-pointer hover:text-yellow-500" data-rating="4"></i>
-                        <i class="fas fa-star text-3xl text-gray-300 cursor-pointer hover:text-yellow-500" data-rating="5"></i>
-                    </div>
-                    <input type="hidden" id="ratingValue" name="rating" required>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Your Review *</label>
-                    <textarea required rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Share your experience with Divjules..."></textarea>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Your Photo (Optional)</label>
-                    <input type="file" accept="image/*" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                    <p class="text-xs text-gray-500 mt-1">Upload a professional photo (max 5MB)</p>
-                </div>
-
-                <button type="submit" class="w-full px-6 py-4 bg-purple-600 text-white rounded-lg font-bold text-lg hover:bg-purple-700 transition shadow-lg">
-                    <i class="fas fa-paper-plane mr-2"></i>Submit Review
-                </button>
-            </form>
-        </div>
-    </div>
-
     <!-- Student Reviews Section -->
     <section class="py-20 px-4 bg-gray-50">
         <div class="max-w-7xl mx-auto">
@@ -491,139 +439,56 @@ class extends Component {
                 <p class="text-xl text-gray-600">Real experiences from students who trusted us with their future</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8 mb-12">
-                <!-- Review Card 1 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition card-hover">
-                    <div class="flex items-center mb-6">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student" class="w-16 h-16 rounded-full object-cover mr-4">
-                        <div>
-                            <h3 class="font-bold text-gray-800">Sarah Johnson</h3>
-                            <p class="text-sm text-gray-600">University of Manchester</p>
-                            <div class="flex text-yellow-500 mt-1">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+            @if($testimonials->count() > 0)
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    @foreach($testimonials as $testimonial)
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition card-hover">
+                        <div class="flex items-center mb-6">
+                            @if($testimonial->photo)
+                                <img src="{{ $testimonial->photo_url }}" alt="{{ $testimonial->student_name }}" class="w-16 h-16 rounded-full object-cover mr-4">
+                            @else
+                                <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mr-4">
+                                    <span class="text-2xl font-bold text-purple-600">{{ substr($testimonial->student_name, 0, 1) }}</span>
+                                </div>
+                            @endif
+                            <div>
+                                <h3 class="font-bold text-gray-800">{{ $testimonial->student_name }}</h3>
+                                <p class="text-sm text-gray-600">{{ $testimonial->university }}</p>
+                                @if($testimonial->course)
+                                    <p class="text-xs text-gray-500">{{ $testimonial->course }}</p>
+                                @endif
+                                <div class="flex text-yellow-500 mt-1">
+                                    @for($i = 0; $i < $testimonial->rating; $i++)
+                                        <i class="fas fa-star"></i>
+                                    @endfor
+                                    @for($i = $testimonial->rating; $i < 5; $i++)
+                                        <i class="far fa-star"></i>
+                                    @endfor
+                                </div>
                             </div>
                         </div>
+                        <p class="text-gray-700 leading-relaxed">
+                            "{{ $testimonial->review }}"
+                        </p>
                     </div>
-                    <p class="text-gray-700 leading-relaxed">
-                        "Divjules made my dream of studying in the UK a reality. Their guidance through the application process was exceptional, and I'm now pursuing my Master's in Business Analytics!"
-                    </p>
+                    @endforeach
                 </div>
-
-                <!-- Review Card 2 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition card-hover">
-                    <div class="flex items-center mb-6">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student" class="w-16 h-16 rounded-full object-cover mr-4">
-                        <div>
-                            <h3 class="font-bold text-gray-800">Michael Chen</h3>
-                            <p class="text-sm text-gray-600">Imperial College London</p>
-                            <div class="flex text-yellow-500 mt-1">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
+            @else
+                <!-- Fallback content if no testimonials -->
+                <div class="text-center py-12">
+                    <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-comments text-4xl text-gray-400"></i>
                     </div>
-                    <p class="text-gray-700 leading-relaxed">
-                        "From visa assistance to finding accommodation, Divjules supported me at every step. I couldn't have asked for better guidance. Highly recommend their services!"
-                    </p>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">No Reviews Yet</h3>
+                    <p class="text-gray-600 mb-8">Be the first to share your experience with Divjules!</p>
                 </div>
-
-                <!-- Review Card 3 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition card-hover">
-                    <div class="flex items-center mb-6">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Student" class="w-16 h-16 rounded-full object-cover mr-4">
-                        <div>
-                            <h3 class="font-bold text-gray-800">Priya Patel</h3>
-                            <p class="text-sm text-gray-600">University of Edinburgh</p>
-                            <div class="flex text-yellow-500 mt-1">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 leading-relaxed">
-                        "The team at Divjules is incredibly knowledgeable and patient. They helped me secure a scholarship and guided me through the entire admission process seamlessly."
-                    </p>
-                </div>
-
-                <!-- Review Card 4 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition card-hover">
-                    <div class="flex items-center mb-6">
-                        <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Student" class="w-16 h-16 rounded-full object-cover mr-4">
-                        <div>
-                            <h3 class="font-bold text-gray-800">James Williams</h3>
-                            <p class="text-sm text-gray-600">King's College London</p>
-                            <div class="flex text-yellow-500 mt-1">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 leading-relaxed">
-                        "Professional, reliable, and genuinely caring. Divjules understood my goals and helped me find the perfect course. Now I'm living my dream in London!"
-                    </p>
-                </div>
-
-                <!-- Review Card 5 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition card-hover">
-                    <div class="flex items-center mb-6">
-                        <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Student" class="w-16 h-16 rounded-full object-cover mr-4">
-                        <div>
-                            <h3 class="font-bold text-gray-800">Emma Rodriguez</h3>
-                            <p class="text-sm text-gray-600">University of Bristol</p>
-                            <div class="flex text-yellow-500 mt-1">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 leading-relaxed">
-                        "I was nervous about studying abroad, but Divjules made everything so easy. Their expertise and support gave me confidence throughout the journey. Thank you!"
-                    </p>
-                </div>
-
-                <!-- Review Card 6 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition card-hover">
-                    <div class="flex items-center mb-6">
-                        <img src="https://randomuser.me/api/portraits/men/52.jpg" alt="Student" class="w-16 h-16 rounded-full object-cover mr-4">
-                        <div>
-                            <h3 class="font-bold text-gray-800">David Kumar</h3>
-                            <p class="text-sm text-gray-600">Durham University</p>
-                            <div class="flex text-yellow-500 mt-1">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 leading-relaxed">
-                        "Exceptional service from start to finish. Divjules helped me navigate complex visa requirements and ensured I had everything ready for my departure. Highly professional!"
-                    </p>
-                </div>
-            </div>
+            @endif
 
             <!-- Add Review Button -->
             <div class="text-center">
-                <button onclick="openReviewModal()" class="px-8 py-4 bg-purple-600 text-white rounded-lg font-bold text-lg hover:bg-purple-700 transition shadow-lg transform hover:scale-105">
+                <a href="{{ route('home.submit-review') }}" class="inline-block px-8 py-4 bg-purple-600 text-white rounded-lg font-bold text-lg hover:bg-purple-700 transition shadow-lg transform hover:scale-105">
                     <i class="fas fa-pen mr-2"></i>Share Your Experience
-                </button>
+                </a>
             </div>
         </div>
     </section>

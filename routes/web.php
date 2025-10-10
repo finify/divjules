@@ -33,6 +33,7 @@ Volt::route('/universities/{university:slug}', 'universities.show')->name('unive
 
 #application routes
 Volt::route('/apply', 'home.apply')->name('home.apply');
+Volt::route('/submit-review', 'home.submit-review')->name('home.submit-review');
 Volt::route('/application/track', 'application.track')->name('application.track');
 
 // Admin route for document download

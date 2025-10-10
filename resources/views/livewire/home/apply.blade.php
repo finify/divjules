@@ -78,6 +78,11 @@ class extends Component {
     #[Validate('nullable|file|mimes:pdf,jpg,jpeg,png|max:2048')]
     public $cv;
 
+    // Custom documents
+    public $customDocuments = [];
+    public $newDocumentName = '';
+    public $newDocumentFile = null;
+
     // Submission
     public $submitted = false;
     public $applicationNumber = '';
@@ -255,6 +260,29 @@ class extends Component {
         }
     }
 
+    public function addCustomDocument()
+    {
+        $this->validate([
+            'newDocumentName' => 'required|string|max:191',
+            'newDocumentFile' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        ]);
+
+        $this->customDocuments[] = [
+            'name' => $this->newDocumentName,
+            'file' => $this->newDocumentFile,
+            'temp_name' => $this->newDocumentFile->getClientOriginalName(),
+        ];
+
+        $this->newDocumentName = '';
+        $this->newDocumentFile = null;
+    }
+
+    public function removeCustomDocument($index)
+    {
+        unset($this->customDocuments[$index]);
+        $this->customDocuments = array_values($this->customDocuments);
+    }
+
     private function uploadDocuments($application)
     {
         $documents = [
@@ -274,6 +302,21 @@ class extends Component {
                     'file_path' => $path,
                     'file_size' => $this->$field->getSize(),
                     'mime_type' => $this->$field->getMimeType(),
+                ]);
+            }
+        }
+
+        // Upload custom documents
+        foreach ($this->customDocuments as $customDoc) {
+            if (isset($customDoc['file'])) {
+                $path = $customDoc['file']->store('applications/' . $application->id, 'public');
+
+                $application->documents()->create([
+                    'document_type' => $customDoc['name'],
+                    'file_name' => $customDoc['file']->getClientOriginalName(),
+                    'file_path' => $path,
+                    'file_size' => $customDoc['file']->getSize(),
+                    'mime_type' => $customDoc['file']->getMimeType(),
                 ]);
             }
         }
@@ -541,6 +584,57 @@ class extends Component {
                                 <input type="file" wire:model="cv" accept=".pdf,.jpg,.jpeg,.png" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
                                 @error('cv') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 <div wire:loading wire:target="cv" class="text-sm text-blue-600 mt-1">Uploading...</div>
+                            </div>
+
+                            <!-- Custom Documents Section -->
+                            <div class="mt-8 pt-8 border-t border-gray-200">
+                                <h3 class="text-xl font-bold text-gray-900 mb-4">Additional Documents</h3>
+                                <p class="text-sm text-gray-600 mb-6">Add any other documents that support your application</p>
+
+                                <!-- List of custom documents -->
+                                @if(count($customDocuments) > 0)
+                                    <div class="space-y-3 mb-6">
+                                        @foreach($customDocuments as $index => $doc)
+                                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                                <div class="flex items-center space-x-3">
+                                                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                                    </svg>
+                                                    <div>
+                                                        <p class="font-semibold text-gray-900">{{ $doc['name'] }}</p>
+                                                        <p class="text-sm text-gray-500">{{ $doc['temp_name'] }}</p>
+                                                    </div>
+                                                </div>
+                                                <button type="button" wire:click="removeCustomDocument({{ $index }})" class="text-red-600 hover:text-red-800 font-medium">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                <!-- Add new document form -->
+                                <div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
+                                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Document Name</label>
+                                            <input type="text" wire:model="newDocumentName" placeholder="e.g., Recommendation Letter" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('newDocumentName') border-red-500 @enderror">
+                                            @error('newDocumentName') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Choose File</label>
+                                            <input type="file" wire:model="newDocumentFile" accept=".pdf,.jpg,.jpeg,.png" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('newDocumentFile') border-red-500 @enderror">
+                                            @error('newDocumentFile') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                            <div wire:loading wire:target="newDocumentFile" class="text-sm text-blue-600 mt-1">Uploading...</div>
+                                        </div>
+                                    </div>
+                                    <button type="button" wire:click="addCustomDocument" wire:loading.attr="disabled" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-50">
+                                        <span wire:loading.remove wire:target="addCustomDocument">+ Add Document</span>
+                                        <span wire:loading wire:target="addCustomDocument">Adding...</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 

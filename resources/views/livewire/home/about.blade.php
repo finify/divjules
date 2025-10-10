@@ -176,7 +176,7 @@ class extends Component {
     </section>
 
     <!-- Global Presence -->
-    <section class="py-20 px-4 bg-gray-50">
+    {{-- <section class="py-20 px-4 bg-gray-50">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Global Presence</h2>
@@ -233,7 +233,7 @@ class extends Component {
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- Accreditations -->
     <section class="py-20 px-4 bg-white">

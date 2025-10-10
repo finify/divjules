@@ -31,7 +31,7 @@ use function Livewire\Volt\{state};
                 <!-- CTA Buttons -->
                 <div class="hidden md:flex space-x-4">
                     <a href="{{ route('home.contact') }}" class="px-4 py-2 text-purple-600 border border-purple-600 rounded-lg hover:bg-purple-50 transition">Free Consultation</a>
-                    <a href="{{ route('home.contact') }}" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">Apply Now</a>
+                    <a href="{{ route('home.apply') }}" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">Apply Now</a>
                 </div>
 
                 <!-- Mobile Menu Button & Book Consultation -->
