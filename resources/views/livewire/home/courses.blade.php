@@ -195,7 +195,7 @@ class extends Component {
                         <!-- Course Header -->
                         <div class="p-6 bg-gradient-to-r from-{{ $course->courseCategory->color ?? 'purple' }}-500 to-{{ $course->courseCategory->color ?? 'indigo' }}-500" style="background: linear-gradient(to right, {{ $course->courseCategory->color ?? '#9333ea' }}, {{ $course->courseCategory->color ?? '#6366f1' }});">
                             <div class="flex items-start justify-between mb-4">
-                                <span class="px-3 py-1 bg-white bg-opacity-20 text-white rounded-full text-sm font-semibold">
+                                <span class="px-3 py-1 bg-white bg-opacity-20 text-black rounded-full text-sm font-semibold">
                                     {{ ucfirst($course->level) }}
                                 </span>
                                 @if($course->is_featured)
