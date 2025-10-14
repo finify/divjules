@@ -484,8 +484,11 @@ class extends Component {
                 </div>
             @endif
 
-            <!-- Add Review Button -->
-            <div class="text-center">
+            <!-- Action Buttons -->
+            <div class="text-center flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{{ route('home.reviews') }}" class="inline-block px-8 py-4 bg-white text-purple-600 border-2 border-purple-600 rounded-lg font-bold text-lg hover:bg-purple-50 transition shadow-lg transform hover:scale-105">
+                    <i class="fas fa-comments mr-2"></i>See All Reviews
+                </a>
                 <a href="{{ route('home.submit-review') }}" class="inline-block px-8 py-4 bg-purple-600 text-white rounded-lg font-bold text-lg hover:bg-purple-700 transition shadow-lg transform hover:scale-105">
                     <i class="fas fa-pen mr-2"></i>Share Your Experience
                 </a>
