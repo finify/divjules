@@ -158,11 +158,11 @@ if (document.getElementById('level-filter')) {
 
             // Update active button
             categoryButtons.forEach(btn => {
-                btn.classList.remove('bg-purple-600', 'text-white');
+                btn.classList.remove('bg-sky-700', 'text-white');
                 btn.classList.add('bg-gray-200', 'text-gray-700');
             });
             this.classList.remove('bg-gray-200', 'text-gray-700');
-            this.classList.add('bg-purple-600', 'text-white');
+            this.classList.add('bg-sky-700', 'text-white');
 
             // Filter courses
             if (category === 'all') {
@@ -191,11 +191,11 @@ if (document.querySelectorAll('.category-filter').length > 0) {
 
             // Update active button
             categoryFilters.forEach(btn => {
-                btn.classList.remove('bg-purple-600', 'text-white');
+                btn.classList.remove('bg-sky-700', 'text-white');
                 btn.classList.add('bg-gray-200', 'text-gray-700');
             });
             this.classList.remove('bg-gray-200', 'text-gray-700');
-            this.classList.add('bg-purple-600', 'text-white');
+            this.classList.add('bg-sky-700', 'text-white');
 
             // Filter blog posts
             blogCards.forEach(card => {
@@ -386,7 +386,7 @@ window.showSlide = function(n) {
 
     slides.forEach(slide => slide.classList.remove('active'));
     dots.forEach(dot => {
-        dot.classList.remove('bg-purple-600');
+        dot.classList.remove('bg-sky-700');
         dot.classList.add('bg-gray-300');
     });
 
@@ -395,7 +395,7 @@ window.showSlide = function(n) {
     }
     if (dots[currentSlide]) {
         dots[currentSlide].classList.remove('bg-gray-300');
-        dots[currentSlide].classList.add('bg-purple-600');
+        dots[currentSlide].classList.add('bg-sky-700');
     }
 }
 
@@ -528,7 +528,7 @@ window.slowDownUniSlider = function() {
         // Visual feedback
         const btn = event.target.closest('button');
         if (btn) {
-            btn.style.background = '#7c3aed';
+            btn.style.background = '#0369a1';
             btn.style.color = 'white';
             setTimeout(() => {
                 btn.style.background = '';
@@ -547,7 +547,7 @@ window.speedUpUniSlider = function() {
         // Visual feedback
         const btn = event.target.closest('button');
         if (btn) {
-            btn.style.background = '#7c3aed';
+            btn.style.background = '#0369a1';
             btn.style.color = 'white';
             setTimeout(() => {
                 btn.style.background = '';

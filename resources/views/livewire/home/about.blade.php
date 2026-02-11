@@ -12,7 +12,7 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-purple-600 to-indigo-600 pt-32 pb-16 px-4 mt-20">
+    <section class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] pt-32 pb-16 px-4 mt-20">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">About Divjules</h1>
             <p class="text-xl">Empowering students to achieve their global education dreams</p>
@@ -40,8 +40,8 @@ class extends Component {
     <section class="py-20 px-4 bg-white">
         <div class="max-w-7xl mx-auto">
             <div class="grid md:grid-cols-2 gap-12">
-                <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-12 rounded-2xl">
-                    <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center mb-6">
+                <div class="bg-gradient-to-br from-sky-50 to-sky-100 p-12 rounded-2xl">
+                    <div class="w-16 h-16 bg-sky-700 text-white rounded-full flex items-center justify-center mb-6">
                         <i class="fas fa-bullseye text-2xl"></i>
                     </div>
                     <h3 class="text-3xl font-bold mb-4">Our Mission</h3>
@@ -69,8 +69,8 @@ class extends Component {
 
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-white p-8 rounded-xl shadow-lg text-center">
-                    <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-handshake text-3xl text-purple-600"></i>
+                    <div class="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-handshake text-3xl text-sky-700"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">Integrity</h3>
                     <p class="text-gray-600">We maintain the highest standards of honesty and transparency in all our interactions with students and partners.</p>
@@ -109,8 +109,8 @@ class extends Component {
                 </div>
 
                 <div class="bg-white p-8 rounded-xl shadow-lg text-center">
-                    <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-heart text-3xl text-indigo-600"></i>
+                    <div class="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-heart text-3xl text-sky-700"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">Commitment</h3>
                     <p class="text-gray-600">We are dedicated to supporting our students throughout their entire educational journey.</p>
@@ -131,44 +131,44 @@ class extends Component {
                 <div class="text-center">
                     <img src="https://ui-avatars.com/api/?name=David+Jules&size=200&background=667eea&color=fff" alt="Team member" class="w-48 h-48 rounded-full mx-auto mb-4 shadow-lg">
                     <h3 class="text-xl font-bold mb-1">David Jules</h3>
-                    <p class="text-purple-600 font-semibold mb-2">CEO & Founder</p>
+                    <p class="text-sky-700 font-semibold mb-2">CEO & Founder</p>
                     <p class="text-gray-600 text-sm mb-4">15+ years in education consulting</p>
                     <div class="flex justify-center space-x-3">
-                        <a href="#" class="text-gray-400 hover:text-purple-600"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-purple-600"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
 
                 <div class="text-center">
                     <img src="https://ui-avatars.com/api/?name=Sarah+Mitchell&size=200&background=764ba2&color=fff" alt="Team member" class="w-48 h-48 rounded-full mx-auto mb-4 shadow-lg">
                     <h3 class="text-xl font-bold mb-1">Sarah Mitchell</h3>
-                    <p class="text-purple-600 font-semibold mb-2">Director of Operations</p>
+                    <p class="text-sky-700 font-semibold mb-2">Director of Operations</p>
                     <p class="text-gray-600 text-sm mb-4">12+ years in student services</p>
                     <div class="flex justify-center space-x-3">
-                        <a href="#" class="text-gray-400 hover:text-purple-600"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-purple-600"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
 
                 <div class="text-center">
                     <img src="https://ui-avatars.com/api/?name=James+Anderson&size=200&background=667eea&color=fff" alt="Team member" class="w-48 h-48 rounded-full mx-auto mb-4 shadow-lg">
                     <h3 class="text-xl font-bold mb-1">James Anderson</h3>
-                    <p class="text-purple-600 font-semibold mb-2">Head of Counselling</p>
+                    <p class="text-sky-700 font-semibold mb-2">Head of Counselling</p>
                     <p class="text-gray-600 text-sm mb-4">10+ years counselling experience</p>
                     <div class="flex justify-center space-x-3">
-                        <a href="#" class="text-gray-400 hover:text-purple-600"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-purple-600"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
 
                 <div class="text-center">
                     <img src="https://ui-avatars.com/api/?name=Emily+Chen&size=200&background=764ba2&color=fff" alt="Team member" class="w-48 h-48 rounded-full mx-auto mb-4 shadow-lg">
                     <h3 class="text-xl font-bold mb-1">Emily Chen</h3>
-                    <p class="text-purple-600 font-semibold mb-2">Partnerships Director</p>
+                    <p class="text-sky-700 font-semibold mb-2">Partnerships Director</p>
                     <p class="text-gray-600 text-sm mb-4">8+ years in university relations</p>
                     <div class="flex justify-center space-x-3">
-                        <a href="#" class="text-gray-400 hover:text-purple-600"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-purple-600"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
             </div>
@@ -185,49 +185,49 @@ class extends Component {
 
             <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow text-center">
-                    <i class="fas fa-map-marker-alt text-3xl text-purple-600 mb-3"></i>
+                    <i class="fas fa-map-marker-alt text-3xl text-sky-700 mb-3"></i>
                     <h3 class="font-bold text-lg mb-1">United Kingdom</h3>
                     <p class="text-gray-600 text-sm">London, Manchester</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow text-center">
-                    <i class="fas fa-map-marker-alt text-3xl text-purple-600 mb-3"></i>
+                    <i class="fas fa-map-marker-alt text-3xl text-sky-700 mb-3"></i>
                     <h3 class="font-bold text-lg mb-1">United States</h3>
                     <p class="text-gray-600 text-sm">New York, Los Angeles</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow text-center">
-                    <i class="fas fa-map-marker-alt text-3xl text-purple-600 mb-3"></i>
+                    <i class="fas fa-map-marker-alt text-3xl text-sky-700 mb-3"></i>
                     <h3 class="font-bold text-lg mb-1">Canada</h3>
                     <p class="text-gray-600 text-sm">Toronto, Vancouver</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow text-center">
-                    <i class="fas fa-map-marker-alt text-3xl text-purple-600 mb-3"></i>
+                    <i class="fas fa-map-marker-alt text-3xl text-sky-700 mb-3"></i>
                     <h3 class="font-bold text-lg mb-1">Australia</h3>
                     <p class="text-gray-600 text-sm">Sydney, Melbourne</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow text-center">
-                    <i class="fas fa-map-marker-alt text-3xl text-purple-600 mb-3"></i>
+                    <i class="fas fa-map-marker-alt text-3xl text-sky-700 mb-3"></i>
                     <h3 class="font-bold text-lg mb-1">India</h3>
                     <p class="text-gray-600 text-sm">Delhi, Mumbai, Bangalore</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow text-center">
-                    <i class="fas fa-map-marker-alt text-3xl text-purple-600 mb-3"></i>
+                    <i class="fas fa-map-marker-alt text-3xl text-sky-700 mb-3"></i>
                     <h3 class="font-bold text-lg mb-1">Singapore</h3>
                     <p class="text-gray-600 text-sm">Central Business District</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow text-center">
-                    <i class="fas fa-map-marker-alt text-3xl text-purple-600 mb-3"></i>
+                    <i class="fas fa-map-marker-alt text-3xl text-sky-700 mb-3"></i>
                     <h3 class="font-bold text-lg mb-1">UAE</h3>
                     <p class="text-gray-600 text-sm">Dubai, Abu Dhabi</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow text-center">
-                    <i class="fas fa-map-marker-alt text-3xl text-purple-600 mb-3"></i>
+                    <i class="fas fa-map-marker-alt text-3xl text-sky-700 mb-3"></i>
                     <h3 class="font-bold text-lg mb-1">Nigeria</h3>
                     <p class="text-gray-600 text-sm">Lagos, Abuja</p>
                 </div>
@@ -245,7 +245,7 @@ class extends Component {
 
             <div class="grid md:grid-cols-4 gap-8">
                 <div class="bg-gray-50 p-8 rounded-lg text-center">
-                    <i class="fas fa-certificate text-5xl text-purple-600 mb-4"></i>
+                    <i class="fas fa-certificate text-5xl text-sky-700 mb-4"></i>
                     <h3 class="font-bold mb-2">British Council</h3>
                     <p class="text-sm text-gray-600">Certified Education Agent</p>
                 </div>
@@ -272,13 +272,13 @@ class extends Component {
     </section>
 
     <!-- CTA Section -->
-    <section class="py-16 px-4 bg-gradient-to-r from-purple-600 to-indigo-600">
+    <section class="py-16 px-4 bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e]">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
             <p class="text-xl mb-8">Join thousands of successful students who trusted us with their education</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/contact" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Contact Us Today</a>
-                <a href="/apply" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition">Start Application</a>
+                <a href="/contact" class="px-8 py-4 bg-white text-sky-700 rounded-lg font-semibold hover:bg-gray-100 transition">Contact Us Today</a>
+                <a href="/apply" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-sky-700 transition">Start Application</a>
             </div>
         </div>
     </section>

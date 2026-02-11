@@ -76,7 +76,7 @@ class extends Component {
 <div>
     @if($submitted)
         <!-- Success Message -->
-        <section class="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-purple-50 to-indigo-50 py-32">
+        <section class="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-sky-50 to-[#e8eef5] py-32">
             <div class="max-w-2xl w-full bg-white rounded-2xl shadow-2xl p-12 text-center">
                 <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                     <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,14 +86,14 @@ class extends Component {
                 <h1 class="text-4xl font-bold text-gray-900 mb-4">Thank You!</h1>
                 <p class="text-xl text-gray-600 mb-8">Your review has been submitted successfully.</p>
 
-                <div class="bg-purple-50 border-2 border-purple-200 rounded-xl p-6 mb-8">
+                <div class="bg-sky-50 border-2 border-sky-200 rounded-xl p-6 mb-8">
                     <p class="text-gray-700 mb-2">Your review is pending approval and will be published on our website soon.</p>
                     <p class="text-sm text-gray-500">We appreciate you taking the time to share your experience!</p>
                 </div>
 
                 <div class="space-y-4">
                     <button wire:click="submitAnother"
-                       class="block w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-lg transition-colors">
+                       class="block w-full bg-sky-700 hover:bg-sky-800 text-white font-bold py-4 px-6 rounded-lg transition-colors">
                         Submit Another Review
                     </button>
                     <a href="{{ route('home.index') }}"
@@ -105,7 +105,7 @@ class extends Component {
         </section>
     @else
         <!-- Review Form -->
-        <section class="bg-gradient-to-r from-purple-600 to-indigo-600 pt-32 pb-16 px-4 mt-20">
+        <section class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] pt-32 pb-16 px-4 mt-20">
             <div class="max-w-7xl mx-auto text-center text-white">
                 <h1 class="text-5xl font-bold mb-4">Share Your Experience</h1>
                 <p class="text-xl">Help future students by sharing your journey with Divjules</p>
@@ -123,13 +123,13 @@ class extends Component {
                             <div class="grid md:grid-cols-2 gap-6 mb-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Your Name *</label>
-                                    <input type="text" wire:model="student_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('student_name') border-red-500 @enderror" placeholder="John Doe">
+                                    <input type="text" wire:model="student_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('student_name') border-red-500 @enderror" placeholder="John Doe">
                                     @error('student_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                                    <input type="email" wire:model="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('email') border-red-500 @enderror" placeholder="john@example.com">
+                                    <input type="email" wire:model="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('email') border-red-500 @enderror" placeholder="john@example.com">
                                     @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 </div>
                             </div>
@@ -137,13 +137,13 @@ class extends Component {
                             <div class="grid md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">University/College *</label>
-                                    <input type="text" wire:model="university" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('university') border-red-500 @enderror" placeholder="University of London">
+                                    <input type="text" wire:model="university" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('university') border-red-500 @enderror" placeholder="University of London">
                                     @error('university') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Course/Program (Optional)</label>
-                                    <input type="text" wire:model="course" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('course') border-red-500 @enderror" placeholder="MSc Computer Science">
+                                    <input type="text" wire:model="course" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('course') border-red-500 @enderror" placeholder="MSc Computer Science">
                                     @error('course') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 </div>
                             </div>
@@ -171,14 +171,14 @@ class extends Component {
 
                             <div class="mb-6">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Your Review * (Minimum 50 characters)</label>
-                                <textarea wire:model="review" rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('review') border-red-500 @enderror" placeholder="Share your experience with Divjules..."></textarea>
+                                <textarea wire:model="review" rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('review') border-red-500 @enderror" placeholder="Share your experience with Divjules..."></textarea>
                                 <p class="text-xs text-gray-500 mt-1">{{ strlen($review) }} characters</p>
                                 @error('review') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Your Photo (Optional)</label>
-                                <input type="file" wire:model="photo" accept="image/*" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('photo') border-red-500 @enderror">
+                                <input type="file" wire:model="photo" accept="image/*" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('photo') border-red-500 @enderror">
                                 <p class="text-xs text-gray-500 mt-1">Upload a professional photo (max 5MB)</p>
                                 @error('photo') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 <div wire:loading wire:target="photo" class="text-sm text-blue-600 mt-1">Uploading...</div>
@@ -186,7 +186,7 @@ class extends Component {
                                 @if ($photo)
                                     <div class="mt-4">
                                         <p class="text-sm text-gray-600 mb-2">Preview:</p>
-                                        <img src="{{ $photo->temporaryUrl() }}" class="w-32 h-32 rounded-full object-cover border-4 border-purple-200">
+                                        <img src="{{ $photo->temporaryUrl() }}" class="w-32 h-32 rounded-full object-cover border-4 border-sky-200">
                                     </div>
                                 @endif
                             </div>
@@ -194,7 +194,7 @@ class extends Component {
 
                         <!-- Submit Button -->
                         <div class="flex gap-4">
-                            <button type="submit" wire:loading.attr="disabled" class="flex-1 px-6 py-4 bg-purple-600 text-white rounded-lg font-bold text-lg hover:bg-purple-700 transition shadow-lg disabled:opacity-50">
+                            <button type="submit" wire:loading.attr="disabled" class="flex-1 px-6 py-4 bg-sky-700 text-white rounded-lg font-bold text-lg hover:bg-sky-800 transition shadow-lg disabled:opacity-50">
                                 <span wire:loading.remove wire:target="submit">
                                     <i class="fas fa-paper-plane mr-2"></i>Submit Review
                                 </span>

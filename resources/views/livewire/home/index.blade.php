@@ -43,10 +43,10 @@ class extends Component {
                         Expert guidance for your academic journey. Connect with top universities worldwide.
                     </p>
                     <div class="sliding-text flex flex-col sm:flex-row gap-4">
-                        <a href="/apply" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition text-center shadow-lg">
+                        <a href="/apply" class="px-8 py-4 bg-white text-sky-700 rounded-lg font-semibold hover:bg-gray-100 transition text-center shadow-lg">
                             Get Started
                         </a>
-                        <a href="/contact" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition text-center">
+                        <a href="/contact" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-sky-700 transition text-center">
                             Book Free Consultation
                         </a>
                     </div>
@@ -60,19 +60,19 @@ class extends Component {
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div>
-                    <div class="text-4xl font-bold text-purple-600 mb-2">150+</div>
+                    <div class="text-4xl font-bold text-sky-700 mb-2">150+</div>
                     <div class="text-gray-600">Partner Universities</div>
                 </div>
                 <div>
-                    <div class="text-4xl font-bold text-purple-600 mb-2">15+</div>
+                    <div class="text-4xl font-bold text-sky-700 mb-2">15+</div>
                     <div class="text-gray-600">Countries</div>
                 </div>
                 <div>
-                    <div class="text-4xl font-bold text-purple-600 mb-2">10,000+</div>
+                    <div class="text-4xl font-bold text-sky-700 mb-2">10,000+</div>
                     <div class="text-gray-600">Students Placed</div>
                 </div>
                 <div>
-                    <div class="text-4xl font-bold text-purple-600 mb-2">500+</div>
+                    <div class="text-4xl font-bold text-sky-700 mb-2">500+</div>
                     <div class="text-gray-600">Expert Counsellors</div>
                 </div>
             </div>
@@ -89,24 +89,24 @@ class extends Component {
 
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-university text-3xl text-purple-600"></i>
+                    <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-university text-3xl text-sky-700"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">Expert Guidance</h3>
                     <p class="text-gray-600">Our certified counsellors provide personalized advice to help you choose the right university and course.</p>
                 </div>
 
                 <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-globe text-3xl text-purple-600"></i>
+                    <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-globe text-3xl text-sky-700"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">Global Network</h3>
                     <p class="text-gray-600">Access to 150+ partner institutions across multiple countries for diverse opportunities.</p>
                 </div>
 
                 <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-hand-holding-heart text-3xl text-purple-600"></i>
+                    <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-hand-holding-heart text-3xl text-sky-700"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">End-to-End Support</h3>
                     <p class="text-gray-600">From application to visa assistance and pre-departure briefing, we're with you every step.</p>
@@ -130,7 +130,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Business & Management</h3>
                     <p class="text-gray-600 text-sm mb-4">MBA, Finance, Marketing</p>
-                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -139,7 +139,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Computing & IT</h3>
                     <p class="text-gray-600 text-sm mb-4">Computer Science, Data Science</p>
-                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -148,7 +148,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Engineering</h3>
                     <p class="text-gray-600 text-sm mb-4">Mechanical, Civil, Electrical</p>
-                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -157,16 +157,16 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Health Sciences</h3>
                     <p class="text-gray-600 text-sm mb-4">Medicine, Nursing, Pharmacy</p>
-                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
-                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-balance-scale text-2xl text-purple-600"></i>
+                    <div class="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-balance-scale text-2xl text-sky-700"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">Law</h3>
                     <p class="text-gray-600 text-sm mb-4">LLB, Corporate Law, International Law</p>
-                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -175,7 +175,7 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Arts & Humanities</h3>
                     <p class="text-gray-600 text-sm mb-4">Design, Media, Languages</p>
-                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
@@ -184,16 +184,16 @@ class extends Component {
                     </div>
                     <h3 class="text-xl font-bold mb-2">Science</h3>
                     <p class="text-gray-600 text-sm mb-4">Physics, Chemistry, Biology</p>
-                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
-                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-graduation-cap text-2xl text-indigo-600"></i>
+                    <div class="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-graduation-cap text-2xl text-[#1a1a4e]"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">Education</h3>
                     <p class="text-gray-600 text-sm mb-4">Teaching, Training, Development</p>
-                    <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Explore <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
             </div>
         </div>
@@ -249,7 +249,7 @@ class extends Component {
             </div>
 
             <div class="text-center mt-12">
-                <a href="/universities" class="inline-block px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">View All Universities</a>
+                <a href="/universities" class="inline-block px-8 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">View All Universities</a>
             </div>
         </div>
     </section>
@@ -264,25 +264,25 @@ class extends Component {
 
             <div class="grid md:grid-cols-4 gap-8">
                 <div class="text-center">
-                    <div class="w-20 h-20 bg-purple-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">1</div>
+                    <div class="w-20 h-20 bg-sky-700 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">1</div>
                     <h3 class="text-xl font-bold mb-2">Free Consultation</h3>
                     <p class="text-gray-600">Discuss your goals with our expert counsellors</p>
                 </div>
 
                 <div class="text-center">
-                    <div class="w-20 h-20 bg-purple-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">2</div>
+                    <div class="w-20 h-20 bg-sky-700 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">2</div>
                     <h3 class="text-xl font-bold mb-2">University Selection</h3>
                     <p class="text-gray-600">Choose from our partner institutions</p>
                 </div>
 
                 <div class="text-center">
-                    <div class="w-20 h-20 bg-purple-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">3</div>
+                    <div class="w-20 h-20 bg-sky-700 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">3</div>
                     <h3 class="text-xl font-bold mb-2">Application Support</h3>
                     <p class="text-gray-600">Complete guidance through the application process</p>
                 </div>
 
                 <div class="text-center">
-                    <div class="w-20 h-20 bg-purple-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">4</div>
+                    <div class="w-20 h-20 bg-sky-700 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">4</div>
                     <h3 class="text-xl font-bold mb-2">Visa & Departure</h3>
                     <p class="text-gray-600">Visa assistance and pre-departure orientation</p>
                 </div>
@@ -314,7 +314,7 @@ class extends Component {
                                     <img src="{{ $testimonial->display_thumbnail }}" alt="{{ $testimonial->student_name }}" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110 relative z-0">
                                     <div class="absolute inset-0  flex items-center justify-center z-10">
                                         <div class="w-20 h-20 bg-white bg-opacity-90 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-125">
-                                            <i class="fas fa-play text-purple-600 text-2xl ml-1"></i>
+                                            <i class="fas fa-play text-sky-700 text-2xl ml-1"></i>
                                         </div>
                                     </div>
                                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 z-20">
@@ -340,17 +340,17 @@ class extends Component {
 
                     <!-- Slider Navigation -->
                     @if($chunkedTestimonials->count() > 1)
-                    <button onclick="changeSlide(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white hover:bg-purple-600 text-purple-600 hover:text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300">
+                    <button onclick="changeSlide(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white hover:bg-sky-700 text-sky-700 hover:text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <button onclick="changeSlide(1)" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white hover:bg-purple-600 text-purple-600 hover:text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300">
+                    <button onclick="changeSlide(1)" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white hover:bg-sky-700 text-sky-700 hover:text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300">
                         <i class="fas fa-chevron-right"></i>
                     </button>
 
                     <!-- Dots -->
                     <div class="flex justify-center mt-8 space-x-2">
                         @foreach($chunkedTestimonials as $dotIndex => $chunk)
-                        <button onclick="setSlide({{ $dotIndex }})" class="slider-dot w-3 h-3 rounded-full {{ $dotIndex === 0 ? 'bg-purple-600' : 'bg-gray-300' }}"></button>
+                        <button onclick="setSlide({{ $dotIndex }})" class="slider-dot w-3 h-3 rounded-full {{ $dotIndex === 0 ? 'bg-sky-700' : 'bg-gray-300' }}"></button>
                         @endforeach
                     </div>
                     @endif
@@ -366,7 +366,7 @@ class extends Component {
                             <img src="{{ $testimonial->display_thumbnail }}" alt="{{ $testimonial->student_name }}" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110 relative z-0">
                             <div class="absolute inset-0 bg-none bg-opacity-40 flex items-center justify-center z-10">
                                 <div class="w-20 h-20 bg-white bg-opacity-90 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-125">
-                                    <i class="fas fa-play text-purple-600 text-2xl ml-1"></i>
+                                    <i class="fas fa-play text-sky-700 text-2xl ml-1"></i>
                                 </div>
                             </div>
                             <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 z-20">
@@ -394,10 +394,10 @@ class extends Component {
                 </div>
 
                 <!-- Mobile Navigation Arrows -->
-                <button onclick="scrollMobileTestimonials('left')" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white hover:bg-purple-600 text-purple-600 hover:text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-10">
+                <button onclick="scrollMobileTestimonials('left')" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white hover:bg-sky-700 text-sky-700 hover:text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-10">
                     <i class="fas fa-chevron-left"></i>
                 </button>
-                <button onclick="scrollMobileTestimonials('right')" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white hover:bg-purple-600 text-purple-600 hover:text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-10">
+                <button onclick="scrollMobileTestimonials('right')" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white hover:bg-sky-700 text-sky-700 hover:text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-10">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
@@ -415,7 +415,7 @@ class extends Component {
             </script>
 
             {{-- <div class="text-center mt-12">
-                <a href="contact.html" class="inline-block px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">Share Your Success Story</a>
+                <a href="contact.html" class="inline-block px-8 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">Share Your Success Story</a>
             </div> --}}
         </div>
     </section>
@@ -447,8 +447,8 @@ class extends Component {
                             @if($testimonial->photo)
                                 <img src="{{ $testimonial->photo_url }}" alt="{{ $testimonial->student_name }}" class="w-16 h-16 rounded-full object-cover mr-4">
                             @else
-                                <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mr-4">
-                                    <span class="text-2xl font-bold text-purple-600">{{ substr($testimonial->student_name, 0, 1) }}</span>
+                                <div class="w-16 h-16 rounded-full bg-sky-100 flex items-center justify-center mr-4">
+                                    <span class="text-2xl font-bold text-sky-700">{{ substr($testimonial->student_name, 0, 1) }}</span>
                                 </div>
                             @endif
                             <div>
@@ -486,10 +486,10 @@ class extends Component {
 
             <!-- Action Buttons -->
             <div class="text-center flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ route('home.reviews') }}" class="inline-block px-8 py-4 bg-white text-purple-600 border-2 border-purple-600 rounded-lg font-bold text-lg hover:bg-purple-50 transition shadow-lg transform hover:scale-105">
+                <a href="{{ route('home.reviews') }}" class="inline-block px-8 py-4 bg-white text-sky-700 border-2 border-sky-700 rounded-lg font-bold text-lg hover:bg-sky-50 transition shadow-lg transform hover:scale-105">
                     <i class="fas fa-comments mr-2"></i>See All Reviews
                 </a>
-                <a href="{{ route('home.submit-review') }}" class="inline-block px-8 py-4 bg-purple-600 text-white rounded-lg font-bold text-lg hover:bg-purple-700 transition shadow-lg transform hover:scale-105">
+                <a href="{{ route('home.submit-review') }}" class="inline-block px-8 py-4 bg-sky-700 text-white rounded-lg font-bold text-lg hover:bg-sky-800 transition shadow-lg transform hover:scale-105">
                     <i class="fas fa-pen mr-2"></i>Share Your Experience
                 </a>
             </div>
@@ -501,18 +501,18 @@ class extends Component {
         <!-- Background Image -->
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1600&q=80" alt="Students celebrating" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-900/95 to-indigo-900/95"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#1a1a4e]/95 to-[#0f0f2e]/95"></div>
         </div>
 
         <!-- Content -->
         <div class="relative z-10 max-w-4xl mx-auto text-center text-white">
             <h2 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">Ready to Start Your Journey?</h2>
-            <p class="text-xl md:text-2xl mb-10 text-purple-100">Book a free consultation with our expert counsellors today!</p>
+            <p class="text-xl md:text-2xl mb-10 text-sky-100">Book a free consultation with our expert counsellors today!</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/contact" class="px-10 py-5 bg-white text-purple-600 rounded-lg font-bold text-lg hover:bg-gray-100 transition shadow-2xl transform hover:scale-105">
+                <a href="/contact" class="px-10 py-5 bg-white text-sky-700 rounded-lg font-bold text-lg hover:bg-gray-100 transition shadow-2xl transform hover:scale-105">
                     <i class="fas fa-calendar-check mr-2"></i>Book Free Consultation
                 </a>
-                <a href="/apply" class="px-10 py-5 bg-transparent border-3 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:text-purple-600 transition shadow-2xl transform hover:scale-105">
+                <a href="/apply" class="px-10 py-5 bg-transparent border-3 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:text-sky-700 transition shadow-2xl transform hover:scale-105">
                     <i class="fas fa-paper-plane mr-2"></i>Apply Now
                 </a>
             </div>
@@ -521,15 +521,15 @@ class extends Component {
             <div class="mt-16 grid grid-cols-3 gap-8 max-w-3xl mx-auto">
                 <div class="text-center">
                     <div class="text-4xl font-bold mb-2">98%</div>
-                    <div class="text-sm text-purple-200">Success Rate</div>
+                    <div class="text-sm text-sky-200">Success Rate</div>
                 </div>
                 <div class="text-center">
                     <div class="text-4xl font-bold mb-2">10k+</div>
-                    <div class="text-sm text-purple-200">Students Placed</div>
+                    <div class="text-sm text-sky-200">Students Placed</div>
                 </div>
                 <div class="text-center">
                     <div class="text-4xl font-bold mb-2">150+</div>
-                    <div class="text-sm text-purple-200">Universities</div>
+                    <div class="text-sm text-sky-200">Universities</div>
                 </div>
             </div>
         </div>

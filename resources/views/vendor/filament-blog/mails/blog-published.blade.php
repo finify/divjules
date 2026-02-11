@@ -54,7 +54,7 @@
         .btn {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #0369a1;
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
@@ -65,7 +65,7 @@
         }
         .flash {
             text-align: center;
-            color: #007bff;
+            color: #0369a1;
         }
     </style>
 </head>

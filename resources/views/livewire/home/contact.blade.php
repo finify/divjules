@@ -86,7 +86,7 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-purple-600 to-indigo-600 pt-32 pb-16 px-4 mt-20">
+    <section class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] pt-32 pb-16 px-4 mt-20">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">Get in Touch</h1>
             <p class="text-xl">We're here to answer all your questions about studying abroad</p>
@@ -109,7 +109,7 @@ class extends Component {
                             </div>
                             <h3 class="text-2xl font-bold text-gray-900 mb-4">Message Sent Successfully!</h3>
                             <p class="text-gray-600 mb-6">Thank you for contacting us. We'll get back to you as soon as possible.</p>
-                            <button wire:click="$set('submitted', false)" class="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+                            <button wire:click="$set('submitted', false)" class="px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
                                 Send Another Message
                             </button>
                         </div>
@@ -126,31 +126,31 @@ class extends Component {
                             <div class="grid md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
-                                    <input type="text" wire:model.blur="first_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('first_name') border-red-500 @enderror">
+                                    <input type="text" wire:model.blur="first_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('first_name') border-red-500 @enderror">
                                     @error('first_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
-                                    <input type="text" wire:model.blur="last_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('last_name') border-red-500 @enderror">
+                                    <input type="text" wire:model.blur="last_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('last_name') border-red-500 @enderror">
                                     @error('last_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 </div>
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                                <input type="email" wire:model.blur="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('email') border-red-500 @enderror">
+                                <input type="email" wire:model.blur="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('email') border-red-500 @enderror">
                                 @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                                <input type="tel" wire:model.blur="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('phone') border-red-500 @enderror">
+                                <input type="tel" wire:model.blur="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('phone') border-red-500 @enderror">
                                 @error('phone') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Country *</label>
-                                <select wire:model.blur="country" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('country') border-red-500 @enderror">
+                                <select wire:model.blur="country" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('country') border-red-500 @enderror">
                                     <option value="">Select your country</option>
                                     <option value="United Kingdom">United Kingdom</option>
                                     <option value="United States">United States</option>
@@ -167,7 +167,7 @@ class extends Component {
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">I'm Interested In *</label>
-                                <select wire:model.blur="interest" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('interest') border-red-500 @enderror">
+                                <select wire:model.blur="interest" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('interest') border-red-500 @enderror">
                                     <option value="">Select an option</option>
                                     <option value="Undergraduate Programs">Undergraduate Programs</option>
                                     <option value="Postgraduate Programs">Postgraduate Programs</option>
@@ -181,7 +181,7 @@ class extends Component {
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Your Message *</label>
-                                <textarea wire:model.blur="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('message') border-red-500 @enderror"></textarea>
+                                <textarea wire:model.blur="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('message') border-red-500 @enderror"></textarea>
                                 @error('message') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
 
@@ -193,7 +193,7 @@ class extends Component {
                             </div>
                             @error('consent') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
 
-                            <button type="submit" wire:loading.attr="disabled" class="w-full px-8 py-4 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition disabled:opacity-50">
+                            <button type="submit" wire:loading.attr="disabled" class="w-full px-8 py-4 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition disabled:opacity-50">
                                 <span wire:loading.remove wire:target="submit">Send Message</span>
                                 <span wire:loading wire:target="submit">Sending...</span>
                             </button>
@@ -209,13 +209,13 @@ class extends Component {
                         <div class="space-y-6">
                             @foreach($contactDetails as $contact)
                                 <div class="flex items-start">
-                                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                        <i class="fas {{ str_replace('heroicon-o-', 'fa-', $contact->icon ?? 'fa-circle') }} text-purple-600"></i>
+                                    <div class="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                        <i class="fas {{ str_replace('heroicon-o-', 'fa-', $contact->icon ?? 'fa-circle') }} text-sky-700"></i>
                                     </div>
                                     <div>
                                         <h3 class="font-bold mb-1">{{ $contact->label }}</h3>
                                         @if($contact->is_clickable)
-                                            <a href="{{ $contact->link }}" class="text-gray-600 hover:text-purple-600 transition-colors">
+                                            <a href="{{ $contact->link }}" class="text-gray-600 hover:text-sky-700 transition-colors">
                                                 {{ $contact->value }}
                                             </a>
                                         @else
@@ -229,19 +229,19 @@ class extends Component {
                         <div class="mt-8 pt-8 border-t">
                             <h3 class="font-bold mb-4">Follow Us</h3>
                             <div class="flex space-x-4">
-                                <a href="#" class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition">
+                                <a href="#" class="w-12 h-12 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center hover:bg-sky-700 hover:text-white transition">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
-                                <a href="#" class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition">
+                                <a href="#" class="w-12 h-12 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center hover:bg-sky-700 hover:text-white transition">
                                     <i class="fab fa-twitter"></i>
                                 </a>
-                                <a href="#" class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition">
+                                <a href="#" class="w-12 h-12 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center hover:bg-sky-700 hover:text-white transition">
                                     <i class="fab fa-instagram"></i>
                                 </a>
-                                <a href="#" class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition">
+                                <a href="#" class="w-12 h-12 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center hover:bg-sky-700 hover:text-white transition">
                                     <i class="fab fa-linkedin-in"></i>
                                 </a>
-                                <a href="#" class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition">
+                                <a href="#" class="w-12 h-12 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center hover:bg-sky-700 hover:text-white transition">
                                     <i class="fab fa-youtube"></i>
                                 </a>
                             </div>
@@ -249,10 +249,10 @@ class extends Component {
                     </div>
 
                     <!-- Quick Links -->
-                    <div class="bg-gradient-to-br from-purple-600 to-indigo-600 p-8 rounded-xl shadow-lg text-white">
+                    <div class="bg-gradient-to-br from-[#1a1a4e] to-[#1a1a4e] p-8 rounded-xl shadow-lg text-white">
                         <h3 class="text-2xl font-bold mb-4">Book a Free Consultation</h3>
                         <p class="mb-6">Schedule a one-on-one session with our expert counsellors to discuss your study abroad plans.</p>
-                        <a href="/apply" class="inline-block px-6 py-3 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Book Now</a>
+                        <a href="/apply" class="inline-block px-6 py-3 bg-white text-sky-700 rounded-lg font-semibold hover:bg-gray-100 transition">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -271,18 +271,18 @@ class extends Component {
                 <!-- UK Office -->
                 <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-purple-600 text-white rounded-lg flex items-center justify-center mr-4">
+                        <div class="w-12 h-12 bg-sky-700 text-white rounded-lg flex items-center justify-center mr-4">
                             <i class="fas fa-building"></i>
                         </div>
                         <div>
                             <h3 class="font-bold text-xl">London, UK</h3>
-                            <span class="text-sm text-purple-600">Headquarters</span>
+                            <span class="text-sm text-sky-700">Headquarters</span>
                         </div>
                     </div>
                     <p class="text-gray-600 mb-2">123 Education Street</p>
                     <p class="text-gray-600 mb-2">London, WC1A 1AA</p>
                     <p class="text-gray-600 mb-4">United Kingdom</p>
-                    <p class="text-gray-700"><i class="fas fa-phone mr-2 text-purple-600"></i> +44 (0) 20 1234 5678</p>
+                    <p class="text-gray-700"><i class="fas fa-phone mr-2 text-sky-700"></i> +44 (0) 20 1234 5678</p>
                 </div>
 
                 <!-- USA Office -->
@@ -356,18 +356,18 @@ class extends Component {
                 <!-- Australia Office -->
                 <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-indigo-600 text-white rounded-lg flex items-center justify-center mr-4">
+                        <div class="w-12 h-12 bg-[#1a1a4e] text-white rounded-lg flex items-center justify-center mr-4">
                             <i class="fas fa-building"></i>
                         </div>
                         <div>
                             <h3 class="font-bold text-xl">Sydney, Australia</h3>
-                            <span class="text-sm text-indigo-600">Regional Office</span>
+                            <span class="text-sm text-[#1a1a4e]">Regional Office</span>
                         </div>
                     </div>
                     <p class="text-gray-600 mb-2">George Street</p>
                     <p class="text-gray-600 mb-2">Sydney, NSW 2000</p>
                     <p class="text-gray-600 mb-4">Australia</p>
-                    <p class="text-gray-700"><i class="fas fa-phone mr-2 text-indigo-600"></i> +61 2 1234 5678</p>
+                    <p class="text-gray-700"><i class="fas fa-phone mr-2 text-[#1a1a4e]"></i> +61 2 1234 5678</p>
                 </div>
             </div>
         </div>
@@ -410,7 +410,7 @@ class extends Component {
 
             <div class="text-center mt-12">
                 <p class="text-gray-600 mb-4">Still have questions?</p>
-                <a href="#contact-form" class="inline-block px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">Contact Us Now</a>
+                <a href="#contact-form" class="inline-block px-8 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">Contact Us Now</a>
             </div>
         </div>
     </section>

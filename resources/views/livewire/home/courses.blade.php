@@ -96,7 +96,7 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-purple-600 to-indigo-600 pt-32 pb-16 px-4 mt-20">
+    <section class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] pt-32 pb-16 px-4 mt-20">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">Explore Our Courses</h1>
             <p class="text-xl">Find the perfect program for your academic and career goals</p>
@@ -107,12 +107,12 @@ class extends Component {
     <div class="md:hidden sticky top-20 z-40 bg-white shadow-md px-4 py-3">
         <button
             wire:click="$toggle('showFilters')"
-            class="w-full flex items-center justify-between px-4 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+            class="w-full flex items-center justify-between px-4 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
             <span class="flex items-center">
                 <i class="fas fa-filter mr-2"></i>
                 Filters
                 @if($level || $category || $university || $search)
-                    <span class="ml-2 bg-white text-purple-600 text-xs px-2 py-1 rounded-full">
+                    <span class="ml-2 bg-white text-sky-700 text-xs px-2 py-1 rounded-full">
                         Active
                     </span>
                 @endif
@@ -132,13 +132,13 @@ class extends Component {
                         type="text"
                         wire:model.live.debounce.300ms="search"
                         placeholder="Search courses..."
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
                 </div>
 
                 <!-- Level -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Course Level</label>
-                    <select wire:model.live="level" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    <select wire:model.live="level" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
                         <option value="">All Levels</option>
                         <option value="undergraduate">Undergraduate</option>
                         <option value="postgraduate">Postgraduate</option>
@@ -150,7 +150,7 @@ class extends Component {
                 <!-- Category -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Field of Study</label>
-                    <select wire:model.live="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    <select wire:model.live="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
                         <option value="">All Fields</option>
                         @foreach($categories as $cat)
                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -161,7 +161,7 @@ class extends Component {
                 <!-- University -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">University</label>
-                    <select wire:model.live="university" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    <select wire:model.live="university" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
                         <option value="">All Universities</option>
                         @foreach($universities as $uni)
                             <option value="{{ $uni->id }}">{{ $uni->name }}</option>
@@ -193,7 +193,7 @@ class extends Component {
                     @foreach($courses as $course)
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                         <!-- Course Header -->
-                        <div class="p-6 bg-gradient-to-r from-{{ $course->courseCategory->color ?? 'purple' }}-500 to-{{ $course->courseCategory->color ?? 'indigo' }}-500" style="background: linear-gradient(to right, {{ $course->courseCategory->color ?? '#9333ea' }}, {{ $course->courseCategory->color ?? '#6366f1' }});">
+                        <div class="p-6 bg-gradient-to-r from-{{ $course->courseCategory->color ?? 'sky' }}-500 to-{{ $course->courseCategory->color ?? 'sky' }}-700" style="background: linear-gradient(to right, {{ $course->courseCategory->color ?? '#0369a1' }}, {{ $course->courseCategory->color ?? '#1a1a4e' }});">
                             <div class="flex items-start justify-between mb-4">
                                 <span class="px-3 py-1 bg-white bg-opacity-20 text-black rounded-full text-sm font-semibold">
                                     {{ ucfirst($course->level) }}
@@ -227,18 +227,18 @@ class extends Component {
                             <!-- Course Details -->
                             <div class="space-y-2 mb-4 pb-4 border-b">
                                 <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-clock mr-2 text-purple-600"></i>
+                                    <i class="fas fa-clock mr-2 text-sky-700"></i>
                                     {{ $course->duration }}
                                 </div>
                                 @if($course->tuition_fee)
                                     <div class="flex items-center text-sm text-gray-600">
-                                        <i class="fas fa-dollar-sign mr-2 text-purple-600"></i>
+                                        <i class="fas fa-dollar-sign mr-2 text-sky-700"></i>
                                         {{ $course->formatted_tuition_fee }}
                                     </div>
                                 @endif
                                 @if($course->mode_of_study)
                                     <div class="flex items-center text-sm text-gray-600">
-                                        <i class="fas fa-graduation-cap mr-2 text-purple-600"></i>
+                                        <i class="fas fa-graduation-cap mr-2 text-sky-700"></i>
                                         {{ $course->mode_of_study }}
                                     </div>
                                 @endif
@@ -246,10 +246,10 @@ class extends Component {
 
                             <!-- Actions -->
                             <div class="flex gap-2">
-                                <button class="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+                                <button class="flex-1 px-4 py-2 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
                                     View Details
                                 </button>
-                                <button class="px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition">
+                                <button class="px-4 py-2 border-2 border-sky-700 text-sky-700 rounded-lg font-semibold hover:bg-sky-50 transition">
                                     <i class="fas fa-bookmark"></i>
                                 </button>
                             </div>
@@ -267,7 +267,7 @@ class extends Component {
                     <i class="fas fa-book-open text-6xl text-gray-300 mb-4"></i>
                     <h3 class="text-2xl font-bold text-gray-700 mb-2">No Courses Found</h3>
                     <p class="text-gray-500 mb-4">Try adjusting your filters or search criteria</p>
-                    <button wire:click="clearFilters" class="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+                    <button wire:click="clearFilters" class="px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
                         Clear All Filters
                     </button>
                 </div>
@@ -288,13 +288,13 @@ class extends Component {
                 @foreach($categories as $cat)
                 <button
                     wire:click="$set('category', '{{ $cat->id }}')"
-                    class="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-purple-600 hover:shadow-lg transition-all duration-300 text-center group">
+                    class="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-sky-700 hover:shadow-lg transition-all duration-300 text-center group">
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: {{ $cat->color }}20;">
                         @if($cat->icon)
                             <i class="fas fa-{{ $cat->icon }} text-3xl" style="color: {{ $cat->color }};"></i>
                         @endif
                     </div>
-                    <h3 class="font-bold text-gray-800 mb-2 group-hover:text-purple-600">{{ $cat->name }}</h3>
+                    <h3 class="font-bold text-gray-800 mb-2 group-hover:text-sky-700">{{ $cat->name }}</h3>
                     <p class="text-sm text-gray-500">{{ $cat->courses_count ?? 0 }} courses</p>
                 </button>
                 @endforeach
@@ -304,11 +304,11 @@ class extends Component {
     @endif
 
     <!-- CTA Section -->
-    <section class="py-16 px-4 bg-gradient-to-r from-purple-600 to-indigo-600">
+    <section class="py-16 px-4 bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e]">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Need Help Choosing the Right Course?</h2>
             <p class="text-xl mb-8">Our expert counsellors are here to guide you</p>
-            <a href="/contact" class="inline-block px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Get Free Consultation</a>
+            <a href="/contact" class="inline-block px-8 py-4 bg-white text-sky-700 rounded-lg font-semibold hover:bg-gray-100 transition">Get Free Consultation</a>
         </div>
     </section>
 </div>

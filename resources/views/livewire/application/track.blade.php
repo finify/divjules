@@ -40,7 +40,7 @@ class extends Component {
 
 <div class="min-h-screen bg-gray-50">
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-purple-600 to-indigo-600 pt-32 pb-16 px-4 mt-20">
+    <section class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] pt-32 pb-16 px-4 mt-20">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">Track Your Application</h1>
             <p class="text-xl">Enter your application number to check the status</p>
@@ -60,7 +60,7 @@ class extends Component {
                             <input type="text"
                                    wire:model="application_number"
                                    placeholder="e.g., APP-2025-XXXXXXXX"
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('application_number') border-red-500 @enderror">
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('application_number') border-red-500 @enderror">
                             @error('application_number')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -74,7 +74,7 @@ class extends Component {
 
                         <button type="submit"
                                 wire:loading.attr="disabled"
-                                class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50">
+                                class="w-full bg-sky-700 hover:bg-sky-800 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50">
                             <span wire:loading.remove wire:target="searchApplication">Search Application</span>
                             <span wire:loading wire:target="searchApplication">Searching...</span>
                         </button>
@@ -83,7 +83,7 @@ class extends Component {
                     <div class="mt-8 pt-6 border-t border-gray-200 text-center">
                         <p class="text-sm text-gray-600">
                             Don't have an application number?
-                            <a href="{{ route('home.apply') }}" class="text-purple-600 hover:text-purple-700 font-semibold">Apply Now</a>
+                            <a href="{{ route('home.apply') }}" class="text-sky-700 hover:text-sky-800 font-semibold">Apply Now</a>
                         </p>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ class extends Component {
                 <!-- Application Details -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                     <!-- Header -->
-                    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-8 text-white">
+                    <div class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] p-8 text-white">
                         <div class="flex items-center justify-between mb-4">
                             <h2 class="text-3xl font-bold">Application Details</h2>
                             <button wire:click="resetSearch" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors">
@@ -104,7 +104,7 @@ class extends Component {
                     <!-- Application Stage Progress -->
                     <div class="p-8 bg-gray-50">
                         <h3 class="text-lg font-semibold mb-4">Current Stage</h3>
-                        <div class="bg-white rounded-lg p-6 border-l-4" style="border-color: {{ $application->applicationStage?->color ?? '#9333ea' }}">
+                        <div class="bg-white rounded-lg p-6 border-l-4" style="border-color: {{ $application->applicationStage?->color ?? '#0369a1' }}">
                             <div class="flex items-start justify-between">
                                 <div class="flex-1">
                                     <h4 class="text-xl font-bold text-gray-900 mb-2">
@@ -116,7 +116,7 @@ class extends Component {
                                 </div>
                                 <div class="ml-4">
                                     <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold text-white"
-                                          style="background-color: {{ $application->applicationStage?->color ?? '#9333ea' }}">
+                                          style="background-color: {{ $application->applicationStage?->color ?? '#0369a1' }}">
                                         {{ ucfirst($application->status) }}
                                     </span>
                                 </div>
@@ -191,7 +191,7 @@ class extends Component {
                                 Search Another Application
                             </button>
                             <a href="{{ route('home.index') }}"
-                               class="flex-1 text-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                               class="flex-1 text-center bg-sky-700 hover:bg-sky-800 text-white font-bold py-3 px-6 rounded-lg transition-colors">
                                 Return to Homepage
                             </a>
                         </div>
@@ -208,7 +208,7 @@ class extends Component {
             <div class="grid md:grid-cols-3 gap-6">
                 @foreach($contactDetails->take(3) as $contact)
                     <div class="text-center p-6">
-                        <svg class="w-12 h-12 mx-auto mb-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-sky-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             @if($contact->type === 'email')
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                             @elseif($contact->type === 'phone')
@@ -219,7 +219,7 @@ class extends Component {
                         </svg>
                         <h3 class="font-bold mb-2">{{ $contact->label }}</h3>
                         @if($contact->is_clickable)
-                            <a href="{{ $contact->link }}" class="text-gray-600 text-sm hover:text-purple-600 transition-colors">{{ $contact->value }}</a>
+                            <a href="{{ $contact->link }}" class="text-gray-600 text-sm hover:text-sky-700 transition-colors">{{ $contact->value }}</a>
                         @else
                             <p class="text-gray-600 text-sm">{{ $contact->value }}</p>
                         @endif

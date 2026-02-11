@@ -44,16 +44,16 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-purple-600 to-indigo-600 py-20 mt-20">
+    <section class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] py-20 mt-20">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center text-white">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">Student Reviews</h1>
-                <p class="text-xl text-purple-100 mb-6">See what our students have to say about their experience with Divjules</p>
+                <p class="text-xl text-sky-100 mb-6">See what our students have to say about their experience with Divjules</p>
 
                 @if($totalReviews > 0)
                 <div class="flex items-center justify-center gap-4 mt-8">
                     <div class="bg-white rounded-lg px-6 py-4 text-gray-800">
-                        <div class="text-4xl font-bold text-purple-600">{{ number_format($averageRating, 1) }}</div>
+                        <div class="text-4xl font-bold text-sky-700">{{ number_format($averageRating, 1) }}</div>
                         <div class="flex text-yellow-400 text-xl my-2">
                             @for($i = 0; $i < floor($averageRating); $i++)
                                 <i class="fas fa-star"></i>
@@ -80,12 +80,12 @@ class extends Component {
                 </div>
                 <div class="flex flex-wrap gap-2">
                     <button wire:click="$set('filterRating', null)"
-                            class="px-4 py-2 rounded-lg font-medium transition {{ $filterRating === null ? 'bg-purple-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100' }}">
+                            class="px-4 py-2 rounded-lg font-medium transition {{ $filterRating === null ? 'bg-sky-700 text-white' : 'bg-white text-gray-700 hover:bg-gray-100' }}">
                         All Reviews
                     </button>
                     @foreach([5, 4, 3, 2, 1] as $rating)
                         <button wire:click="$set('filterRating', {{ $rating }})"
-                                class="px-4 py-2 rounded-lg font-medium transition {{ $filterRating === $rating ? 'bg-purple-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100' }}">
+                                class="px-4 py-2 rounded-lg font-medium transition {{ $filterRating === $rating ? 'bg-sky-700 text-white' : 'bg-white text-gray-700 hover:bg-gray-100' }}">
                             <span class="flex items-center gap-2">
                                 {{ $rating }} <i class="fas fa-star text-yellow-400"></i>
                                 <span class="text-xs opacity-75">({{ $ratingCounts[$rating] }})</span>
@@ -109,8 +109,8 @@ class extends Component {
                             @if($testimonial->photo)
                                 <img src="{{ $testimonial->photo_url }}" alt="{{ $testimonial->student_name }}" class="w-16 h-16 rounded-full object-cover mr-4">
                             @else
-                                <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mr-4">
-                                    <span class="text-2xl font-bold text-purple-600">{{ substr($testimonial->student_name, 0, 1) }}</span>
+                                <div class="w-16 h-16 rounded-full bg-sky-100 flex items-center justify-center mr-4">
+                                    <span class="text-2xl font-bold text-sky-700">{{ substr($testimonial->student_name, 0, 1) }}</span>
                                 </div>
                             @endif
                             <div class="flex-1">
@@ -165,7 +165,7 @@ class extends Component {
                         @endif
                     </p>
                     @if($filterRating)
-                        <button wire:click="$set('filterRating', null)" class="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+                        <button wire:click="$set('filterRating', null)" class="px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
                             View All Reviews
                         </button>
                     @endif
@@ -175,15 +175,15 @@ class extends Component {
     </section>
 
     <!-- CTA Section -->
-    <section class="py-16 px-4 bg-gradient-to-r from-purple-600 to-indigo-600">
+    <section class="py-16 px-4 bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e]">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">Share Your Experience</h2>
-            <p class="text-xl text-purple-100 mb-8">Had a great experience with Divjules? Let others know!</p>
+            <p class="text-xl text-sky-100 mb-8">Had a great experience with Divjules? Let others know!</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ route('home.submit-review') }}" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-bold text-lg hover:bg-gray-100 transition shadow-lg transform hover:scale-105">
+                <a href="{{ route('home.submit-review') }}" class="px-8 py-4 bg-white text-sky-700 rounded-lg font-bold text-lg hover:bg-gray-100 transition shadow-lg transform hover:scale-105">
                     <i class="fas fa-pen mr-2"></i>Write a Review
                 </a>
-                <a href="/" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:text-purple-600 transition shadow-lg transform hover:scale-105">
+                <a href="/" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:text-sky-700 transition shadow-lg transform hover:scale-105">
                     <i class="fas fa-home mr-2"></i>Back to Home
                 </a>
             </div>

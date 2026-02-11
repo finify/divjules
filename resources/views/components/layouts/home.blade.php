@@ -31,7 +31,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%);
+            background: linear-gradient(135deg, rgba(26, 26, 78, 0.90) 0%, rgba(26, 26, 78, 0.90) 100%);
             z-index: 2;
         }
         .hero-content {
@@ -189,10 +189,10 @@
             border: 2px solid transparent;
         }
         .uni-nav-btn:hover {
-            background: #7c3aed;
+            background: #0369a1;
             color: white;
             transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 6px 12px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 6px 12px rgba(3, 105, 161, 0.3);
         }
         .uni-nav-btn.left {
             left: 10px;
@@ -232,6 +232,10 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+        }
+        /* Logo color filter to match dark navy theme */
+        .logo-themed {
+            filter: brightness(0) saturate(100%) invert(10%) sepia(60%) saturate(4000%) hue-rotate(226deg) brightness(70%) contrast(120%);
         }
 
          .card-hover {

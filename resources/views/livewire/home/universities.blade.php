@@ -99,7 +99,7 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-purple-600 to-indigo-600 pt-32 pb-16 px-4 mt-20">
+    <section class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] pt-32 pb-16 px-4 mt-20">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">Partner Universities</h1>
             <p class="text-xl">Explore world-class institutions across the globe</p>
@@ -110,12 +110,12 @@ class extends Component {
     <div class="md:hidden sticky top-20 z-40 bg-white shadow-md px-4 py-3">
         <button
             wire:click="$toggle('showFilters')"
-            class="w-full flex items-center justify-between px-4 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+            class="w-full flex items-center justify-between px-4 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
             <span class="flex items-center">
                 <i class="fas fa-filter mr-2"></i>
                 Filters
                 @if($country || $type || $ranking || $search)
-                    <span class="ml-2 bg-white text-purple-600 text-xs px-2 py-1 rounded-full">
+                    <span class="ml-2 bg-white text-sky-700 text-xs px-2 py-1 rounded-full">
                         Active
                     </span>
                 @endif
@@ -135,13 +135,13 @@ class extends Component {
                         type="text"
                         wire:model.live.debounce.300ms="search"
                         placeholder="Search universities..."
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
                 </div>
 
                 <!-- Country -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Country</label>
-                    <select wire:model.live="country" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    <select wire:model.live="country" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
                         <option value="">All Countries</option>
                         @foreach($countries as $key => $value)
                             <option value="{{ $key }}">{{ $value }}</option>
@@ -152,7 +152,7 @@ class extends Component {
                 <!-- Type -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">University Type</label>
-                    <select wire:model.live="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    <select wire:model.live="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
                         <option value="">All Types</option>
                         <option value="research">Research University</option>
                         <option value="public">Public University</option>
@@ -163,7 +163,7 @@ class extends Component {
                 <!-- Ranking -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Ranking</label>
-                    <select wire:model.live="ranking" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    <select wire:model.live="ranking" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
                         <option value="">All Rankings</option>
                         <option value="top100">Top 100</option>
                         <option value="top500">Top 500</option>
@@ -194,7 +194,7 @@ class extends Component {
                     @foreach($universities as $university)
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                         <!-- University Banner -->
-                        <div class="h-48 bg-gradient-to-r from-purple-500 to-indigo-500 relative">
+                        <div class="h-48 bg-gradient-to-r from-[#1a1a4e] to-[#2a2a5e] relative">
                             @if($university->banner_image_url)
                                 <img src="{{ $university->banner_image_url }}" alt="{{ $university->name }}" class="w-full h-full object-cover">
                             @endif
@@ -211,7 +211,7 @@ class extends Component {
                                 @if($university->logo_url)
                                     <img src="{{ $university->logo_url }}" alt="{{ $university->name }}" class="w-full h-full object-contain">
                                 @else
-                                    <i class="fas fa-university text-4xl text-purple-600"></i>
+                                    <i class="fas fa-university text-4xl text-sky-700"></i>
                                 @endif
                             </div>
                         </div>
@@ -239,7 +239,7 @@ class extends Component {
                             <!-- Stats -->
                             <div class="flex items-center justify-between text-sm text-gray-600 mb-4 pb-4 border-b">
                                 <div class="flex items-center">
-                                    <i class="fas fa-book mr-2 text-purple-600"></i>
+                                    <i class="fas fa-book mr-2 text-sky-700"></i>
                                     {{ $university->courses_count }} Courses
                                 </div>
                                 <div class="bg-gray-100 px-3 py-1 rounded-full text-xs font-semibold">
@@ -250,11 +250,11 @@ class extends Component {
                             <!-- Actions -->
                             <div class="flex gap-2">
                                 @if($university->website)
-                                    <a href="{{ $university->website }}" target="_blank" class="flex-1 text-center px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+                                    <a href="{{ $university->website }}" target="_blank" class="flex-1 text-center px-4 py-2 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
                                         Visit Website
                                     </a>
                                 @endif
-                                <button class="px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition">
+                                <button class="px-4 py-2 border-2 border-sky-700 text-sky-700 rounded-lg font-semibold hover:bg-sky-50 transition">
                                     <i class="fas fa-info-circle"></i>
                                 </button>
                             </div>
@@ -272,7 +272,7 @@ class extends Component {
                     <i class="fas fa-university text-6xl text-gray-300 mb-4"></i>
                     <h3 class="text-2xl font-bold text-gray-700 mb-2">No Universities Found</h3>
                     <p class="text-gray-500 mb-4">Try adjusting your filters or search criteria</p>
-                    <button wire:click="clearFilters" class="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+                    <button wire:click="clearFilters" class="px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
                         Clear All Filters
                     </button>
                 </div>
@@ -281,11 +281,11 @@ class extends Component {
     </section>
 
     <!-- CTA Section -->
-    <section class="py-16 px-4 bg-gradient-to-r from-purple-600 to-indigo-600">
+    <section class="py-16 px-4 bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e]">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Can't Find Your Ideal University?</h2>
             <p class="text-xl mb-8">Contact our expert counsellors for personalized recommendations</p>
-            <a href="/contact" class="inline-block px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Get Free Consultation</a>
+            <a href="/contact" class="inline-block px-8 py-4 bg-white text-sky-700 rounded-lg font-semibold hover:bg-gray-100 transition">Get Free Consultation</a>
         </div>
     </section>
 </div>

@@ -86,7 +86,7 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-purple-600 to-indigo-600 pt-32 pb-16 px-4 mt-20">
+    <section class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] pt-32 pb-16 px-4 mt-20">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">Blog & News</h1>
             <p class="text-xl">Stay updated with the latest insights, tips, and news about studying abroad</p>
@@ -100,13 +100,13 @@ class extends Component {
                 <div class="flex flex-wrap gap-3">
                     <button
                         wire:click="filterCategory('all')"
-                        class="px-6 py-2 rounded-lg font-semibold {{ !$category ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-purple-100' }}">
+                        class="px-6 py-2 rounded-lg font-semibold {{ !$category ? 'bg-sky-700 text-white' : 'bg-gray-200 text-gray-700 hover:bg-sky-100' }}">
                         All Posts
                     </button>
                     @foreach($categories as $cat)
                         <button
                             wire:click="filterCategory('{{ $cat->slug }}')"
-                            class="px-6 py-2 rounded-lg font-semibold {{ $category === $cat->slug ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-purple-100' }}">
+                            class="px-6 py-2 rounded-lg font-semibold {{ $category === $cat->slug ? 'bg-sky-700 text-white' : 'bg-gray-200 text-gray-700 hover:bg-sky-100' }}">
                             {{ $cat->name }}
                         </button>
                     @endforeach
@@ -115,7 +115,7 @@ class extends Component {
                     type="search"
                     wire:model.live.debounce.500ms="search"
                     placeholder="Search articles..."
-                    class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
             </div>
         </div>
     </section>
@@ -137,7 +137,7 @@ class extends Component {
                     <div class="p-8 flex flex-col justify-center">
                         <div class="flex items-center mb-4">
                             @if($featuredPost->categories->first())
-                                <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-semibold mr-3">
+                                <span class="px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-sm font-semibold mr-3">
                                     {{ $featuredPost->categories->first()->name }}
                                 </span>
                             @endif
@@ -158,7 +158,7 @@ class extends Component {
                                 <p class="font-semibold">{{ $featuredPost->user->name }}</p>
                             </div>
                         </div>
-                        <a href="{{ route('blog.show', $featuredPost->slug) }}" class="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">Read Full Article</a>
+                        <a href="{{ route('blog.show', $featuredPost->slug) }}" class="inline-block px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">Read Full Article</a>
                     </div>
                 </div>
             </div>
@@ -193,7 +193,7 @@ class extends Component {
                         <div class="p-6">
                             <div class="flex items-center mb-3">
                                 @if($post->categories->first())
-                                    <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-xs font-semibold mr-3">
+                                    <span class="px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-xs font-semibold mr-3">
                                         {{ $post->categories->first()->name }}
                                     </span>
                                 @endif
@@ -213,7 +213,7 @@ class extends Component {
                                     @endif
                                     <span class="text-sm font-semibold">{{ $post->user->name }}</span>
                                 </div>
-                                <a href="{{ route('blog.show', $post->slug) }}" class="text-purple-600 font-semibold hover:text-purple-700">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                                <a href="{{ route('blog.show', $post->slug) }}" class="text-sky-700 font-semibold hover:text-sky-800">Read More <i class="fas fa-arrow-right ml-1"></i></a>
                             </div>
                         </div>
                     </div>
@@ -231,7 +231,7 @@ class extends Component {
                     </div>
                     <h3 class="text-2xl font-bold text-gray-700 mb-2">No Articles Found</h3>
                     <p class="text-gray-600 mb-6">Try adjusting your search or filter criteria</p>
-                    <button wire:click="filterCategory('all')" class="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
+                    <button wire:click="filterCategory('all')" class="px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
                         View All Articles
                     </button>
                 </div>
@@ -240,13 +240,13 @@ class extends Component {
     </section>
 
     <!-- Newsletter Section -->
-    <section class="py-16 px-4 bg-gradient-to-r from-purple-600 to-indigo-600">
+    <section class="py-16 px-4 bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e]">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Subscribe to Our Newsletter</h2>
             <p class="text-xl mb-8">Get the latest articles, tips, and updates delivered to your inbox</p>
             <form class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
                 <input type="email" placeholder="Enter your email address" class="flex-1 px-6 py-4 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
-                <button type="submit" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Subscribe</button>
+                <button type="submit" class="px-8 py-4 bg-white text-sky-700 rounded-lg font-semibold hover:bg-gray-100 transition">Subscribe</button>
             </form>
         </div>
     </section>

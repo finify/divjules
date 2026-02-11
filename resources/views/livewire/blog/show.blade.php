@@ -29,7 +29,7 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-purple-600 to-indigo-600 pt-32 pb-16 px-4 mt-20">
+    <section class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] pt-32 pb-16 px-4 mt-20">
         <div class="max-w-4xl mx-auto text-center text-white">
             <div class="flex flex-wrap gap-2 items-center justify-center mb-4">
                 @foreach($post->categories as $category)
@@ -81,7 +81,7 @@ class extends Component {
                 <h3 class="text-lg font-semibold mb-4">Tags</h3>
                 <div class="flex flex-wrap gap-2">
                     @foreach($post->tags as $tag)
-                        <a href="{{ route('home.blog') }}?tag={{ $tag->slug }}" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-purple-100 hover:text-purple-600 transition">
+                        <a href="{{ route('home.blog') }}?tag={{ $tag->slug }}" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-sky-100 hover:text-sky-700 transition">
                             #{{ $tag->name }}
                         </a>
                     @endforeach
@@ -90,7 +90,7 @@ class extends Component {
             @endif
 
             <!-- Author Bio -->
-            <div class="mt-12 p-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl">
+            <div class="mt-12 p-8 bg-gradient-to-r from-sky-50 to-[#e8eef5] rounded-xl">
                 <div class="flex items-start gap-6">
                     @if($post->user->profile_photo_path)
                         <img src="{{ asset('storage/' . $post->user->profile_photo_path) }}" alt="{{ $post->user->name }}" class="w-20 h-20 rounded-full">
@@ -133,7 +133,7 @@ class extends Component {
                     <div class="p-6">
                         <div class="flex items-center mb-3">
                             @if($relatedPost->categories->first())
-                                <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-xs font-semibold mr-3">
+                                <span class="px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-xs font-semibold mr-3">
                                     {{ $relatedPost->categories->first()->name }}
                                 </span>
                             @endif
@@ -144,7 +144,7 @@ class extends Component {
                         </div>
                         <h3 class="text-xl font-bold mb-3">{{ $relatedPost->title }}</h3>
                         <p class="text-gray-600 mb-4">{{ $relatedPost->sub_title ?? Str::limit(strip_tags($relatedPost->body), 100) }}</p>
-                        <a href="{{ route('blog.show', $relatedPost->slug) }}" class="text-purple-600 font-semibold hover:text-purple-700">
+                        <a href="{{ route('blog.show', $relatedPost->slug) }}" class="text-sky-700 font-semibold hover:text-sky-800">
                             Read More <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                     </div>
@@ -155,13 +155,13 @@ class extends Component {
     </section>
 
     <!-- Newsletter Section -->
-    <section class="py-16 px-4 bg-gradient-to-r from-purple-600 to-indigo-600">
+    <section class="py-16 px-4 bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e]">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Subscribe to Our Newsletter</h2>
             <p class="text-xl mb-8">Get the latest articles, tips, and updates delivered to your inbox</p>
             <form class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
                 <input type="email" placeholder="Enter your email address" class="flex-1 px-6 py-4 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
-                <button type="submit" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Subscribe</button>
+                <button type="submit" class="px-8 py-4 bg-white text-sky-700 rounded-lg font-semibold hover:bg-gray-100 transition">Subscribe</button>
             </form>
         </div>
     </section>

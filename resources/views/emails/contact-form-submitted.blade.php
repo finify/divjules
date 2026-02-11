@@ -14,7 +14,7 @@
             padding: 20px;
         }
         .header {
-            background: linear-gradient(135deg, #9333ea 0%, #4f46e5 100%);
+            background: linear-gradient(135deg, #0369a1 0%, #1a1a4e 100%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -30,7 +30,7 @@
             background: white;
             padding: 15px;
             border-radius: 8px;
-            border-left: 4px solid #9333ea;
+            border-left: 4px solid #0369a1;
         }
         .field-label {
             font-weight: bold;
@@ -58,7 +58,7 @@
         }
         .button {
             display: inline-block;
-            background: #9333ea;
+            background: #0369a1;
             color: white;
             padding: 12px 30px;
             text-decoration: none;
@@ -82,7 +82,7 @@
         <div class="field">
             <div class="field-label">Email</div>
             <div class="field-value">
-                <a href="mailto:{{ $contactMessage->email }}" style="color: #9333ea;">{{ $contactMessage->email }}</a>
+                <a href="mailto:{{ $contactMessage->email }}" style="color: #0369a1;">{{ $contactMessage->email }}</a>
             </div>
         </div>
 
@@ -90,7 +90,7 @@
         <div class="field">
             <div class="field-label">Phone</div>
             <div class="field-value">
-                <a href="tel:{{ $contactMessage->phone }}" style="color: #9333ea;">{{ $contactMessage->phone }}</a>
+                <a href="tel:{{ $contactMessage->phone }}" style="color: #0369a1;">{{ $contactMessage->phone }}</a>
             </div>
         </div>
         @endif
