@@ -420,6 +420,7 @@ class extends Component {
         </div>
     </section>
     @endif
+    
 
     <!-- Video Modal -->
     <div id="videoModal" class="video-modal">
