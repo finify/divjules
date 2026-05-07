@@ -2,12 +2,19 @@
 
 use Livewire\Volt\Component;
 use Livewire\Attributes\{Layout, Title};
+use App\Models\TeamMember;
+use Illuminate\Support\Facades\Storage;
 
-new 
+new
 #[Layout('components.layouts.home')]
-#[Title('Home')]
+#[Title('About Us')]
 class extends Component {
-    //
+    public $teamMembers = [];
+
+    public function mount(): void
+    {
+        $this->teamMembers = TeamMember::active()->ordered()->get();
+    }
 }; ?>
 
 <div>
@@ -120,6 +127,7 @@ class extends Component {
     </section>
 
     <!-- Our Team -->
+    @if($teamMembers->isNotEmpty())
     <section class="py-20 px-4 bg-white">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
@@ -128,52 +136,32 @@ class extends Component {
             </div>
 
             <div class="grid md:grid-cols-4 gap-8">
+                @foreach($teamMembers as $member)
                 <div class="text-center">
-                    <img src="https://ui-avatars.com/api/?name=David+Jules&size=200&background=667eea&color=fff" alt="Team member" class="w-48 h-48 rounded-full mx-auto mb-4 shadow-lg">
-                    <h3 class="text-xl font-bold mb-1">David Jules</h3>
-                    <p class="text-sky-700 font-semibold mb-2">CEO & Founder</p>
-                    <p class="text-gray-600 text-sm mb-4">15+ years in education consulting</p>
+                    @if($member->photo)
+                        <img src="{{ Storage::url($member->photo) }}" alt="{{ $member->name }}" class="w-48 h-48 rounded-full mx-auto mb-4 shadow-lg object-cover">
+                    @else
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode($member->name) }}&size=200&background=667eea&color=fff" alt="{{ $member->name }}" class="w-48 h-48 rounded-full mx-auto mb-4 shadow-lg">
+                    @endif
+                    <h3 class="text-xl font-bold mb-1">{{ $member->name }}</h3>
+                    <p class="text-sky-700 font-semibold mb-2">{{ $member->role }}</p>
+                    @if($member->bio)
+                        <p class="text-gray-600 text-sm mb-4">{{ $member->bio }}</p>
+                    @endif
                     <div class="flex justify-center space-x-3">
-                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-twitter"></i></a>
+                        @if($member->linkedin_url)
+                            <a href="{{ $member->linkedin_url }}" target="_blank" rel="noopener" class="text-gray-400 hover:text-sky-700"><i class="fab fa-linkedin"></i></a>
+                        @endif
+                        @if($member->twitter_url)
+                            <a href="{{ $member->twitter_url }}" target="_blank" rel="noopener" class="text-gray-400 hover:text-sky-700"><i class="fab fa-twitter"></i></a>
+                        @endif
                     </div>
                 </div>
-
-                <div class="text-center">
-                    <img src="https://ui-avatars.com/api/?name=Sarah+Mitchell&size=200&background=764ba2&color=fff" alt="Team member" class="w-48 h-48 rounded-full mx-auto mb-4 shadow-lg">
-                    <h3 class="text-xl font-bold mb-1">Sarah Mitchell</h3>
-                    <p class="text-sky-700 font-semibold mb-2">Director of Operations</p>
-                    <p class="text-gray-600 text-sm mb-4">12+ years in student services</p>
-                    <div class="flex justify-center space-x-3">
-                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-
-                <div class="text-center">
-                    <img src="https://ui-avatars.com/api/?name=James+Anderson&size=200&background=667eea&color=fff" alt="Team member" class="w-48 h-48 rounded-full mx-auto mb-4 shadow-lg">
-                    <h3 class="text-xl font-bold mb-1">James Anderson</h3>
-                    <p class="text-sky-700 font-semibold mb-2">Head of Counselling</p>
-                    <p class="text-gray-600 text-sm mb-4">10+ years counselling experience</p>
-                    <div class="flex justify-center space-x-3">
-                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-
-                <div class="text-center">
-                    <img src="https://ui-avatars.com/api/?name=Emily+Chen&size=200&background=764ba2&color=fff" alt="Team member" class="w-48 h-48 rounded-full mx-auto mb-4 shadow-lg">
-                    <h3 class="text-xl font-bold mb-1">Emily Chen</h3>
-                    <p class="text-sky-700 font-semibold mb-2">Partnerships Director</p>
-                    <p class="text-gray-600 text-sm mb-4">8+ years in university relations</p>
-                    <div class="flex justify-center space-x-3">
-                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-sky-700"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
+    @endif
 
     <!-- Global Presence -->
     {{-- <section class="py-20 px-4 bg-gray-50">

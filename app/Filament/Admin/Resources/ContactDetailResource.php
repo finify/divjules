@@ -152,6 +152,8 @@ class ContactDetailResource extends Resource
             'index' => Pages\ListContactDetails::route('/'),
             'create' => Pages\CreateContactDetail::route('/create'),
             'edit' => Pages\EditContactDetail::route('/{record}/edit'),
+            'whatsapp' => Pages\WhatsappSettings::route('/whatsapp-settings'),
+            'social'   => Pages\SocialMediaSettings::route('/social-media-settings'),
         ];
     }
 }

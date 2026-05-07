@@ -260,10 +260,11 @@
         <livewire:home.layout.footer />
 
 
-   
+    <x-whatsapp-button />
+
     @livewireScripts
     @stack('scripts')
-    
+
 </body>
 
 </html>

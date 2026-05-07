@@ -35,5 +35,17 @@ class AppServiceProvider extends ServiceProvider
 
         // Register view composer for contact details
         \Illuminate\Support\Facades\View::composer('*', \App\View\Composers\ContactDetailsComposer::class);
+
+        // Explicitly register the WhatsApp settings Livewire component so it is
+        // always available regardless of Filament panel boot order.
+        \Livewire\Livewire::component(
+            'app.filament.admin.resources.contact-detail-resource.pages.whatsapp-settings',
+            \App\Filament\Admin\Resources\ContactDetailResource\Pages\WhatsappSettings::class
+        );
+
+        \Livewire\Livewire::component(
+            'app.filament.admin.resources.contact-detail-resource.pages.social-media-settings',
+            \App\Filament\Admin\Resources\ContactDetailResource\Pages\SocialMediaSettings::class
+        );
     }
 }
