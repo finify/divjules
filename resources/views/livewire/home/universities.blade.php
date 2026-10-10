@@ -99,7 +99,7 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] pt-32 pb-16 px-4 mt-20">
+    <section class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">Partner Universities</h1>
             <p class="text-xl">Explore world-class institutions across the globe</p>
@@ -281,7 +281,7 @@ class extends Component {
     </section>
 
     <!-- CTA Section -->
-    <section class="py-16 px-4 bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e]">
+    <section class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Can't Find Your Ideal University?</h2>
             <p class="text-xl mb-8">Contact our expert counsellors for personalized recommendations</p>

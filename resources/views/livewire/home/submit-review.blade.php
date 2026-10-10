@@ -105,7 +105,7 @@ class extends Component {
         </section>
     @else
         <!-- Review Form -->
-        <section class="bg-gradient-to-r from-[#1a1a4e] to-[#1a1a4e] pt-32 pb-16 px-4 mt-20">
+        <section class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
             <div class="max-w-7xl mx-auto text-center text-white">
                 <h1 class="text-5xl font-bold mb-4">Share Your Experience</h1>
                 <p class="text-xl">Help future students by sharing your journey with Divjules</p>

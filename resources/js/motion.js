@@ -1,0 +1,305 @@
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine = () => window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const EASE = 'expo.out';
+
+/* ---------------------------------------------------------------
+   Header: scrolled state, hide on scroll down, scroll progress bar
+---------------------------------------------------------------- */
+function initNav() {
+    const nav = document.querySelector('[data-site-nav]');
+    const bar = document.querySelector('.scroll-progress');
+    if (!nav) return;
+    let last = window.scrollY;
+    const onScroll = () => {
+        const y = window.scrollY;
+        nav.classList.toggle('is-scrolled', y > 8);
+        // transparent header with light text while it sits over a navy page hero
+        const first = document.querySelector('main > div > section, main > section');
+        nav.classList.toggle('on-dark', !!first?.classList.contains('page-hero') && y < first.offsetHeight - 80);
+        const menuOpen = !document.getElementById('mobile-menu')?.classList.contains('hidden');
+        // pages with sticky filter bars keep the header pinned so the bars never float under a gap
+        const canHide = !document.querySelector('main .sticky');
+        if (canHide) nav.classList.toggle('is-hidden', y > 300 && y > last + 4 && !menuOpen);
+        if (y < last - 4) nav.classList.remove('is-hidden');
+        last = y;
+        if (bar) {
+            const max = document.documentElement.scrollHeight - innerHeight;
+            bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+        }
+    };
+    window.removeEventListener('scroll', initNav.handler);
+    initNav.handler = onScroll;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+}
+
+/* ---------------------------------------------------------------
+   Mobile menu with staggered links
+---------------------------------------------------------------- */
+function initMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    if (!btn || !menu || btn.dataset.bound) return;
+    btn.dataset.bound = '1';
+    const icon = btn.querySelector('i');
+    const set = (open) => {
+        btn.setAttribute('aria-expanded', open);
+        icon.className = open ? 'fas fa-xmark' : 'fas fa-bars';
+        if (open) {
+            menu.classList.remove('hidden');
+            if (!reduce()) {
+                gsap.fromTo(menu, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 0.5, ease: EASE });
+                gsap.fromTo(menu.querySelectorAll('.mobile-link, .btn'), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.04, ease: EASE, delay: 0.05 });
+            }
+        } else {
+            menu.classList.add('hidden');
+        }
+    };
+    btn.addEventListener('click', (e) => { e.stopPropagation(); set(menu.classList.contains('hidden')); });
+    document.addEventListener('click', (e) => {
+        if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !btn.contains(e.target)) set(false);
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+}
+
+/* ---------------------------------------------------------------
+   Split headline into words that rise in
+---------------------------------------------------------------- */
+function splitWords(el) {
+    if (el.dataset.splitDone) return el.querySelectorAll('.split-line > span');
+    el.dataset.splitDone = '1';
+    const walk = (node) => {
+        [...node.childNodes].forEach((child) => {
+            if (child.nodeType === 3) {
+                const frag = document.createDocumentFragment();
+                child.textContent.split(/(\s+)/).forEach((part) => {
+                    if (!part) return;
+                    if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+                    const outer = document.createElement('span');
+                    outer.className = 'split-line';
+                    outer.style.display = 'inline-block';
+                    const inner = document.createElement('span');
+                    inner.textContent = part;
+                    outer.appendChild(inner);
+                    frag.appendChild(outer);
+                });
+                child.replaceWith(frag);
+            } else if (child.nodeType === 1 && !child.matches('.word-swap, i, br')) {
+                walk(child);
+            }
+        });
+    };
+    walk(el);
+    return el.querySelectorAll('.split-line > span');
+}
+
+function initSplit() {
+    document.querySelectorAll('[data-split], .page-hero h1').forEach((el) => {
+        if (el.dataset.splitAnimated) return;
+        el.dataset.splitAnimated = '1';
+        const words = splitWords(el);
+        if (reduce()) return;
+        gsap.fromTo(words, { yPercent: 115, rotate: 4 }, { yPercent: 0, rotate: 0, duration: 1.1, ease: EASE, stagger: 0.05, delay: Number(el.dataset.delay || 0.1) });
+    });
+    document.querySelectorAll('.page-hero h1 ~ p, .page-hero h1 + *').forEach((el) => {
+        if (el.dataset.introDone || reduce()) return;
+        el.dataset.introDone = '1';
+        gsap.from(el, { y: 20, opacity: 0, duration: 0.9, ease: EASE, delay: 0.45 });
+    });
+}
+
+/* ---------------------------------------------------------------
+   Scroll reveals
+   - explicit: [data-reveal] (optionally grouped by [data-reveal-group])
+   - automatic: headings / grid items / images inside inner-page sections
+---------------------------------------------------------------- */
+function initReveals() {
+    if (reduce()) return;
+    const explicit = gsap.utils.toArray('[data-reveal]:not([data-revealed])');
+    explicit.forEach((el) => el.setAttribute('data-revealed', ''));
+    ScrollTrigger.batch(explicit, {
+        start: 'top 90%',
+        once: true,
+        onEnter: (batch) => gsap.fromTo(batch,
+            { opacity: 0, y: (i, el) => Number(el.dataset.revealY || 36), scale: (i, el) => (el.dataset.reveal === 'scale' ? 0.94 : 1) },
+            { opacity: 1, y: 0, scale: 1, duration: 1, ease: EASE, stagger: 0.08, clearProps: 'transform' }),
+    });
+
+    // Automatic reveals for pages that weren't hand-annotated
+    const auto = [];
+    document.querySelectorAll('main section:not(.page-hero):not([data-no-auto])').forEach((section) => {
+        if (section.querySelector('[data-reveal]')) return;
+        section.querySelectorAll('h2, .grid > *, form, img, .card-hover, table').forEach((el) => {
+            if (el.closest('[data-auto-revealed]') || el.closest('.hidden') || el.dataset.autoRevealed) return;
+            el.dataset.autoRevealed = '';
+            auto.push(el);
+        });
+    });
+    auto.forEach((el) => {
+        if (el.getBoundingClientRect().top < innerHeight * 0.95) return; // already on screen: leave it be
+        gsap.set(el, { opacity: 0, y: 32 });
+    });
+    ScrollTrigger.batch(auto.filter((el) => el.getBoundingClientRect().top >= innerHeight * 0.95), {
+        start: 'top 92%',
+        once: true,
+        onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.9, ease: EASE, stagger: 0.07, clearProps: 'transform,opacity' }),
+    });
+}
+
+/* ---------------------------------------------------------------
+   Count-up numbers: <span data-count="10000" data-suffix="+">
+---------------------------------------------------------------- */
+function initCounters() {
+    document.querySelectorAll('[data-count]:not([data-counted])').forEach((el) => {
+        el.setAttribute('data-counted', '');
+        const end = Number(el.dataset.count);
+        const suffix = el.dataset.suffix || '';
+        const fmt = (v) => Math.round(v).toLocaleString() + suffix;
+        if (reduce()) { el.textContent = fmt(end); return; }
+        el.textContent = fmt(0);
+        const o = { v: 0 };
+        ScrollTrigger.create({
+            trigger: el, start: 'top 92%', once: true,
+            onEnter: () => gsap.to(o, { v: end, duration: 2, ease: 'power3.out', onUpdate: () => (el.textContent = fmt(o.v)) }),
+        });
+    });
+}
+
+/* ---------------------------------------------------------------
+   Parallax: [data-speed="0.2"] moves against scroll
+---------------------------------------------------------------- */
+function initParallax() {
+    if (reduce()) return;
+    document.querySelectorAll('[data-speed]:not([data-par])').forEach((el) => {
+        el.setAttribute('data-par', '');
+        const s = Number(el.dataset.speed);
+        gsap.fromTo(el, { y: () => -s * 120 }, { y: () => s * 120, ease: 'none', scrollTrigger: { trigger: el.closest('section') || el, start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } });
+    });
+}
+
+/* ---------------------------------------------------------------
+   Pointer interactions: magnetic buttons, 3D tilt cards, spotlight
+---------------------------------------------------------------- */
+function initPointer() {
+    if (!fine() || reduce()) return;
+    document.querySelectorAll('[data-magnetic]:not([data-mag])').forEach((el) => {
+        el.setAttribute('data-mag', '');
+        const xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+        const yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+        el.addEventListener('pointermove', (e) => {
+            const r = el.getBoundingClientRect();
+            xTo((e.clientX - r.left - r.width / 2) * 0.25);
+            yTo((e.clientY - r.top - r.height / 2) * 0.35);
+        });
+        el.addEventListener('pointerleave', () => { xTo(0); yTo(0); });
+    });
+
+    const tiltTargets = document.querySelectorAll('[data-tilt]:not([data-tilted]), main .card-hover:not([data-tilted])');
+    tiltTargets.forEach((el) => {
+        el.setAttribute('data-tilted', '');
+        const max = Number(el.dataset.tilt || 6);
+        const rx = gsap.quickTo(el, 'rotationX', { duration: 0.6, ease: 'power3.out' });
+        const ry = gsap.quickTo(el, 'rotationY', { duration: 0.6, ease: 'power3.out' });
+        gsap.set(el, { transformPerspective: 900 });
+        el.addEventListener('pointermove', (e) => {
+            const r = el.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+            ry((px - 0.5) * max * 2);
+            rx(-(py - 0.5) * max * 2);
+            el.style.setProperty('--mx', `${px * 100}%`);
+            el.style.setProperty('--my', `${py * 100}%`);
+        });
+        el.addEventListener('pointerleave', () => { rx(0); ry(0); });
+    });
+
+    document.querySelectorAll('[data-spotlight]:not([data-tilt])').forEach((el) => {
+        if (el.dataset.spotBound) return;
+        el.dataset.spotBound = '1';
+        el.addEventListener('pointermove', (e) => {
+            const r = el.getBoundingClientRect();
+            el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+            el.style.setProperty('--my', `${e.clientY - r.top}px`);
+        });
+    });
+}
+
+/* ---------------------------------------------------------------
+   Smooth anchor scrolling + back-to-top
+---------------------------------------------------------------- */
+function initAnchors() {
+    document.querySelectorAll('a[href^="#"]:not([data-anc])').forEach((a) => {
+        a.setAttribute('data-anc', '');
+        a.addEventListener('click', (e) => {
+            const id = a.getAttribute('href');
+            if (id.length < 2) return;
+            const t = document.querySelector(id);
+            if (!t) return;
+            e.preventDefault();
+            t.scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'start' });
+        });
+    });
+    document.querySelectorAll('[data-scroll-top]').forEach((b) => {
+        b.onclick = () => window.scrollTo({ top: 0, behavior: reduce() ? 'auto' : 'smooth' });
+    });
+}
+
+/* ---------------------------------------------------------------
+   Three.js stages — loaded lazily so the 3D code never blocks paint
+---------------------------------------------------------------- */
+function webglOK() {
+    try {
+        const c = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl')));
+    } catch (e) { return false; }
+}
+
+export const stages = {};
+
+function initThree() {
+    // inner pages: drop a floating-objects stage into every page hero
+    document.querySelectorAll('.page-hero').forEach((hero) => {
+        if (hero.querySelector('.three-stage')) return;
+        const stage = document.createElement('div');
+        stage.className = 'three-stage';
+        stage.dataset.three = 'floaters';
+        stage.dataset.preset = hero.dataset.preset || 'hero';
+        stage.setAttribute('aria-hidden', 'true');
+        hero.prepend(stage);
+    });
+
+    if (!webglOK()) return;
+    document.querySelectorAll('[data-three]:not([data-mounted])').forEach((el) => {
+        el.setAttribute('data-mounted', '');
+        const kind = el.dataset.three;
+        const load = kind === 'globe' ? import('./three/globe.js') : import('./three/floaters.js');
+        load.then((mod) => {
+            const api = kind === 'globe' ? mod.mountGlobe(el) : mod.mountFloaters(el, el.dataset.preset);
+            if (el.id) stages[el.id] = api;
+            el.dispatchEvent(new CustomEvent('three:ready', { detail: api }));
+            gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 1.4, ease: 'power2.out' });
+            const section = el.closest('section') || el.parentElement;
+            ScrollTrigger.create({ trigger: section, start: 'top top', end: 'bottom top', scrub: true, onUpdate: (st) => api.setScroll(st.progress) });
+        });
+    });
+}
+
+export function initMotion() {
+    document.documentElement.classList.add('js-motion');
+    initNav();
+    initMobileMenu();
+    initSplit();
+    initReveals();
+    initCounters();
+    initParallax();
+    initPointer();
+    initAnchors();
+    initThree();
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+}
+
+export { gsap, ScrollTrigger, reduce, fine, EASE };

@@ -6,56 +6,64 @@ use function Livewire\Volt\{state};
 
 ?>
 
+@php
+    $links = [
+        ['home.index', 'Home'],
+        ['home.universities', 'Universities'],
+        ['home.courses', 'Courses'],
+        ['home.about', 'About'],
+        ['home.blog', 'Blog'],
+        ['home.contact', 'Contact'],
+    ];
+@endphp
+
 <div>
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
-                <div class="flex-shrink-0">
-                    <a href="{{ route('home.index') }}" class="flex items-center">
-                        <img src="{{ asset('assets/images/logo.png') }}" alt="Divjules Logo" class="h-12 w-auto logo-themed">
-                    </a>
+    <nav class="site-nav fixed w-full top-0 z-50" data-site-nav>
+        <div class="container-x">
+            <div class="flex justify-between items-center h-20 gap-6">
+                <a href="{{ route('home.index') }}" class="flex items-center shrink-0" aria-label="Divjules home">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="Divjules Logo" class="h-11 w-auto logo-themed">
+                </a>
+
+                <div class="hidden lg:flex items-center gap-8">
+                    @foreach ($links as [$name, $label])
+                        <a href="{{ route($name) }}" class="nav-link {{ request()->routeIs($name) ? 'is-active' : '' }}">{{ $label }}</a>
+                    @endforeach
                 </div>
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8">
-                    <a href="{{ route('home.index') }}" class="text-gray-700 hover:text-sky-700 font-medium transition">Home</a>
-                    <a href="{{ route('home.universities') }}" class="text-gray-700 hover:text-sky-700 font-medium transition">Universities</a>
-                    <a href="{{ route('home.courses') }}" class="text-gray-700 hover:text-sky-700 font-medium transition">Courses</a>
-                    <a href="{{ route('home.about') }}" class="text-gray-700 hover:text-sky-700 font-medium transition">About Us</a>
-                    <a href="{{ route('home.blog') }}" class="text-gray-700 hover:text-sky-700 font-medium transition">Blog</a>
-                    <a href="{{ route('home.contact') }}" class="text-gray-700 hover:text-sky-700 font-medium transition">Contact</a>
+                <div class="hidden lg:flex items-center gap-3">
+                    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+                        <i class="fas fa-moon i-moon"></i>
+                        <i class="fas fa-sun i-sun"></i>
+                    </button>
+                    <a href="{{ route('home.contact') }}" class="btn btn-ghost !py-2.5 !px-5 text-sm">Free consultation</a>
+                    <a href="{{ route('home.apply') }}" class="btn btn-primary !py-2.5 !px-5 text-sm" data-magnetic>Apply now <i class="fas fa-arrow-right text-xs btn-arrow"></i></a>
                 </div>
 
-                <!-- CTA Buttons -->
-                <div class="hidden md:flex space-x-4">
-                    <a href="{{ route('home.contact') }}" class="px-4 py-2 text-sky-700 border border-sky-700 rounded-lg hover:bg-sky-50 transition">Free Consultation</a>
-                    <a href="{{ route('home.apply') }}" class="px-4 py-2 bg-sky-700 text-white rounded-lg hover:bg-sky-800 transition">Apply Now</a>
-                </div>
-
-                <!-- Mobile Menu Button & Book Consultation -->
-                <div class="md:hidden flex items-center space-x-3">
-                    <a href="{{ route('home.contact') }}" class="px-4 py-2 bg-sky-700 text-white rounded-lg text-sm font-semibold hover:bg-sky-800 transition">
-                        Book Consultation
-                    </a>
-                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-sky-700 focus:outline-none">
-                        <i class="fas fa-bars text-2xl"></i>
+                <div class="lg:hidden flex items-center gap-2">
+                    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+                        <i class="fas fa-moon i-moon"></i>
+                        <i class="fas fa-sun i-sun"></i>
+                    </button>
+                    <a href="{{ route('home.contact') }}" class="btn btn-primary !py-2 !px-4 text-sm hidden sm:inline-flex">Book consultation</a>
+                    <button id="mobile-menu-btn" type="button" class="theme-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                        <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="{{ route('home.index') }}" class="block px-3 py-2 text-gray-700 hover:bg-sky-50 hover:text-sky-700 rounded">Home</a>
-                <a href="{{ route('home.universities') }}" class="block px-3 py-2 text-gray-700 hover:bg-sky-50 hover:text-sky-700 rounded">Universities</a>
-                <a href="{{ route('home.courses') }}" class="block px-3 py-2 text-gray-700 hover:bg-sky-50 hover:text-sky-700 rounded">Courses</a>
-                <a href="{{ route('home.about') }}" class="block px-3 py-2 text-gray-700 hover:bg-sky-50 hover:text-sky-700 rounded">About Us</a>
-                <a href="{{ route('home.blog') }}" class="block px-3 py-2 text-gray-700 hover:bg-sky-50 hover:text-sky-700 rounded">Blog</a>
-                <a href="{{ route('home.contact') }}" class="block px-3 py-2 text-gray-700 hover:bg-sky-50 hover:text-sky-700 rounded">Contact</a>
-                <a href="{{ route('home.apply') }}" class="block px-3 py-2 bg-sky-700 text-white rounded text-center mt-4">Apply Now</a>
+        <div id="mobile-menu" class="hidden lg:hidden mobile-sheet">
+            <div class="container-x py-4 flex flex-col">
+                @foreach ($links as [$name, $label])
+                    <a href="{{ route($name) }}" class="mobile-link flex items-center justify-between py-3.5 text-lg font-medium border-b border-line {{ request()->routeIs($name) ? 'text-accent' : 'text-ink' }}">
+                        {{ $label }} <i class="fas fa-arrow-right text-xs text-muted"></i>
+                    </a>
+                @endforeach
+                <div class="grid grid-cols-2 gap-3 pt-5">
+                    <a href="{{ route('home.contact') }}" class="btn btn-ghost">Consultation</a>
+                    <a href="{{ route('home.apply') }}" class="btn btn-primary">Apply now</a>
+                </div>
             </div>
         </div>
     </nav>

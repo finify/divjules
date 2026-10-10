@@ -20,519 +20,449 @@ class extends Component {
     }
 }; ?>
 
+@php
+    $destinations = [
+        'uk' => ['United Kingdom', 'Jan · May · Sep', 'Business, Nursing, Computing, Law', 'One-year master’s degrees and world-famous universities.'],
+        'canada' => ['Canada', 'Jan · May · Sep', 'Engineering, IT, Health, Business', 'Co-op programmes that blend study with paid work.'],
+        'usa' => ['United States', 'Jan · Aug', 'STEM, Business, Data Science', 'Flexible majors and a huge choice of campuses.'],
+        'australia' => ['Australia', 'Feb · Jul', 'Nursing, Engineering, Hospitality', 'High quality of life and practical, career-led courses.'],
+        'germany' => ['Germany', 'Apr · Oct', 'Engineering, Computer Science', 'Low or no tuition at many public universities.'],
+        'ireland' => ['Ireland', 'Jan · Sep', 'Tech, Pharma, Finance', 'English-speaking hub for Europe’s tech giants.'],
+        'dubai' => ['Dubai', 'Jan · Sep', 'Business, Hospitality, Media', 'International branch campuses close to home.'],
+    ];
+
+    $faculties = [
+        ['fa-briefcase', 'Business & Management', 'MBA, Finance, Marketing'],
+        ['fa-laptop-code', 'Computing & IT', 'Computer Science, Data Science, Cyber Security'],
+        ['fa-gears', 'Engineering', 'Mechanical, Civil, Electrical'],
+        ['fa-heart-pulse', 'Health Sciences', 'Medicine, Nursing, Pharmacy'],
+        ['fa-scale-balanced', 'Law', 'LLB, Corporate Law, International Law'],
+        ['fa-palette', 'Arts & Humanities', 'Design, Media, Languages'],
+        ['fa-flask', 'Science', 'Physics, Chemistry, Biology'],
+        ['fa-graduation-cap', 'Education', 'Teaching, Training, Development'],
+    ];
+
+    $journey = [
+        ['fa-comments', 'Free consultation', 'Talk through your goals, budget and grades with an expert counsellor.'],
+        ['fa-building-columns', 'University selection', 'Shortlist courses and partner institutions that fit you.'],
+        ['fa-file-signature', 'Application support', 'Statements, documents and submissions — handled with you.'],
+        ['fa-plane-departure', 'Visa & departure', 'Visa guidance and a pre-departure briefing before you fly.'],
+    ];
+@endphp
+
 <div>
-    <!-- Hero Section with Video Background -->
-    <section class="hero-video-section mt-20">
-        <!-- Video Background -->
-        <video class="hero-video-bg" autoplay muted loop playsinline>
-            <source src="https://admin.ahzassociates.com/documents/5/video-2_online-video-cutter.com.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+    {{-- ============================== HERO ============================== --}}
+    <section class="hero-home relative overflow-hidden pt-28 lg:pt-20 min-h-[100dvh] flex items-center" data-home-hero data-no-auto>
+        <div class="absolute inset-0 grid-fade opacity-70 pointer-events-none" aria-hidden="true"></div>
 
-        <!-- Overlay -->
-        <div class="hero-overlay"></div>
+        <div class="container-x relative w-full grid lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+            <div class="lg:col-span-6 relative z-10" data-hero-copy>
+                <span class="eyebrow" data-hero-in>Education consultancy · Study abroad</span>
 
-        <!-- Content -->
-        <div class="hero-content flex items-center min-h-screen px-4 py-32">
-            <div class="max-w-7xl mx-auto w-full">
-                <div class="max-w-2xl">
-                    <h1 class="sliding-text text-5xl md:text-7xl font-bold mb-6 leading-tight text-white">
-                        Your Gateway to Quality Education
-                    </h1>
-                    <p class="sliding-text text-xl md:text-2xl mb-8 text-white">
-                        Expert guidance for your academic journey. Connect with top universities worldwide.
-                    </p>
-                    <div class="sliding-text flex flex-col sm:flex-row gap-4">
-                        <a href="/apply" class="px-8 py-4 bg-white text-sky-700 rounded-lg font-semibold hover:bg-gray-100 transition text-center shadow-lg">
-                            Get Started
-                        </a>
-                        <a href="/contact" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-sky-700 transition text-center">
-                            Book Free Consultation
-                        </a>
+                <h1 class="h-display mt-6 text-[2.6rem] sm:text-6xl xl:text-[4.6rem]">
+                    <span class="block" data-split data-delay="0.15">Your gateway to quality education</span>
+                    <span class="block mt-1" data-hero-in>
+                        <span class="text-muted font-normal">in</span>
+                        <span class="word-swap text-accent" data-word-swap aria-live="polite">
+                            @foreach ($destinations as $d)
+                                <span>{{ $d[0] }}.</span>
+                            @endforeach
+                        </span>
+                    </span>
+                </h1>
+
+                <p class="mt-7 text-lg text-muted leading-relaxed max-w-[52ch]" data-hero-in>
+                    Expert guidance for your academic journey — from picking the right course to landing on campus. We connect you with top universities worldwide.
+                </p>
+
+                <div class="mt-9 flex flex-col sm:flex-row gap-3" data-hero-in>
+                    <a href="/apply" class="btn btn-primary" data-magnetic>Get started <i class="fas fa-arrow-right text-xs btn-arrow"></i></a>
+                    <a href="/contact" class="btn btn-ghost" data-magnetic><i class="fas fa-calendar-check text-sm"></i> Book free consultation</a>
+                </div>
+
+                <div class="mt-10 flex items-center gap-5" data-hero-in>
+                    <div class="flex -space-x-3">
+                        @foreach (['A', 'C', 'T', 'O'] as $i => $letter)
+                            <span class="grid place-items-center w-10 h-10 rounded-full text-sm font-semibold text-white ring-2 ring-[var(--bg)]" style="background: {{ ['#1a1a4e', '#0369a1', '#0ea5e9', '#334155'][$i] }}">{{ $letter }}</span>
+                        @endforeach
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="py-12 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div>
-                    <div class="text-4xl font-bold text-sky-700 mb-2">150+</div>
-                    <div class="text-gray-600">Partner Universities</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-sky-700 mb-2">15+</div>
-                    <div class="text-gray-600">Countries</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-sky-700 mb-2">10,000+</div>
-                    <div class="text-gray-600">Students Placed</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-sky-700 mb-2">500+</div>
-                    <div class="text-gray-600">Expert Counsellors</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="py-20 px-4">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Why Choose Divjules?</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">We provide comprehensive support throughout your educational journey, from selection to enrollment and beyond.</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-university text-3xl text-sky-700"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">Expert Guidance</h3>
-                    <p class="text-gray-600">Our certified counsellors provide personalized advice to help you choose the right university and course.</p>
-                </div>
-
-                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-globe text-3xl text-sky-700"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">Global Network</h3>
-                    <p class="text-gray-600">Access to 150+ partner institutions across multiple countries for diverse opportunities.</p>
-                </div>
-
-                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-hand-holding-heart text-3xl text-sky-700"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">End-to-End Support</h3>
-                    <p class="text-gray-600">From application to visa assistance and pre-departure briefing, we're with you every step.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Courses -->
-    <section class="py-20 px-4 bg-gray-100">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Popular Faculties</h2>
-                <p class="text-xl text-gray-600">Explore our most sought-after academic programs</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-briefcase text-2xl text-blue-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Business & Management</h3>
-                    <p class="text-gray-600 text-sm mb-4">MBA, Finance, Marketing</p>
-                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
-                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-laptop-code text-2xl text-green-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Computing & IT</h3>
-                    <p class="text-gray-600 text-sm mb-4">Computer Science, Data Science</p>
-                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
-                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-cogs text-2xl text-orange-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Engineering</h3>
-                    <p class="text-gray-600 text-sm mb-4">Mechanical, Civil, Electrical</p>
-                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
-                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-heartbeat text-2xl text-red-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Health Sciences</h3>
-                    <p class="text-gray-600 text-sm mb-4">Medicine, Nursing, Pharmacy</p>
-                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
-                    <div class="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-balance-scale text-2xl text-sky-700"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Law</h3>
-                    <p class="text-gray-600 text-sm mb-4">LLB, Corporate Law, International Law</p>
-                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
-                    <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-palette text-2xl text-pink-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Arts & Humanities</h3>
-                    <p class="text-gray-600 text-sm mb-4">Design, Media, Languages</p>
-                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
-                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-flask text-2xl text-yellow-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Science</h3>
-                    <p class="text-gray-600 text-sm mb-4">Physics, Chemistry, Biology</p>
-                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow card-hover cursor-pointer">
-                    <div class="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-graduation-cap text-2xl text-[#1a1a4e]"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Education</h3>
-                    <p class="text-gray-600 text-sm mb-4">Teaching, Training, Development</p>
-                    <a href="#" class="text-sky-700 font-semibold hover:text-sky-800">Explore <i class="fas fa-arrow-right ml-1"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Partner Universities Slider -->
-    <section class="py-20 px-4 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Schools We Work With</h2>
-                <p class="text-xl text-gray-600">Partner universities and institutions across the globe</p>
-            </div>
-
-            <div class="universities-slider-wrapper">
-                <div class="universities-slider-container relative">
-                    <!-- Navigation Buttons -->
-                    <button onclick="slowDownUniSlider()" class="uni-nav-btn left" aria-label="Slow down slider">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button onclick="speedUpUniSlider()" class="uni-nav-btn right" aria-label="Speed up slider">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-
-                    <!-- Slider Track -->
-                    <div id="universitiesSliderTrack" class="universities-slider-track flex gap-8 items-center">
-                    @forelse($schools as $school)
-                    <div class="university-slide flex-shrink-0 bg-white p-4 rounded-lg hover:shadow-xl transition-all duration-300 h-36 w-56 flex flex-col items-center justify-center group cursor-pointer border border-gray-100">
-                        @if($school->logo_url)
-                            <img src="/storage/{{ $school->logo_url }}" alt="{{ $school->name }}" class="h-16 w-auto mb-2 object-contain group-hover:scale-110 transition-transform">
-                        @endif
-                        <div class="text-center px-2">
-                            <div class="text-sm font-bold text-gray-800 line-clamp-2">{{ $school->name }}</div>
-                        </div>
-                    </div>
-                    @empty
-                    <div class="university-slide flex-shrink-0 bg-white p-4 rounded-lg h-36 w-56 flex items-center justify-center">
-                        <p class="text-gray-500 text-sm">No schools added yet</p>
-                    </div>
-                    @endforelse
-
-                    {{-- Duplicate slides for infinite loop effect --}}
-                    @foreach($schools as $school)
-                    <div class="university-slide flex-shrink-0 bg-white p-4 rounded-lg hover:shadow-xl transition-all duration-300 h-36 w-56 flex flex-col items-center justify-center group cursor-pointer border border-gray-100">
-                        @if($school->logo_url)
-                            <img src="{{ $school->logo_url }}" alt="{{ $school->name }}" class="h-16 w-auto mb-2 object-contain group-hover:scale-110 transition-transform">
-                        @endif
-                        <div class="text-center px-2">
-                            <div class="text-sm font-bold text-gray-800 line-clamp-2">{{ $school->name }}</div>
-                        </div>
-                    </div>
-                    @endforeach
+                    <p class="text-sm text-muted leading-snug"><strong class="text-ink">10,000+ students</strong> placed across<br class="hidden sm:block"> 150+ partner universities</p>
                 </div>
             </div>
 
-            <div class="text-center mt-12">
-                <a href="/universities" class="inline-block px-8 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">View All Universities</a>
-            </div>
-        </div>
-    </section>
+            {{-- 3D globe + destination explorer --}}
+            <div class="lg:col-span-6 relative">
+                <div class="relative h-[400px] sm:h-[520px] lg:h-[660px] -mx-4 lg:mx-0">
+                    <div id="hero-globe" class="three-stage is-interactive" data-three="globe" aria-label="Interactive globe showing study destinations"></div>
 
-    <!-- Application Journey -->
-    <section class="py-20 px-4 bg-gray-100">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Your Journey With Us</h2>
-                <p class="text-xl text-gray-600">Simple steps to kickstart your academic career</p>
-            </div>
-
-            <div class="grid md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-sky-700 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">1</div>
-                    <h3 class="text-xl font-bold mb-2">Free Consultation</h3>
-                    <p class="text-gray-600">Discuss your goals with our expert counsellors</p>
-                </div>
-
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-sky-700 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">2</div>
-                    <h3 class="text-xl font-bold mb-2">University Selection</h3>
-                    <p class="text-gray-600">Choose from our partner institutions</p>
-                </div>
-
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-sky-700 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">3</div>
-                    <h3 class="text-xl font-bold mb-2">Application Support</h3>
-                    <p class="text-gray-600">Complete guidance through the application process</p>
-                </div>
-
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-sky-700 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">4</div>
-                    <h3 class="text-xl font-bold mb-2">Visa & Departure</h3>
-                    <p class="text-gray-600">Visa assistance and pre-departure orientation</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Video Testimonials Slider -->
-    @if($videoTestimonials->count() > 0)
-    @php
-    $chunkedTestimonials = $videoTestimonials->chunk(3);
-    @endphp
-    <section class="py-20 px-4 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Student Video Testimonials</h2>
-                <p class="text-xl text-gray-600">Watch success stories from students who achieved their dreams with Divjules</p>
-            </div>
-
-            <!-- Desktop View: Grid Layout with Slider -->
-            <div class="hidden md:block">
-                <div class="testimonial-slider relative">
-                    @foreach($chunkedTestimonials as $slideIndex => $chunk)
-                    <div class="testimonial-slide {{ $slideIndex === 0 ? 'active' : '' }}">
-                        <div class="grid md:grid-cols-3 gap-8">
-                            @foreach($chunk as $testimonial)
-                            <div class="group cursor-pointer" onclick="openVideoModal('{{ $testimonial->youtube_embed_url }}')">
-                                <div class="relative overflow-hidden rounded-xl shadow-lg">
-                                    <img src="{{ $testimonial->display_thumbnail }}" alt="{{ $testimonial->student_name }}" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110 relative z-0">
-                                    <div class="absolute inset-0  flex items-center justify-center z-10">
-                                        <div class="w-20 h-20 bg-white bg-opacity-90 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-125">
-                                            <i class="fas fa-play text-sky-700 text-2xl ml-1"></i>
-                                        </div>
-                                    </div>
-                                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 z-20">
-                                        <h4 class="text-white font-bold text-lg">{{ $testimonial->student_name }}</h4>
-                                        <p class="text-white text-sm">{{ $testimonial->course }}, {{ $testimonial->university }}</p>
-                                    </div>
-                                </div>
-                                <div class="mt-4">
-                                    <div class="flex text-yellow-400 mb-2">
-                                        @for($i = 0; $i < $testimonial->rating; $i++)
-                                            <i class="fas fa-star"></i>
-                                        @endfor
-                                    </div>
-                                    @if($testimonial->quote)
-                                        <p class="text-gray-600 text-sm">"{{ $testimonial->quote }}"</p>
-                                    @endif
-                                </div>
+                    <div class="absolute left-4 right-4 lg:left-auto lg:right-0 bottom-2 lg:bottom-16 lg:w-80 z-10" data-hero-in>
+                        <div class="surface rounded-2xl p-5 backdrop-blur-md" style="background: color-mix(in srgb, var(--surface) 82%, transparent);">
+                            <div data-dest-card="default">
+                                <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">Explore destinations</p>
+                                <p class="mt-2 font-semibold text-ink">Pick a country to fly there.</p>
+                                <p class="mt-1 text-sm text-muted">Drag the globe to spin it. Every arc starts in Lagos.</p>
                             </div>
+                            @foreach ($destinations as $key => [$name, $intakes, $popular, $blurb])
+                                <div data-dest-card="{{ $key }}" hidden>
+                                    <span class="font-mono text-[11px] uppercase tracking-wider text-accent">Intakes · {{ $intakes }}</span>
+                                    <p class="mt-1 font-semibold text-ink text-lg">{{ $name }}</p>
+                                    <p class="mt-1.5 text-sm text-muted">{{ $blurb }}</p>
+                                    <p class="mt-3 text-xs text-muted"><span class="text-ink font-medium">Popular:</span> {{ $popular }}</p>
+                                    <a href="/universities" class="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:gap-2.5 transition-all">See universities <i class="fas fa-arrow-right text-[10px]"></i></a>
+                                </div>
                             @endforeach
                         </div>
                     </div>
-                    @endforeach
-
-                    <!-- Slider Navigation -->
-                    @if($chunkedTestimonials->count() > 1)
-                    <button onclick="changeSlide(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white hover:bg-sky-700 text-sky-700 hover:text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button onclick="changeSlide(1)" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white hover:bg-sky-700 text-sky-700 hover:text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-
-                    <!-- Dots -->
-                    <div class="flex justify-center mt-8 space-x-2">
-                        @foreach($chunkedTestimonials as $dotIndex => $chunk)
-                        <button onclick="setSlide({{ $dotIndex }})" class="slider-dot w-3 h-3 rounded-full {{ $dotIndex === 0 ? 'bg-sky-700' : 'bg-gray-300' }}"></button>
-                        @endforeach
-                    </div>
-                    @endif
                 </div>
-            </div>
 
-            <!-- Mobile View: Horizontal Scrollable -->
-            <div class="md:hidden relative">
-                <div id="mobileTestimonialsSlider" class="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4" style="scroll-behavior: smooth;">
-                    @foreach($videoTestimonials as $testimonial)
-                    <div class="flex-none w-[85%] snap-center group cursor-pointer" onclick="openVideoModal('{{ $testimonial->youtube_embed_url }}')">
-                        <div class="relative overflow-hidden rounded-xl shadow-lg">
-                            <img src="{{ $testimonial->display_thumbnail }}" alt="{{ $testimonial->student_name }}" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110 relative z-0">
-                            <div class="absolute inset-0 bg-none bg-opacity-40 flex items-center justify-center z-10">
-                                <div class="w-20 h-20 bg-white bg-opacity-90 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-125">
-                                    <i class="fas fa-play text-sky-700 text-2xl ml-1"></i>
-                                </div>
-                            </div>
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 z-20">
-                                <h4 class="text-white font-bold text-lg">{{ $testimonial->student_name }}</h4>
-                                <p class="text-white text-sm">{{ $testimonial->course }}, {{ $testimonial->university }}</p>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="flex text-yellow-400 mb-2">
-                                @for($i = 0; $i < $testimonial->rating; $i++)
-                                    <i class="fas fa-star"></i>
-                                @endfor
-                            </div>
-                            @if($testimonial->quote)
-                                <p class="text-gray-600 text-sm">"{{ $testimonial->quote }}"</p>
-                            @endif
-                        </div>
-                    </div>
+                <div class="mt-4 flex flex-wrap gap-2 justify-center lg:justify-start relative z-10" data-hero-in role="group" aria-label="Study destinations">
+                    @foreach ($destinations as $key => $d)
+                        <button type="button" class="chip" data-dest="{{ $key }}" aria-pressed="false">{{ $d[0] }}</button>
                     @endforeach
                 </div>
-
-                <!-- Scroll Indicator -->
-                <div class="text-center mt-6 text-gray-400 text-sm">
-                    <i class="fas fa-hand-pointer mr-2"></i>Swipe to see more testimonials
-                </div>
-
-                <!-- Mobile Navigation Arrows -->
-                <button onclick="scrollMobileTestimonials('left')" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white hover:bg-sky-700 text-sky-700 hover:text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-10">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button onclick="scrollMobileTestimonials('right')" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white hover:bg-sky-700 text-sky-700 hover:text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-10">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
             </div>
+        </div>
 
-            <script>
-                function scrollMobileTestimonials(direction) {
-                    const slider = document.getElementById('mobileTestimonialsSlider');
-                    const scrollAmount = slider.offsetWidth * 0.85; // 85% of container width
-                    if (direction === 'left') {
-                        slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-                    } else {
-                        slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-                    }
-                }
-            </script>
+        <a href="#stats" class="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-muted hover:text-accent transition" data-hero-in>
+            Scroll
+            <span class="block w-px h-10 bg-[var(--line)] relative overflow-hidden"><span class="absolute inset-x-0 top-0 h-4 bg-[var(--accent)] animate-[scrollcue_1.8s_ease-in-out_infinite]"></span></span>
+        </a>
+        <style>@keyframes scrollcue { 0% { transform: translateY(-100%) } 100% { transform: translateY(250%) } }</style>
+    </section>
 
-            {{-- <div class="text-center mt-12">
-                <a href="contact.html" class="inline-block px-8 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">Share Your Success Story</a>
-            </div> --}}
+    {{-- ============================== DESTINATION TICKER ============================== --}}
+    <section class="py-8 border-y border-line bg-page-alt overflow-hidden" data-no-auto>
+        <div class="marquee-mask" data-marquee data-marquee-speed="45">
+            <div class="marquee items-center">
+                @foreach (array_merge(array_values($destinations), array_values($destinations), array_values($destinations), array_values($destinations)) as $d)
+                    <span class="flex items-center gap-12 text-3xl md:text-5xl font-semibold tracking-tight text-ink whitespace-nowrap">
+                        {{ $d[0] }} <i class="fas fa-graduation-cap text-xl md:text-2xl text-accent"></i>
+                    </span>
+                @endforeach
+            </div>
         </div>
     </section>
-    @endif
-    
-    
 
-    <!-- Video Modal -->
+    {{-- ============================== STATS ============================== --}}
+    <section id="stats" class="py-20 lg:py-28 px-4" data-no-auto>
+        <div class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-px rounded-3xl overflow-hidden border border-line bg-[var(--line)]">
+            @foreach ([[150, '+', 'Partner universities'], [15, '+', 'Countries'], [10000, '+', 'Students placed'], [500, '+', 'Expert counsellors']] as [$n, $s, $label])
+                <div class="bg-[var(--surface)] p-7 md:p-10 group relative overflow-hidden" data-reveal data-spotlight>
+                    <div class="text-4xl md:text-6xl font-semibold tracking-tight text-ink tabular-nums" data-count="{{ $n }}" data-suffix="{{ $s }}">{{ number_format($n) }}{{ $s }}</div>
+                    <div class="mt-3 text-sm md:text-base text-muted flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent)] group-hover:scale-150 transition-transform"></span>{{ $label }}
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </section>
+
+    {{-- ============================== WHY DIVJULES (bento) ============================== --}}
+    <section class="pb-24 lg:pb-32 px-4" data-no-auto>
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-6 items-end mb-12">
+                <div class="lg:col-span-7">
+                    <span class="eyebrow" data-reveal>Why Divjules</span>
+                    <h2 class="h-display text-4xl md:text-6xl mt-5" data-reveal>Support at every step,<br><span class="text-accent">from shortlist to campus.</span></h2>
+                </div>
+                <p class="lg:col-span-5 text-lg text-muted leading-relaxed" data-reveal>We provide comprehensive support throughout your educational journey, from selection to enrollment and beyond.</p>
+            </div>
+
+            <div class="grid md:grid-cols-6 gap-5" data-why-stack>
+                <div class="card md:col-span-4 md:row-span-2 overflow-hidden min-h-[420px] flex flex-col justify-end" data-tilt="4" data-spotlight>
+                    <div class="three-stage" data-three="floaters" data-preset="side" aria-hidden="true"></div>
+                    <div class="relative z-10 max-w-md">
+                        <div class="icon-tile mb-5"><i class="fas fa-user-graduate"></i></div>
+                        <h3 class="text-2xl md:text-3xl font-semibold tracking-tight text-ink">Expert guidance</h3>
+                        <p class="mt-3 text-muted leading-relaxed">Our certified counsellors provide personalised advice to help you choose the right university and course. <span class="text-ink">Tap the objects</span> — they spin.</p>
+                    </div>
+                </div>
+                <div class="card md:col-span-2" data-tilt data-spotlight>
+                    <div class="icon-tile mb-5"><i class="fas fa-earth-africa"></i></div>
+                    <h3 class="text-xl font-semibold text-ink">Global network</h3>
+                    <p class="mt-2 text-muted">Access to 150+ partner institutions across multiple countries for diverse opportunities.</p>
+                </div>
+                <div class="card md:col-span-2" data-tilt data-spotlight>
+                    <div class="icon-tile mb-5"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3 class="text-xl font-semibold text-ink">End-to-end support</h3>
+                    <p class="mt-2 text-muted">From application to visa assistance and pre-departure briefing, we’re with you every step.</p>
+                </div>
+                <a href="/application/track" class="card md:col-span-3 group flex items-center justify-between gap-6" data-tilt data-spotlight>
+                    <div>
+                        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">Already applied?</p>
+                        <p class="mt-2 text-xl font-semibold text-ink">Track your application</p>
+                    </div>
+                    <span class="grid place-items-center w-12 h-12 rounded-full border border-line text-accent group-hover:bg-[var(--accent)] group-hover:text-white group-hover:border-transparent transition"><i class="fas fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i></span>
+                </a>
+                <a href="/contact" class="card brand-band md:col-span-3 group flex items-center justify-between gap-6 !bg-[#1a1a4e] !border-transparent text-white" data-tilt data-spotlight>
+                    <div>
+                        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">It’s free</p>
+                        <p class="mt-2 text-xl font-semibold">Book a consultation</p>
+                    </div>
+                    <span class="grid place-items-center w-12 h-12 rounded-full bg-white text-[#1a1a4e] group-hover:scale-110 transition-transform"><i class="fas fa-calendar-check"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {{-- ============================== FACULTIES (pinned horizontal scroll) ============================== --}}
+    <section class="bg-page-alt py-24 lg:py-0 lg:h-[100dvh] lg:flex lg:flex-col lg:justify-center overflow-hidden" data-hscroll data-no-auto>
+        <div class="container-x w-full flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 lg:mb-14">
+            <div>
+                <span class="eyebrow" data-reveal>Popular faculties</span>
+                <h2 class="h-display text-4xl md:text-6xl mt-5" data-reveal>Find the field<br>that fits you.</h2>
+            </div>
+            <div class="lg:w-80" data-reveal>
+                <p class="text-muted">Explore our most sought-after academic programmes. Keep scrolling to browse.</p>
+                <div class="hidden lg:block mt-5 h-[3px] rounded-full bg-[var(--line)] overflow-hidden"><div class="h-full bg-[var(--accent)] origin-left scale-x-0" data-hscroll-bar></div></div>
+            </div>
+        </div>
+
+        <div class="w-full overflow-x-auto lg:overflow-visible snap-x snap-mandatory scrollbar-hide">
+            <div class="h-scroll-track px-4 sm:px-6 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))] pb-2">
+                @foreach ($faculties as $i => [$icon, $title, $sub])
+                    <a href="/courses" class="faculty-card card snap-start group flex flex-col justify-between min-h-[320px] lg:min-h-[380px] overflow-hidden" data-spotlight>
+                        <i class="fas {{ $icon }} absolute -right-6 top-1/2 -translate-y-1/2 text-[9rem] text-accent opacity-[0.06] group-hover:opacity-[0.12] group-hover:-rotate-6 group-hover:scale-110 transition duration-500 pointer-events-none" aria-hidden="true"></i>
+                        <div class="flex items-start justify-between">
+                            <div class="icon-tile w-14 h-14 text-xl group-hover:bg-[var(--accent)] group-hover:text-white transition-colors duration-300"><i class="fas {{ $icon }}"></i></div>
+                            <span class="font-mono text-sm text-muted">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold tracking-tight text-ink">{{ $title }}</h3>
+                            <p class="mt-2 text-muted">{{ $sub }}</p>
+                            <span class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent">Explore courses <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i></span>
+                        </div>
+                    </a>
+                @endforeach
+                <a href="/courses" class="faculty-card snap-start rounded-3xl grid place-items-center min-h-[320px] lg:min-h-[380px] border-2 border-dashed border-line text-center group hover:border-[var(--accent)] transition-colors">
+                    <div>
+                        <span class="grid place-items-center w-16 h-16 mx-auto rounded-full bg-[var(--accent)] text-white text-xl group-hover:scale-110 transition-transform"><i class="fas fa-arrow-right"></i></span>
+                        <p class="mt-4 font-semibold text-ink text-lg">All courses</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {{-- ============================== PARTNER SCHOOLS ============================== --}}
+    <section class="py-24 lg:py-32 overflow-hidden" data-no-auto>
+        <div class="container-x text-center mb-14">
+            <span class="eyebrow" data-reveal>Partners</span>
+            <h2 class="h-display text-4xl md:text-6xl mt-5" data-reveal>Schools we work with</h2>
+            <p class="mt-5 text-lg text-muted" data-reveal>Partner universities and institutions across the globe. Hover to pause, drag to browse.</p>
+        </div>
+
+        <div class="relative marquee-mask cursor-grab active:cursor-grabbing select-none" data-marquee data-marquee-speed="35" style="touch-action: pan-y">
+            <div class="marquee !gap-5 items-center py-4">
+                @php $loopSchools = $schools->count() ? $schools->concat($schools)->concat($schools)->concat($schools) : collect(); @endphp
+                @forelse ($loopSchools as $school)
+                    <div class="uni-logo-card shrink-0 rounded-2xl p-5 h-40 w-60 flex flex-col items-center justify-center gap-3">
+                        @if ($school->logo_url)
+                            <img src="/storage/{{ $school->logo_url }}" alt="{{ $school->name }}" class="h-16 w-auto max-w-[160px] object-contain pointer-events-none" loading="lazy" draggable="false">
+                        @endif
+                        <div class="text-sm font-semibold text-ink text-center line-clamp-2">{{ $school->name }}</div>
+                    </div>
+                @empty
+                    @foreach (array_merge(array_values($destinations), array_values($destinations)) as $d)
+                        <div class="uni-logo-card shrink-0 rounded-2xl p-5 h-40 w-60 flex flex-col items-center justify-center gap-3">
+                            <i class="fas fa-building-columns text-3xl text-accent"></i>
+                            <div class="text-sm font-semibold text-ink">Universities in {{ $d[0] }}</div>
+                        </div>
+                    @endforeach
+                @endforelse
+            </div>
+            <button type="button" data-marquee-nudge="1" class="theme-toggle !absolute left-4 top-1/2 -translate-y-1/2 z-10 !bg-[var(--surface)] hidden md:grid" aria-label="Scroll partners left"><i class="fas fa-chevron-left"></i></button>
+            <button type="button" data-marquee-nudge="-1" class="theme-toggle !absolute right-4 top-1/2 -translate-y-1/2 z-10 !bg-[var(--surface)] hidden md:grid" aria-label="Scroll partners right"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <div class="text-center mt-12" data-reveal>
+            <a href="/universities" class="btn btn-primary" data-magnetic>View all universities <i class="fas fa-arrow-right text-xs btn-arrow"></i></a>
+        </div>
+    </section>
+
+    {{-- ============================== JOURNEY ============================== --}}
+    <section class="py-24 lg:py-32 px-4 bg-page-alt" data-no-auto>
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16 lg:mb-24">
+                <span class="eyebrow" data-reveal>How it works</span>
+                <h2 class="h-display text-4xl md:text-6xl mt-5" data-reveal>Your journey with us</h2>
+                <p class="mt-5 text-lg text-muted" data-reveal>Simple steps to kickstart your academic career.</p>
+            </div>
+
+            <div class="relative" data-journey>
+                {{-- track + fill (horizontal on desktop, vertical on mobile) --}}
+                <div class="absolute bg-[var(--line)] rounded-full left-7 top-0 bottom-0 w-[3px] lg:left-[12.5%] lg:right-[12.5%] lg:top-7 lg:bottom-auto lg:w-auto lg:h-[3px]"></div>
+                <div class="absolute bg-[var(--accent)] rounded-full left-7 top-0 bottom-0 w-[3px] origin-top scale-y-0 lg:left-[12.5%] lg:right-[12.5%] lg:top-7 lg:bottom-auto lg:w-auto lg:h-[3px] lg:origin-left lg:scale-y-100 lg:scale-x-0" data-journey-fill></div>
+
+                <ol class="relative grid lg:grid-cols-4 gap-12 lg:gap-6">
+                    @foreach ($journey as $i => [$icon, $title, $text])
+                        <li class="journey-step flex lg:flex-col lg:items-center lg:text-center gap-6" data-active="false" data-reveal>
+                            <div class="journey-dot shrink-0 grid place-items-center w-14 h-14 rounded-full border-2 border-line bg-[var(--surface)] text-accent text-lg relative z-10">
+                                <i class="fas {{ $icon }}"></i>
+                            </div>
+                            <div class="pt-1 lg:pt-2">
+                                <p class="font-mono text-xs text-muted">Step {{ $i + 1 }}</p>
+                                <h3 class="mt-1.5 text-xl font-semibold text-ink">{{ $title }}</h3>
+                                <p class="mt-2 text-muted lg:max-w-[28ch] lg:mx-auto">{{ $text }}</p>
+                            </div>
+                        </li>
+                    @endforeach
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    {{-- ============================== VIDEO TESTIMONIALS ============================== --}}
+    @if ($videoTestimonials->count() > 0)
+        @php $chunkedTestimonials = $videoTestimonials->chunk(3); @endphp
+        <section class="py-24 lg:py-32 px-4 overflow-hidden" data-no-auto>
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+                    <div>
+                        <span class="eyebrow" data-reveal>In their words</span>
+                        <h2 class="h-display text-4xl md:text-6xl mt-5" data-reveal>Student video stories</h2>
+                    </div>
+                    <p class="text-lg text-muted max-w-md" data-reveal>Watch success stories from students who achieved their dreams with Divjules.</p>
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="testimonial-slider relative">
+                        @foreach ($chunkedTestimonials as $slideIndex => $chunk)
+                            <div class="testimonial-slide {{ $slideIndex === 0 ? 'active' : '' }}">
+                                <div class="grid md:grid-cols-3 gap-6">
+                                    @foreach ($chunk as $testimonial)
+                                        <button type="button" class="group text-left" onclick="openVideoModal('{{ $testimonial->youtube_embed_url }}')" data-reveal>
+                                            <div class="relative overflow-hidden rounded-3xl aspect-[4/5]">
+                                                <img src="{{ $testimonial->display_thumbnail }}" alt="{{ $testimonial->student_name }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
+                                                <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f2e] via-[#0f0f2e]/20 to-transparent"></div>
+                                                <span class="absolute top-5 right-5 grid place-items-center w-14 h-14 rounded-full bg-white/90 text-[#1a1a4e] backdrop-blur group-hover:scale-110 group-hover:bg-white transition-transform duration-300"><i class="fas fa-play ml-0.5"></i></span>
+                                                <div class="absolute bottom-0 inset-x-0 p-6 text-white">
+                                                    <div class="flex text-amber-400 text-xs gap-0.5 mb-2">@for ($i = 0; $i < $testimonial->rating; $i++)<i class="fas fa-star"></i>@endfor</div>
+                                                    <h4 class="font-semibold text-xl">{{ $testimonial->student_name }}</h4>
+                                                    <p class="text-sm text-white/70">{{ $testimonial->course }}, {{ $testimonial->university }}</p>
+                                                </div>
+                                            </div>
+                                            @if ($testimonial->quote)
+                                                <p class="mt-4 text-muted text-sm leading-relaxed">“{{ $testimonial->quote }}”</p>
+                                            @endif
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+
+                        @if ($chunkedTestimonials->count() > 1)
+                            <div class="flex items-center justify-center gap-4 mt-10">
+                                <button onclick="changeSlide(-1)" class="theme-toggle" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                                <div class="flex gap-2">
+                                    @foreach ($chunkedTestimonials as $dotIndex => $chunk)
+                                        <button onclick="setSlide({{ $dotIndex }})" class="slider-dot w-2.5 h-2.5 rounded-full transition-colors {{ $dotIndex === 0 ? 'bg-sky-700' : 'bg-gray-300' }}" aria-label="Slide {{ $dotIndex + 1 }}"></button>
+                                    @endforeach
+                                </div>
+                                <button onclick="changeSlide(1)" class="theme-toggle" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="md:hidden -mx-4">
+                    <div class="flex overflow-x-auto gap-4 px-4 pb-4 snap-x snap-mandatory scrollbar-hide">
+                        @foreach ($videoTestimonials as $testimonial)
+                            <button type="button" class="flex-none w-[80%] snap-center text-left" onclick="openVideoModal('{{ $testimonial->youtube_embed_url }}')">
+                                <div class="relative overflow-hidden rounded-3xl aspect-[4/5]">
+                                    <img src="{{ $testimonial->display_thumbnail }}" alt="{{ $testimonial->student_name }}" class="absolute inset-0 w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f2e] to-transparent"></div>
+                                    <span class="absolute top-4 right-4 grid place-items-center w-12 h-12 rounded-full bg-white/90 text-[#1a1a4e]"><i class="fas fa-play ml-0.5"></i></span>
+                                    <div class="absolute bottom-0 inset-x-0 p-5 text-white">
+                                        <h4 class="font-semibold text-lg">{{ $testimonial->student_name }}</h4>
+                                        <p class="text-sm text-white/70">{{ $testimonial->course }}, {{ $testimonial->university }}</p>
+                                    </div>
+                                </div>
+                            </button>
+                        @endforeach
+                    </div>
+                    <p class="text-center mt-4 text-muted text-sm"><i class="fas fa-hand-pointer mr-2"></i>Swipe for more stories</p>
+                </div>
+            </div>
+        </section>
+    @endif
+
     <div id="videoModal" class="video-modal">
         <div class="video-modal-content">
             <span class="video-close" onclick="closeVideoModal()">&times;</span>
-            <div class="relative" style="padding-bottom: 56.25%; height: 0;">
+            <div class="relative rounded-2xl overflow-hidden" style="padding-bottom: 56.25%; height: 0;">
                 <iframe id="videoFrame" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
     </div>
 
-    <!-- Student Reviews Section -->
-    <section class="py-20 px-4 bg-gray-50">
+    {{-- ============================== REVIEWS ============================== --}}
+    <section class="py-24 lg:py-32 px-4 bg-page-alt" data-no-auto>
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">What Our Students Say</h2>
-                <p class="text-xl text-gray-600">Real experiences from students who trusted us with their future</p>
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="eyebrow" data-reveal>Reviews</span>
+                <h2 class="h-display text-4xl md:text-6xl mt-5" data-reveal>What our students say</h2>
+                <p class="mt-5 text-lg text-muted" data-reveal>Real experiences from students who trusted us with their future.</p>
             </div>
 
-            @if($testimonials->count() > 0)
-                <div class="grid md:grid-cols-3 gap-8 mb-12">
-                    @foreach($testimonials as $testimonial)
-                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition card-hover">
-                        <div class="flex items-center mb-6">
-                            @if($testimonial->photo)
-                                <img src="{{ $testimonial->photo_url }}" alt="{{ $testimonial->student_name }}" class="w-16 h-16 rounded-full object-cover mr-4">
-                            @else
-                                <div class="w-16 h-16 rounded-full bg-sky-100 flex items-center justify-center mr-4">
-                                    <span class="text-2xl font-bold text-sky-700">{{ substr($testimonial->student_name, 0, 1) }}</span>
-                                </div>
-                            @endif
-                            <div>
-                                <h3 class="font-bold text-gray-800">{{ $testimonial->student_name }}</h3>
-                                <p class="text-sm text-gray-600">{{ $testimonial->university }}</p>
-                                @if($testimonial->course)
-                                    <p class="text-xs text-gray-500">{{ $testimonial->course }}</p>
+            @if ($testimonials->count() > 0)
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+                    @foreach ($testimonials as $testimonial)
+                        <figure class="card flex flex-col" data-reveal data-tilt="3" data-spotlight>
+                            <i class="fas fa-quote-left text-2xl text-accent opacity-60"></i>
+                            <blockquote class="mt-4 text-ink-2 leading-relaxed flex-1" style="color: var(--ink-2)">“{{ $testimonial->review }}”</blockquote>
+                            <figcaption class="mt-6 pt-6 border-t border-line flex items-center gap-4">
+                                @if ($testimonial->photo)
+                                    <img src="{{ $testimonial->photo_url }}" alt="{{ $testimonial->student_name }}" class="w-12 h-12 rounded-full object-cover">
+                                @else
+                                    <span class="grid place-items-center w-12 h-12 rounded-full bg-[var(--accent-soft)] text-accent font-semibold">{{ substr($testimonial->student_name, 0, 1) }}</span>
                                 @endif
-                                <div class="flex text-yellow-500 mt-1">
-                                    @for($i = 0; $i < $testimonial->rating; $i++)
-                                        <i class="fas fa-star"></i>
-                                    @endfor
-                                    @for($i = $testimonial->rating; $i < 5; $i++)
-                                        <i class="far fa-star"></i>
-                                    @endfor
+                                <div class="min-w-0">
+                                    <p class="font-semibold text-ink truncate">{{ $testimonial->student_name }}</p>
+                                    <p class="text-sm text-muted truncate">{{ $testimonial->university }}@if ($testimonial->course) · {{ $testimonial->course }}@endif</p>
                                 </div>
-                            </div>
-                        </div>
-                        <p class="text-gray-700 leading-relaxed">
-                            "{{ $testimonial->review }}"
-                        </p>
-                    </div>
+                                <div class="ml-auto flex text-amber-400 text-xs gap-0.5 shrink-0">
+                                    @for ($i = 0; $i < 5; $i++)<i class="{{ $i < $testimonial->rating ? 'fas' : 'far' }} fa-star"></i>@endfor
+                                </div>
+                            </figcaption>
+                        </figure>
                     @endforeach
                 </div>
             @else
-                <!-- Fallback content if no testimonials -->
-                <div class="text-center py-12">
-                    <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-comments text-4xl text-gray-400"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">No Reviews Yet</h3>
-                    <p class="text-gray-600 mb-8">Be the first to share your experience with Divjules!</p>
+                <div class="card max-w-lg mx-auto text-center py-12 mb-12" data-reveal>
+                    <span class="icon-tile w-16 h-16 mx-auto text-2xl"><i class="fas fa-comments"></i></span>
+                    <h3 class="mt-6 text-2xl font-semibold text-ink">No reviews yet</h3>
+                    <p class="mt-2 text-muted">Be the first to share your experience with Divjules!</p>
                 </div>
             @endif
 
-            <!-- Action Buttons -->
-            <div class="text-center flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ route('home.reviews') }}" class="inline-block px-8 py-4 bg-white text-sky-700 border-2 border-sky-700 rounded-lg font-bold text-lg hover:bg-sky-50 transition shadow-lg transform hover:scale-105">
-                    <i class="fas fa-comments mr-2"></i>See All Reviews
-                </a>
-                <a href="{{ route('home.submit-review') }}" class="inline-block px-8 py-4 bg-sky-700 text-white rounded-lg font-bold text-lg hover:bg-sky-800 transition shadow-lg transform hover:scale-105">
-                    <i class="fas fa-pen mr-2"></i>Share Your Experience
-                </a>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center" data-reveal>
+                <a href="{{ route('home.reviews') }}" class="btn btn-ghost" data-magnetic><i class="fas fa-comments text-sm"></i> See all reviews</a>
+                <a href="{{ route('home.submit-review') }}" class="btn btn-primary" data-magnetic><i class="fas fa-pen text-sm"></i> Share your experience</a>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section with Background Image -->
-    <section class="relative py-32 px-4 overflow-hidden">
-        <!-- Background Image -->
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1600&q=80" alt="Students celebrating" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-[#1a1a4e]/95 to-[#0f0f2e]/95"></div>
-        </div>
-
-        <!-- Content -->
-        <div class="relative z-10 max-w-4xl mx-auto text-center text-white">
-            <h2 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">Ready to Start Your Journey?</h2>
-            <p class="text-xl md:text-2xl mb-10 text-sky-100">Book a free consultation with our expert counsellors today!</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/contact" class="px-10 py-5 bg-white text-sky-700 rounded-lg font-bold text-lg hover:bg-gray-100 transition shadow-2xl transform hover:scale-105">
-                    <i class="fas fa-calendar-check mr-2"></i>Book Free Consultation
-                </a>
-                <a href="/apply" class="px-10 py-5 bg-transparent border-3 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:text-sky-700 transition shadow-2xl transform hover:scale-105">
-                    <i class="fas fa-paper-plane mr-2"></i>Apply Now
-                </a>
+    {{-- ============================== CTA ============================== --}}
+    <section class="brand-band relative overflow-hidden py-32 lg:py-44 px-4 text-white" data-cta-zoom data-no-auto
+        style="background: radial-gradient(60% 80% at 80% 0%, rgba(3,105,161,.55), transparent 60%), linear-gradient(160deg, #1a1a4e, #0f0f2e);">
+        <div class="three-stage" data-three="floaters" data-preset="cta" aria-hidden="true"></div>
+        <div class="relative z-10 max-w-4xl mx-auto text-center">
+            <span class="eyebrow !text-sky-300" data-reveal>Let’s begin</span>
+            <h2 class="mt-6 text-5xl md:text-7xl font-semibold tracking-tight leading-[1.02]" data-split>Ready to start your journey?</h2>
+            <p class="mt-6 text-lg md:text-xl text-sky-100/80" data-reveal>Book a free consultation with our expert counsellors today.</p>
+            <div class="mt-10 flex flex-col sm:flex-row gap-3 justify-center" data-reveal>
+                <a href="/contact" class="btn btn-light" data-magnetic><i class="fas fa-calendar-check text-sm"></i> Book free consultation</a>
+                <a href="/apply" class="btn btn-outline-light" data-magnetic><i class="fas fa-paper-plane text-sm"></i> Apply now</a>
             </div>
 
-            <!-- Stats Row -->
-            <div class="mt-16 grid grid-cols-3 gap-8 max-w-3xl mx-auto">
-                <div class="text-center">
-                    <div class="text-4xl font-bold mb-2">98%</div>
-                    <div class="text-sm text-sky-200">Success Rate</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-4xl font-bold mb-2">10k+</div>
-                    <div class="text-sm text-sky-200">Students Placed</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-4xl font-bold mb-2">150+</div>
-                    <div class="text-sm text-sky-200">Universities</div>
-                </div>
+            <div class="mt-20 grid grid-cols-3 gap-6 max-w-2xl mx-auto border-t border-white/10 pt-10">
+                @foreach ([[98, '%', 'Success rate'], [10000, '+', 'Students placed'], [150, '+', 'Universities']] as [$n, $s, $label])
+                    <div data-reveal>
+                        <div class="text-3xl md:text-5xl font-semibold tabular-nums" data-count="{{ $n }}" data-suffix="{{ $s }}">{{ number_format($n) }}{{ $s }}</div>
+                        <div class="mt-2 text-xs md:text-sm text-sky-200/70">{{ $label }}</div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
