@@ -63,7 +63,7 @@ class extends Component {
                 <span class="text-white/90">{{ $u->name }}</span>
             </nav>
             <div class="flex flex-col md:flex-row md:items-end gap-6">
-                <span class="uni-logo !w-20 !h-20 !rounded-3xl !text-2xl">
+                <span class="uni-logo is-lg">
                     @if ($u->logo_url)<img src="{{ $u->logo_url }}" alt="{{ $u->name }} logo">@else{{ $u->initials }}@endif
                 </span>
                 <div class="flex-1">
