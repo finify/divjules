@@ -1,5 +1,10 @@
 import * as THREE from 'three';
-import { palette } from './objects.js';
+
+// Theme-aware colours (brand navy ocean + sky land in both themes)
+function palette() {
+    const dark = document.documentElement.classList.contains('dark');
+    return dark ? { core: 0x14164a, dots: 0x7dd3fc } : { core: 0x1a1a4e, dots: 0xbae6fd };
+}
 
 // Study destinations (origin = Lagos). Labels are drawn as HTML so they stay crisp.
 export const DESTINATIONS = {

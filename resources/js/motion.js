@@ -53,7 +53,7 @@ function initNav() {
         // transparent header with light text while it sits over a navy page hero
         const first = document.querySelector('main > div > section, main > section');
         nav.classList.toggle('on-dark', !!first?.classList.contains('page-hero') && y < first.offsetHeight - 80);
-        const menuOpen = !document.getElementById('mobile-menu')?.classList.contains('hidden');
+        const menuOpen = document.getElementById('mobile-menu')?.classList.contains('is-open');
         // pages with sticky filter bars keep the header pinned so the bars never float under a gap
         const canHide = !document.querySelector('main .sticky');
         if (canHide) nav.classList.toggle('is-hidden', y > 300 && y > last + 4 && !menuOpen);
@@ -78,24 +78,42 @@ function initMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     if (!btn || !menu || btn.dataset.bound) return;
     btn.dataset.bound = '1';
-    const icon = btn.querySelector('i');
-    const set = (open) => {
-        btn.setAttribute('aria-expanded', open);
-        icon.className = open ? 'fas fa-xmark' : 'fas fa-bars';
-        if (open) {
-            menu.classList.remove('hidden');
-            if (!reduce()) {
-                gsap.fromTo(menu, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 0.5, ease: EASE });
-                gsap.fromTo(menu.querySelectorAll('.mobile-link, .btn'), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.04, ease: EASE, delay: 0.05 });
-            }
+    const panel = menu.querySelector('[data-menu-panel]');
+    const bg = menu.querySelector('[data-menu-bg]');
+    const items = menu.querySelectorAll('[data-menu-item]');
+    let open = false;
+    gsap.set(panel, { xPercent: 100 });
+
+    // one reversible timeline: panel slides in from the right, links cascade after it
+    const tl = gsap.timeline({ paused: true, defaults: { ease: 'expo.out' } })
+        .to(bg, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0)
+        .fromTo(panel, { xPercent: 100 }, { xPercent: 0, duration: 0.85 }, 0)
+        .fromTo(items, { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.9, stagger: 0.05 }, 0.18)
+        .eventCallback('onReverseComplete', () => menu.classList.remove('is-open'));
+    if (reduce()) tl.duration(0.01);
+
+    const set = (state) => {
+        if (state === open) return;
+        open = state;
+        btn.setAttribute('aria-expanded', state);
+        menu.setAttribute('aria-hidden', !state);
+        if (state) {
+            menu.classList.add('is-open');
+            lenis?.stop();
+            document.documentElement.style.overflow = 'hidden';
+            tl.timeScale(1).play();
+            menu.querySelector('[data-menu-close]')?.focus({ preventScroll: true });
         } else {
-            menu.classList.add('hidden');
+            lenis?.start();
+            document.documentElement.style.overflow = '';
+            tl.timeScale(1.6).reverse();
+            btn.focus({ preventScroll: true });
         }
     };
-    btn.addEventListener('click', (e) => { e.stopPropagation(); set(menu.classList.contains('hidden')); });
-    document.addEventListener('click', (e) => {
-        if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !btn.contains(e.target)) set(false);
-    });
+    btn.addEventListener('click', () => set(!open));
+    menu.querySelector('[data-menu-close]')?.addEventListener('click', () => set(false));
+    bg?.addEventListener('click', () => set(false));
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
 }
 
@@ -294,24 +312,14 @@ function webglOK() {
 export const stages = {};
 
 function initThree() {
-    // inner pages: drop a floating-objects stage into every page hero
-    document.querySelectorAll('.page-hero').forEach((hero) => {
-        if (hero.querySelector('.three-stage')) return;
-        const stage = document.createElement('div');
-        stage.className = 'three-stage';
-        stage.dataset.three = 'floaters';
-        stage.dataset.preset = hero.dataset.preset || 'hero';
-        stage.setAttribute('aria-hidden', 'true');
-        hero.prepend(stage);
-    });
-
     if (!webglOK()) return;
     document.querySelectorAll('[data-three]:not([data-mounted])').forEach((el) => {
         el.setAttribute('data-mounted', '');
         const kind = el.dataset.three;
-        const load = kind === 'globe' ? import('./three/globe.js') : import('./three/floaters.js');
+        if (kind !== 'globe') return;
+        const load = import('./three/globe.js');
         load.then((mod) => {
-            const api = kind === 'globe' ? mod.mountGlobe(el) : mod.mountFloaters(el, el.dataset.preset);
+            const api = mod.mountGlobe(el);
             if (el.id) stages[el.id] = api;
             el.dispatchEvent(new CustomEvent('three:ready', { detail: api }));
             gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 1.4, ease: 'power2.out' });
@@ -333,10 +341,21 @@ export function initMotion() {
     initPointer();
     initAnchors();
     initThree();
+    initImageZoom();
+    initReadProgress();
     requestAnimationFrame(() => ScrollTrigger.refresh());
 }
 
 export { gsap, ScrollTrigger, reduce, fine, EASE };
+
+/* Article reading progress ([data-read-progress]) */
+function initReadProgress() {
+    const bar = document.querySelector('[data-read-progress]:not([data-bound])');
+    const body = document.querySelector('.article-body');
+    if (!bar || !body) return;
+    bar.setAttribute('data-bound', '');
+    gsap.to(bar, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: body, start: 'top 30%', end: 'bottom 70%', scrub: 0.3 } });
+}
 
 /* Slow zoom-out on photos as they scroll through ([data-img-zoom]) */
 export function initImageZoom() {

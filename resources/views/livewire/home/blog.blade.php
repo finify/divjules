@@ -85,11 +85,11 @@ class extends Component {
 }; ?>
 
 <div>
-    <!-- Hero Section -->
-    <section style="--hero-img: url('/homeassets/img/site/library-modern.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
-        <div class="max-w-7xl mx-auto text-center text-white">
-            <h1 class="text-5xl font-bold mb-4">Blog & News</h1>
-            <p class="text-xl">Stay updated with the latest insights, tips, and news about studying abroad</p>
+    <section style="--hero-img: url('/homeassets/img/site/library-modern.webp')" class="page-hero pt-40 md:pt-48 pb-24 md:pb-32 px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <span class="eyebrow !text-sky-300 justify-center">The Divjules blog</span>
+            <h1 class="mt-5">Guides for studying abroad</h1>
+            <p class="mt-5 text-xl">Applications, scholarships, visas and student life — explained by our counsellors.</p>
         </div>
     </section>
 
@@ -97,10 +97,10 @@ class extends Component {
     <section class="relative z-20 -mt-9 px-4" data-no-auto>
         <div class="max-w-5xl mx-auto">
             <div class="filter-bar surface rounded-2xl md:rounded-full p-1.5 flex flex-col md:flex-row md:items-center gap-1.5">
-                <div class="flex gap-1.5 overflow-x-auto scrollbar-hide md:flex-1 min-w-0">
+                <div class="flex gap-1.5 overflow-x-auto scrollbar-hide md:flex-1 min-w-0" data-lenis-prevent>
                     <button wire:click="filterCategory('all')" class="chip shrink-0 !border-transparent" aria-pressed="{{ !$category ? 'true' : 'false' }}">All posts</button>
                     @foreach($categories as $cat)
-                        <button wire:click="filterCategory('{{ $cat->slug }}')" class="chip shrink-0 !border-transparent" aria-pressed="{{ $category === $cat->slug ? 'true' : 'false' }}">{{ $cat->name }}</button>
+                        <button wire:click="filterCategory('{{ $cat->slug }}')" class="chip shrink-0 !border-transparent" aria-pressed="{{ $category === $cat->slug ? 'true' : 'false' }}">{{ $cat->name }} <span class="opacity-60 text-xs">{{ $cat->posts_count }}</span></button>
                     @endforeach
                 </div>
                 <label class="relative md:w-72 shrink-0">
@@ -112,133 +112,78 @@ class extends Component {
         </div>
     </section>
 
-    <!-- Featured Post -->
-    @if($featuredPost && !$category && !$search && !$tag)
-    <section class="py-12 px-4">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-8">Featured Article</h2>
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
-                <div class="grid md:grid-cols-2">
-                    <div class="h-96 bg-gray-100">
-                        @if($featuredPost->cover_photo_path)
-                            <img src="{{ asset('storage/' . $featuredPost->cover_photo_path) }}" alt="{{ $featuredPost->photo_alt_text }}" class="w-full h-full object-cover object-center">
-                        @else
-                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800" alt="{{ $featuredPost->title }}" class="w-full h-full object-cover object-center">
-                        @endif
-                    </div>
-                    <div class="p-8 flex flex-col justify-center">
-                        <div class="flex items-center mb-4">
-                            @if($featuredPost->categories->first())
-                                <span class="px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-sm font-semibold mr-3">
-                                    {{ $featuredPost->categories->first()->name }}
-                                </span>
-                            @endif
-                            <span class="text-gray-500 text-sm">
-                                <i class="far fa-calendar mr-2"></i>
-                                {{ $featuredPost->published_at ? $featuredPost->published_at->format('F d, Y') : $featuredPost->created_at->format('F d, Y') }}
-                            </span>
-                        </div>
-                        <h3 class="text-3xl font-bold mb-4">{{ $featuredPost->title }}</h3>
-                        <p class="text-gray-600 text-lg mb-6">{{ $featuredPost->sub_title ?? Str::limit(strip_tags($featuredPost->body), 150) }}</p>
-                        <div class="flex items-center mb-6">
-                            @if($featuredPost->user->profile_photo_path)
-                                <img src="{{ asset('storage/' . $featuredPost->user->profile_photo_path) }}" alt="{{ $featuredPost->user->name }}" class="w-10 h-10 rounded-full mr-3">
-                            @else
-                                <img src="https://ui-avatars.com/api/?name={{ urlencode($featuredPost->user->name) }}&size=40&background=667eea&color=fff" alt="{{ $featuredPost->user->name }}" class="w-10 h-10 rounded-full mr-3">
-                            @endif
-                            <div>
-                                <p class="font-semibold">{{ $featuredPost->user->name }}</p>
-                            </div>
-                        </div>
-                        <a href="{{ route('blog.show', $featuredPost->slug) }}" class="inline-block px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">Read Full Article</a>
-                    </div>
+    @if($featuredPost && !$category && !$search && !$tag && $posts->onFirstPage())
+        @php
+            $f = $featuredPost;
+            $fDate = $f->published_at ?? $f->created_at;
+            $fCover = $f->cover_photo_path ? asset('storage/' . $f->cover_photo_path) : asset('homeassets/img/site/students-library.webp');
+        @endphp
+        <section class="pt-16 px-4" data-no-auto>
+            <article class="max-w-7xl mx-auto relative grid lg:grid-cols-2 overflow-hidden rounded-[2rem] surface group" data-reveal>
+                <div class="relative min-h-[280px] lg:min-h-[460px] overflow-hidden">
+                    <img src="{{ $fCover }}" alt="{{ $f->photo_alt_text ?: $f->title }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.4s] ease-[cubic-bezier(.23,1,.32,1)] group-hover:scale-105">
+                    <span class="uni-chip absolute top-5 left-5 !bg-amber-400 !text-[#1a1a4e]"><i class="fas fa-bolt"></i>Featured</span>
                 </div>
-            </div>
-        </div>
-    </section>
+                <div class="p-8 md:p-12 flex flex-col justify-center">
+                    <p class="text-xs font-mono uppercase tracking-wider text-muted">
+                        @if($f->categories->first()){{ $f->categories->first()->name }} · @endif
+                        <time datetime="{{ $fDate->toDateString() }}">{{ $fDate->format('F j, Y') }}</time>
+                    </p>
+                    <h2 class="h-display text-3xl md:text-5xl mt-4 !leading-[1.08]">
+                        <a href="{{ route('blog.show', $f->slug) }}" class="after:absolute after:inset-0">{{ $f->title }}</a>
+                    </h2>
+                    <p class="mt-5 text-lg text-muted line-clamp-3">{{ $f->sub_title ?: Str::limit(strip_tags($f->body), 180) }}</p>
+                    <span class="mt-8 inline-flex items-center gap-2 font-medium text-accent group-hover:gap-3 transition-all">Read the article <i class="fas fa-arrow-right text-xs"></i></span>
+                </div>
+            </article>
+        </section>
     @endif
 
-    <!-- Blog Grid -->
-    <section class="py-12 px-4">
+    <section class="py-16 md:py-20 px-4" data-no-auto>
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-8">
-                @if($category)
-                    {{ $categories->firstWhere('slug', $category)?->name }} Articles
-                @elseif($search)
-                    Search Results for "{{ $search }}"
-                @else
-                    Latest Articles
-                @endif
-            </h2>
+            <div class="flex items-end justify-between gap-4 mb-8">
+                <h2 class="h-display text-3xl md:text-4xl">
+                    @if($category)
+                        {{ $categories->firstWhere('slug', $category)?->name }}
+                    @elseif($search)
+                        Results for “{{ $search }}”
+                    @else
+                        Latest articles
+                    @endif
+                </h2>
+                @if($posts->total())<p class="text-sm text-muted">{{ $posts->total() }} {{ Str::plural('article', $posts->total()) }}</p>@endif
+            </div>
 
             @if($posts->count() > 0)
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" wire:loading.class="opacity-50" style="transition: opacity .2s ease">
                     @foreach($posts as $post)
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
-                        <div class="h-56 overflow-hidden bg-gray-100">
-                            @if($post->cover_photo_path)
-                                <img src="{{ asset('storage/' . $post->cover_photo_path) }}" alt="{{ $post->photo_alt_text }}" class="w-full h-full object-cover object-center">
-                            @else
-                                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800" alt="{{ $post->title }}" class="w-full h-full object-cover object-center">
-                            @endif
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center mb-3">
-                                @if($post->categories->first())
-                                    <span class="px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-xs font-semibold mr-3">
-                                        {{ $post->categories->first()->name }}
-                                    </span>
-                                @endif
-                                <span class="text-gray-500 text-sm">
-                                    <i class="far fa-calendar mr-1"></i>
-                                    {{ $post->published_at ? $post->published_at->format('M d, Y') : $post->created_at->format('M d, Y') }}
-                                </span>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">{{ $post->title }}</h3>
-                            <p class="text-gray-600 mb-4">{{ $post->sub_title ?? Str::limit(strip_tags($post->body), 100) }}</p>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    @if($post->user->profile_photo_path)
-                                        <img src="{{ asset('storage/' . $post->user->profile_photo_path) }}" alt="{{ $post->user->name }}" class="w-8 h-8 rounded-full mr-2">
-                                    @else
-                                        <img src="https://ui-avatars.com/api/?name={{ urlencode($post->user->name) }}&size=32&background=764ba2&color=fff" alt="{{ $post->user->name }}" class="w-8 h-8 rounded-full mr-2">
-                                    @endif
-                                    <span class="text-sm font-semibold">{{ $post->user->name }}</span>
-                                </div>
-                                <a href="{{ route('blog.show', $post->slug) }}" class="text-sky-700 font-semibold hover:text-sky-800">Read More <i class="fas fa-arrow-right ml-1"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                        <div wire:key="post-{{ $post->id }}" class="card-in" style="--i: {{ $loop->index }}"><x-post-card :post="$post" /></div>
                     @endforeach
                 </div>
-
-                <!-- Pagination -->
-                <div class="mt-12">
-                    {{ $posts->links() }}
-                </div>
+                <div class="mt-14">{{ $posts->links() }}</div>
             @else
-                <div class="text-center py-12">
-                    <div class="text-gray-400 mb-4">
-                        <i class="fas fa-search text-6xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-700 mb-2">No Articles Found</h3>
-                    <p class="text-gray-600 mb-6">Try adjusting your search or filter criteria</p>
-                    <button wire:click="filterCategory('all')" class="px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
-                        View All Articles
-                    </button>
+                <div class="card max-w-lg mx-auto text-center py-14">
+                    <span class="icon-tile w-16 h-16 mx-auto text-2xl"><i class="fas fa-newspaper"></i></span>
+                    <h3 class="mt-6 text-2xl font-semibold text-ink">No articles found</h3>
+                    <p class="mt-2 text-muted">Try another search or browse all posts.</p>
+                    <button wire:click="filterCategory('all')" class="btn btn-primary mt-6">View all articles</button>
                 </div>
             @endif
         </div>
     </section>
 
-    <!-- Newsletter Section -->
-    <section style="--hero-img: url('/homeassets/img/site/students-library.webp')" class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
-        <div class="max-w-4xl mx-auto text-center text-white">
-            <h2 class="text-4xl font-bold mb-4">Subscribe to Our Newsletter</h2>
-            <p class="text-xl mb-8">Get the latest articles, tips, and updates delivered to your inbox</p>
-            <form class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
-                <input type="email" placeholder="Enter your email address" class="flex-1 px-6 py-4 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
-                <button type="submit" class="px-8 py-4 bg-white text-sky-700 rounded-lg font-semibold hover:bg-gray-100 transition">Subscribe</button>
+    <section class="px-4 pb-24" data-no-auto>
+        <div class="max-w-7xl mx-auto brand-band relative overflow-hidden rounded-[2rem] text-white p-8 md:p-14 grid lg:grid-cols-2 gap-8 items-center"
+            style="background: linear-gradient(120deg, rgba(26,26,78,.95), rgba(15,15,46,.9)), url('/homeassets/img/site/students-library.webp') center/cover;" data-reveal>
+            <div>
+                <span class="eyebrow !text-sky-300">Newsletter</span>
+                <h2 class="mt-4 text-3xl md:text-4xl font-semibold tracking-tight">Study-abroad tips in your inbox</h2>
+                <p class="mt-3 text-white/70">Intake deadlines, scholarship alerts and visa updates — once a month, no spam.</p>
+            </div>
+            <form class="flex flex-col sm:flex-row gap-3">
+                <label class="sr-only" for="newsletter-email">Email address</label>
+                <input id="newsletter-email" type="email" required placeholder="Enter your email address" class="flex-1 h-14 px-6 rounded-full !bg-white/10 !border !border-white/20 !text-white placeholder:!text-white/50 focus:!border-sky-300 focus:outline-none">
+                <button type="submit" class="btn btn-light h-14">Subscribe</button>
             </form>
         </div>
     </section>

@@ -172,6 +172,8 @@ jobs:
             #Setting up laravel
             php artisan migrate --force
             php artisan db:seed
+            # starter universities/courses catalogue (only adds missing records, runs once)
+            php artisan db:seed --class=CatalogSeeder --force
             php artisan cache:clear
             php artisan config:clear
             php artisan route:clear

@@ -93,7 +93,6 @@ class extends Component {
             {{-- Photo collage with floating 3D study objects --}}
             <div class="lg:col-span-6 relative">
                 <div class="hero-collage relative h-[440px] sm:h-[560px] lg:h-[640px]" data-collage>
-                    <div class="three-stage" data-three="floaters" data-preset="collage" aria-hidden="true" style="z-index:5"></div>
 
                     <figure class="collage-item" style="top:3%; left:0; width:58%; height:58%;" data-depth="0.6">
                         <img src="/homeassets/img/site/students-laptop.webp" alt="Students working together on laptops" loading="eager">
@@ -315,6 +314,9 @@ class extends Component {
                     <div class="uni-logo-card shrink-0 rounded-2xl p-5 h-40 w-60 flex flex-col items-center justify-center gap-3">
                         @if ($school->logo_url)
                             <img src="/storage/{{ $school->logo_url }}" alt="{{ $school->name }}" class="h-16 w-auto max-w-[160px] object-contain pointer-events-none" loading="lazy" draggable="false">
+                        @else
+                            @php $w = collect(preg_split('/[\s\-]+/', $school->name))->reject(fn ($x) => in_array(strtolower($x), ['of', 'the', 'and', 'in', 'for', 'at']))->values(); @endphp
+                            <span class="grid place-items-center w-14 h-14 rounded-2xl bg-[var(--accent-soft)] text-accent font-bold text-lg">{{ strtoupper(mb_substr($w[0] ?? '', 0, 1) . mb_substr($w[1] ?? '', 0, 1)) }}</span>
                         @endif
                         <div class="text-sm font-semibold text-ink text-center line-clamp-2">{{ $school->name }}</div>
                     </div>
@@ -530,7 +532,6 @@ class extends Component {
     {{-- ============================== CTA ============================== --}}
     <section class="brand-band relative overflow-hidden py-32 lg:py-44 px-4 text-white" data-cta-zoom data-no-auto
         style="background: radial-gradient(60% 80% at 80% 0%, rgba(3,105,161,.55), transparent 60%), linear-gradient(160deg, rgba(26,26,78,.93), rgba(15,15,46,.95)), url('/homeassets/img/site/graduates-caps.webp') center/cover;">
-        <div class="three-stage" data-three="floaters" data-preset="cta" aria-hidden="true"></div>
         <div class="relative z-10 max-w-4xl mx-auto text-center">
             <span class="eyebrow !text-sky-300" data-reveal>Let’s begin</span>
             <h2 class="mt-6 text-5xl md:text-7xl font-semibold tracking-tight leading-[1.02]" data-split>Ready to start your journey?</h2>

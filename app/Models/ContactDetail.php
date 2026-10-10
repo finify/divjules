@@ -74,4 +74,21 @@ class ContactDetail extends Model
     {
         return in_array($this->type, ['email', 'phone', 'url']);
     }
+
+    /** Full Font Awesome class for the stored (heroicon-style) icon name. */
+    public function getFaIconAttribute(): string
+    {
+        $haystack = strtolower(($this->key ?? '') . ' ' . ($this->label ?? ''));
+        if (str_contains($haystack, 'whatsapp')) {
+            return 'fab fa-whatsapp';
+        }
+
+        $name = str_replace(['heroicon-o-', 'heroicon-s-', 'fa-', 'fas ', 'far ', 'fab '], '', (string) $this->icon);
+        $map = [
+            'envelope' => 'envelope', 'phone' => 'phone', 'map-pin' => 'location-dot', 'globe-alt' => 'globe',
+            'clock' => 'clock', 'chat-bubble-left-right' => 'comments', 'chat-bubble-left' => 'comment', 'building-office' => 'building',
+        ];
+
+        return 'fas fa-' . ($map[$name] ?? ($name ?: 'circle-info'));
+    }
 }

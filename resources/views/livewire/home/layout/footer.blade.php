@@ -12,7 +12,7 @@ use function Livewire\Volt\{state};
         <div class="container-x relative">
             <div class="grid lg:grid-cols-12 gap-12 pb-14 border-b border-white/10" data-reveal-group>
                 <div class="lg:col-span-5" data-reveal>
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="Divjules" class="h-11 w-auto" style="filter: brightness(0) invert(1);">
+                    <x-logo variant="light" class="h-11" />
                     <p class="mt-5 text-white/60 max-w-sm leading-relaxed">Your trusted partner for international education — from choosing a course to landing on campus.</p>
                     <a href="{{ route('home.contact') }}" class="btn btn-light mt-7" data-magnetic>Book a free consultation <i class="fas fa-arrow-right text-xs btn-arrow"></i></a>
                     <div class="flex gap-3 mt-8">
@@ -51,12 +51,12 @@ use function Livewire\Volt\{state};
                             <li class="flex items-start">
                                 @if($contact->is_clickable)
                                     <a href="{{ $contact->link }}" class="footer-link">
-                                        <i class="fas {{ str_replace('heroicon-o-', 'fa-', $contact->icon ?? 'fa-circle') }} mr-2 mt-1 text-sky-400"></i>
+                                        <i class="{{ $contact->fa_icon }} mr-2 mt-1 text-sky-400"></i>
                                         {{ $contact->value }}
                                     </a>
                                 @else
                                     <span>
-                                        <i class="fas {{ str_replace('heroicon-o-', 'fa-', $contact->icon ?? 'fa-circle') }} mr-2 mt-1 text-sky-400"></i>
+                                        <i class="{{ $contact->fa_icon }} mr-2 mt-1 text-sky-400"></i>
                                         {!! $contact->formatted_value !!}
                                     </span>
                                 @endif

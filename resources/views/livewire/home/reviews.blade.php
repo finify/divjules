@@ -175,7 +175,7 @@ class extends Component {
     </section>
 
     <!-- CTA Section -->
-    <section style="--hero-img: url('/homeassets/img/site/graduates-caps.webp')" class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
+    <section style="--hero-img: url('/homeassets/img/site/graduates-caps.webp')" class="page-hero brand-band py-24 md:py-32 px-4">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">Share Your Experience</h2>
             <p class="text-xl text-sky-100 mb-8">Had a great experience with Divjules? Let others know!</p>

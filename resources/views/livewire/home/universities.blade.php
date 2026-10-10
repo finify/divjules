@@ -126,106 +126,39 @@ class extends Component {
         </select>
     </x-filter-bar>
 
-    <!-- Universities Grid -->
-    <section class="py-16 px-4 bg-gray-50">
+    <!-- Universities grid -->
+    <section class="pt-14 pb-24 px-4" data-no-auto>
         <div class="max-w-7xl mx-auto">
             @if($universities->count() > 0)
-                <div class="mb-8">
-                    <p class="text-gray-600">{{ $universities->total() }} universities found</p>
+                <div class="results-bar">
+                    <p class="text-muted"><span class="text-ink font-semibold">{{ $universities->total() }}</span> {{ Str::plural('university', $universities->total()) }} found</p>
+                    <p class="text-sm text-muted hidden sm:block">Showing {{ $universities->firstItem() }}–{{ $universities->lastItem() }}</p>
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @foreach($universities as $university)
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <!-- University Banner -->
-                        <div class="h-48 bg-gradient-to-r from-[#1a1a4e] to-[#2a2a5e] relative">
-                            @if($university->banner_image_url)
-                                <img src="{{ $university->banner_image_url }}" alt="{{ $university->name }}" class="w-full h-full object-cover">
-                            @endif
-                            @if($university->is_featured)
-                                <div class="absolute top-4 right-4 bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
-                                    Featured
-                                </div>
-                            @endif
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" wire:loading.class="opacity-50 pointer-events-none" style="transition: opacity .2s ease">
+                    @foreach($universities as $item)
+                        <div wire:key="university-{{ $item->id }}" class="card-in" style="--i: {{ $loop->index }}">
+                            <x-university-card :university="$item" />
                         </div>
-
-                        <!-- University Logo -->
-                        <div class="relative px-6 -mt-12">
-                            <div class="bg-white w-24 h-24 rounded-full shadow-lg flex items-center justify-center p-2">
-                                @if($university->logo_url)
-                                    <img src="{{ $university->logo_url }}" alt="{{ $university->name }}" class="w-full h-full object-contain">
-                                @else
-                                    <i class="fas fa-university text-4xl text-sky-700"></i>
-                                @endif
-                            </div>
-                        </div>
-
-                        <!-- University Info -->
-                        <div class="p-6 pt-4">
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $university->name }}</h3>
-
-                            <div class="flex items-center text-gray-600 text-sm mb-2">
-                                <i class="fas fa-map-marker-alt mr-2"></i>
-                                {{ $university->city ? $university->city . ', ' : '' }}{{ $university->country }}
-                            </div>
-
-                            @if($university->ranking)
-                                <div class="flex items-center text-gray-600 text-sm mb-3">
-                                    <i class="fas fa-trophy mr-2 text-yellow-500"></i>
-                                    Ranked #{{ $university->ranking }} globally
-                                </div>
-                            @endif
-
-                            @if($university->description)
-                                <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ $university->description }}</p>
-                            @endif
-
-                            <!-- Stats -->
-                            <div class="flex items-center justify-between text-sm text-gray-600 mb-4 pb-4 border-b">
-                                <div class="flex items-center">
-                                    <i class="fas fa-book mr-2 text-sky-700"></i>
-                                    {{ $university->courses_count }} Courses
-                                </div>
-                                <div class="bg-gray-100 px-3 py-1 rounded-full text-xs font-semibold">
-                                    {{ ucfirst($university->type) }}
-                                </div>
-                            </div>
-
-                            <!-- Actions -->
-                            <div class="flex gap-2">
-                                @if($university->website)
-                                    <a href="{{ $university->website }}" target="_blank" class="flex-1 text-center px-4 py-2 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
-                                        Visit Website
-                                    </a>
-                                @endif
-                                <button class="px-4 py-2 border-2 border-sky-700 text-sky-700 rounded-lg font-semibold hover:bg-sky-50 transition">
-                                    <i class="fas fa-info-circle"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                     @endforeach
                 </div>
 
-                <!-- Pagination -->
-                <div class="mt-12">
+                <div class="mt-14">
                     {{ $universities->links() }}
                 </div>
             @else
-                <div class="text-center py-16">
-                    <i class="fas fa-university text-6xl text-gray-300 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-700 mb-2">No Universities Found</h3>
-                    <p class="text-gray-500 mb-4">Try adjusting your filters or search criteria</p>
-                    <button wire:click="clearFilters" class="px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
-                        Clear All Filters
-                    </button>
+                <div class="card max-w-lg mx-auto text-center py-14">
+                    <span class="icon-tile w-16 h-16 mx-auto text-2xl"><i class="fas fa-building-columns"></i></span>
+                    <h3 class="mt-6 text-2xl font-semibold text-ink">No universities found</h3>
+                    <p class="mt-2 text-muted">Try a different search, or clear your filters.</p>
+                    <button wire:click="clearFilters" class="btn btn-primary mt-6">Clear all filters</button>
                 </div>
             @endif
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section style="--hero-img: url('/homeassets/img/site/dest-uk.webp')" class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
+    <section style="--hero-img: url('/homeassets/img/site/dest-uk.webp')" class="page-hero brand-band py-24 md:py-32 px-4">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Can't Find Your Ideal University?</h2>
             <p class="text-xl mb-8">Contact our expert counsellors for personalized recommendations</p>

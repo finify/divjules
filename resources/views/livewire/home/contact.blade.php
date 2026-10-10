@@ -57,6 +57,22 @@ class extends Component {
         ];
     }
 
+    public array $faqs = [
+        ['How long does the application process take?', "Typically, the entire process takes 4-8 weeks, depending on the university and course. We'll guide you through each step to ensure timely submission."],
+        ['Do you charge for consultation services?', "Your initial consultation is completely free! We'll discuss your goals and provide guidance at no cost. Additional services may have fees, which we'll discuss transparently."],
+        ['Can you help with visa applications?', 'Yes! We provide comprehensive visa assistance, including document preparation, application review, and interview preparation to maximize your chances of approval.'],
+        ["What if I don't meet the entry requirements?", 'We offer pathway programs and foundation courses that can help you meet university requirements. Our counsellors will find the best route for your situation.'],
+        ['Do you help with scholarships?', 'Absolutely! We have information on numerous scholarships and can help you identify and apply for opportunities that match your profile.'],
+    ];
+
+    public function rendering($view): void
+    {
+        $view->layoutData(['schema' => [[
+            '@type' => 'FAQPage',
+            'mainEntity' => array_map(fn ($f) => ['@type' => 'Question', 'name' => $f[0], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]]], $this->faqs),
+        ]]]);
+    }
+
     public function submit()
     {
         $this->validate();
@@ -114,360 +130,190 @@ class extends Component {
     }
 }; ?>
 
+@php
+    $field = 'w-full h-12 px-4 rounded-2xl border border-line bg-[var(--surface-2)] text-ink focus:bg-[var(--surface)] transition';
+    $interests = ['Undergraduate Programs' => 'Undergraduate', 'Postgraduate Programs' => 'Postgraduate', 'Pathway Courses' => 'Pathway', 'Free Consultation' => 'Consultation', 'Visa Assistance' => 'Visa help', 'Other Services' => 'Something else'];
+@endphp
+
 <div>
-    <!-- Hero Section -->
-    <section style="--hero-img: url('/homeassets/img/site/consultation.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
-        <div class="max-w-7xl mx-auto text-center text-white">
-            <h1 class="text-5xl font-bold mb-4">Get in Touch</h1>
-            <p class="text-xl">We're here to answer all your questions about studying abroad</p>
+    <section style="--hero-img: url('/homeassets/img/site/consultation.webp')" class="page-hero pt-40 md:pt-48 pb-28 md:pb-36 px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <span class="eyebrow !text-sky-300 justify-center">Contact us</span>
+            <h1 class="mt-5">Let's plan your study abroad journey</h1>
+            <p class="mt-5 text-xl">Ask us anything — courses, costs, scholarships or visas. A counsellor will reply within one working day.</p>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="py-20 px-4">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-12">
-
-                <!-- Contact Form -->
-                <div class="bg-white p-8 rounded-xl shadow-lg">
-                    @if($submitted)
-                        <div class="text-center py-8">
-                            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Message Sent Successfully!</h3>
-                            <p class="text-gray-600 mb-6">Thank you for contacting us. We'll get back to you as soon as possible.</p>
-
-                            @if($whatsappUrl)
-                                <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl">
-                                    <p class="text-gray-700 font-medium mb-3">Want a faster response? Send your enquiry directly via WhatsApp:</p>
-                                    <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener"
-                                        class="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white rounded-lg font-semibold hover:bg-[#1ebe5d] transition text-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                                        </svg>
-                                        Send via WhatsApp
-                                    </a>
-                                </div>
-                            @endif
-
-                            <button wire:click="$set('submitted', false)" class="px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
-                                Send Another Message
-                            </button>
-                        </div>
+    {{-- quick channels --}}
+    <section class="relative z-20 -mt-16 px-4" data-no-auto>
+        <div class="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-{{ min(4, max(1, $contactDetails->count())) }} gap-4">
+            @foreach($contactDetails->take(4) as $contact)
+                @php $icon = $contact->fa_icon; @endphp
+                <div class="card !p-5 group" data-reveal data-spotlight>
+                    <span class="icon-tile group-hover:bg-[var(--accent)] group-hover:text-white transition-colors"><i class="{{ $icon }}"></i></span>
+                    <p class="mt-4 text-xs font-mono uppercase tracking-wider text-muted">{{ $contact->label }}</p>
+                    @if($contact->is_clickable)
+                        <a href="{{ $contact->link }}" class="mt-1 block font-semibold text-ink break-words after:absolute after:inset-0 group-hover:text-accent transition-colors">{{ $contact->value }}</a>
                     @else
-                        <h2 class="text-3xl font-bold mb-6">Send Us a Message</h2>
-
-                        @if (session('error'))
-                            <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-
-                        <form wire:submit="submit" class="space-y-6">
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
-                                    <input type="text" wire:model.blur="first_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('first_name') border-red-500 @enderror">
-                                    @error('first_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
-                                    <input type="text" wire:model.blur="last_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('last_name') border-red-500 @enderror">
-                                    @error('last_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                                <input type="email" wire:model.blur="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('email') border-red-500 @enderror">
-                                @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                                <input type="tel" wire:model.blur="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('phone') border-red-500 @enderror">
-                                @error('phone') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Country *</label>
-                                <select wire:model.blur="country" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('country') border-red-500 @enderror">
-                                    <option value="">Select your country</option>
-                                    <option value="United Kingdom">United Kingdom</option>
-                                    <option value="United States">United States</option>
-                                    <option value="Canada">Canada</option>
-                                    <option value="Australia">Australia</option>
-                                    <option value="India">India</option>
-                                    <option value="Nigeria">Nigeria</option>
-                                    <option value="United Arab Emirates">United Arab Emirates</option>
-                                    <option value="Singapore">Singapore</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                                @error('country') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">I'm Interested In *</label>
-                                <select wire:model.blur="interest" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('interest') border-red-500 @enderror">
-                                    <option value="">Select an option</option>
-                                    <option value="Undergraduate Programs">Undergraduate Programs</option>
-                                    <option value="Postgraduate Programs">Postgraduate Programs</option>
-                                    <option value="Pathway Courses">Pathway Courses</option>
-                                    <option value="Free Consultation">Free Consultation</option>
-                                    <option value="Visa Assistance">Visa Assistance</option>
-                                    <option value="Other Services">Other Services</option>
-                                </select>
-                                @error('interest') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Your Message *</label>
-                                <textarea wire:model.blur="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('message') border-red-500 @enderror"></textarea>
-                                @error('message') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-
-                            <div class="flex items-start">
-                                <input type="checkbox" wire:model="consent" class="mt-1 mr-3">
-                                <label class="text-sm text-gray-600">
-                                    I agree to receive information about courses and services from Divjules. We respect your privacy and will never share your details with third parties. *
-                                </label>
-                            </div>
-                            @error('consent') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-
-                            <button type="submit" wire:loading.attr="disabled" class="w-full px-8 py-4 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition disabled:opacity-50">
-                                <span wire:loading.remove wire:target="submit">Send Message</span>
-                                <span wire:loading wire:target="submit">Sending...</span>
-                            </button>
-                        </form>
+                        <p class="mt-1 font-semibold text-ink break-words">{!! $contact->formatted_value !!}</p>
                     @endif
                 </div>
-
-                <!-- Contact Information -->
-                <div>
-                    <div class="bg-white p-8 rounded-xl shadow-lg mb-8">
-                        <h2 class="text-3xl font-bold mb-6">Contact Information</h2>
-
-                        <div class="space-y-6">
-                            @foreach($contactDetails as $contact)
-                                <div class="flex items-start">
-                                    <div class="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                        <i class="fas {{ str_replace('heroicon-o-', 'fa-', $contact->icon ?? 'fa-circle') }} text-sky-700"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="font-bold mb-1">{{ $contact->label }}</h3>
-                                        @if($contact->is_clickable)
-                                            <a href="{{ $contact->link }}" class="text-gray-600 hover:text-sky-700 transition-colors">
-                                                {{ $contact->value }}
-                                            </a>
-                                        @else
-                                            <p class="text-gray-600">{!! $contact->formatted_value !!}</p>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-
-                        <div class="mt-8 pt-8 border-t">
-                            <h3 class="font-bold mb-4">Follow Us</h3>
-                            <div class="flex space-x-4">
-                                @if($socialLinks['facebook'])
-                                <a href="{{ $socialLinks['facebook'] }}" target="_blank" rel="noopener" class="w-12 h-12 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center hover:bg-sky-700 hover:text-white transition">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                @endif
-                                @if($socialLinks['twitter'])
-                                <a href="{{ $socialLinks['twitter'] }}" target="_blank" rel="noopener" class="w-12 h-12 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center hover:bg-sky-700 hover:text-white transition">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                @endif
-                                @if($socialLinks['instagram'])
-                                <a href="{{ $socialLinks['instagram'] }}" target="_blank" rel="noopener" class="w-12 h-12 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center hover:bg-sky-700 hover:text-white transition">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                @endif
-                                @if($socialLinks['linkedin'])
-                                <a href="{{ $socialLinks['linkedin'] }}" target="_blank" rel="noopener" class="w-12 h-12 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center hover:bg-sky-700 hover:text-white transition">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                @endif
-                                @if($socialLinks['youtube'])
-                                <a href="{{ $socialLinks['youtube'] }}" target="_blank" rel="noopener" class="w-12 h-12 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center hover:bg-sky-700 hover:text-white transition">
-                                    <i class="fab fa-youtube"></i>
-                                </a>
-                                @endif
-                                @if(!array_filter($socialLinks))
-                                <p class="text-sm text-gray-400 italic">No social links configured yet.</p>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quick Links -->
-                    <div class="bg-gradient-to-br from-[#1a1a4e] to-[#1a1a4e] p-8 rounded-xl shadow-lg text-white">
-                        <h3 class="text-2xl font-bold mb-4">Book a Free Consultation</h3>
-                        <p class="mb-6">Schedule a one-on-one session with our expert counsellors to discuss your study abroad plans.</p>
-                        <a href="/apply" class="inline-block px-6 py-3 bg-white text-sky-700 rounded-lg font-semibold hover:bg-gray-100 transition">Book Now</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
 
-    <!-- Office Locations -->
-    {{-- <section class="py-20 px-4 bg-white">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Office Locations</h2>
-                <p class="text-xl text-gray-600">Visit us at any of our global offices</p>
+    <section id="contact-form" class="py-20 md:py-24 px-4" data-no-auto>
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-7 card !p-7 md:!p-10" data-reveal>
+                @if($submitted)
+                    <div class="text-center py-10">
+                        <span class="grid place-items-center w-20 h-20 mx-auto rounded-full bg-emerald-500/15 text-emerald-500 text-3xl"><i class="fas fa-check"></i></span>
+                        <h2 class="mt-6 text-3xl font-semibold tracking-tight text-ink">Message sent</h2>
+                        <p class="mt-3 text-muted">Thank you for contacting us. We'll get back to you as soon as possible.</p>
+                        @if($whatsappUrl)
+                            <div class="mt-8 p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+                                <p class="text-ink font-medium">Want a faster reply? Send your enquiry on WhatsApp too.</p>
+                                <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener" class="btn mt-4 !bg-[#25D366] text-white hover:!bg-[#1ebe5d]"><i class="fab fa-whatsapp text-lg"></i> Send via WhatsApp</a>
+                            </div>
+                        @endif
+                        <button wire:click="$set('submitted', false)" class="btn btn-ghost mt-8">Send another message</button>
+                    </div>
+                @else
+                    <h2 class="text-3xl font-semibold tracking-tight text-ink">Send us a message</h2>
+                    <p class="mt-2 text-muted">Fields marked * are required.</p>
+
+                    @if (session('error'))
+                        <div class="mt-6 p-4 rounded-2xl bg-red-500/10 text-red-600 dark:text-red-300 border border-red-500/20">{{ session('error') }}</div>
+                    @endif
+
+                    <form wire:submit="submit" class="mt-8 space-y-5" novalidate>
+                        <div class="grid sm:grid-cols-2 gap-5">
+                            <div>
+                                <label for="c-first" class="block text-sm font-medium text-ink mb-2">First name *</label>
+                                <input id="c-first" type="text" autocomplete="given-name" wire:model.blur="first_name" class="{{ $field }} @error('first_name') !border-red-500 @enderror">
+                                @error('first_name') <p class="mt-1.5 text-sm text-red-500">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="c-last" class="block text-sm font-medium text-ink mb-2">Last name *</label>
+                                <input id="c-last" type="text" autocomplete="family-name" wire:model.blur="last_name" class="{{ $field }} @error('last_name') !border-red-500 @enderror">
+                                @error('last_name') <p class="mt-1.5 text-sm text-red-500">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
+                        <div class="grid sm:grid-cols-2 gap-5">
+                            <div>
+                                <label for="c-email" class="block text-sm font-medium text-ink mb-2">Email *</label>
+                                <input id="c-email" type="email" autocomplete="email" wire:model.blur="email" class="{{ $field }} @error('email') !border-red-500 @enderror">
+                                @error('email') <p class="mt-1.5 text-sm text-red-500">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="c-phone" class="block text-sm font-medium text-ink mb-2">Phone / WhatsApp</label>
+                                <input id="c-phone" type="tel" autocomplete="tel" wire:model.blur="phone" class="{{ $field }} @error('phone') !border-red-500 @enderror">
+                                @error('phone') <p class="mt-1.5 text-sm text-red-500">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
+                        <div>
+                            <label for="c-country" class="block text-sm font-medium text-ink mb-2">Where do you want to study? *</label>
+                            <select id="c-country" wire:model.blur="country" class="filter-select !max-w-none w-full !h-12 !rounded-2xl @error('country') !border-red-500 @enderror">
+                                <option value="">Select a country</option>
+                                @foreach (['United Kingdom', 'Canada', 'United States', 'Australia', 'Germany', 'Ireland', 'United Arab Emirates', 'Not sure yet', 'Other'] as $opt)
+                                    <option value="{{ $opt }}">{{ $opt }}</option>
+                                @endforeach
+                            </select>
+                            @error('country') <p class="mt-1.5 text-sm text-red-500">{{ $message }}</p> @enderror
+                        </div>
+                        <fieldset>
+                            <legend class="block text-sm font-medium text-ink mb-2">I'm interested in *</legend>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach ($interests as $value => $label)
+                                    <label class="chip has-[:checked]:!bg-[var(--accent)] has-[:checked]:!text-white has-[:checked]:!border-[var(--accent)]">
+                                        <input type="radio" name="interest" value="{{ $value }}" wire:model="interest" class="sr-only">{{ $label }}
+                                    </label>
+                                @endforeach
+                            </div>
+                            @error('interest') <p class="mt-1.5 text-sm text-red-500">{{ $message }}</p> @enderror
+                        </fieldset>
+                        <div>
+                            <label for="c-msg" class="block text-sm font-medium text-ink mb-2">Your message *</label>
+                            <textarea id="c-msg" wire:model.blur="message" rows="5" placeholder="Tell us what you'd like to study, your current qualification and when you'd like to start." class="w-full px-4 py-3 rounded-2xl border border-line bg-[var(--surface-2)] text-ink focus:bg-[var(--surface)] transition @error('message') !border-red-500 @enderror"></textarea>
+                            @error('message') <p class="mt-1.5 text-sm text-red-500">{{ $message }}</p> @enderror
+                        </div>
+                        <label class="flex items-start gap-3 text-sm text-muted cursor-pointer">
+                            <input type="checkbox" wire:model="consent" class="mt-0.5 w-5 h-5 rounded accent-[var(--accent)] shrink-0">
+                            <span>I agree to receive information about courses and services from Divjules. We respect your privacy and will never share your details with third parties. *</span>
+                        </label>
+                        @error('consent') <p class="text-sm text-red-500">{{ $message }}</p> @enderror
+
+                        <button type="submit" wire:loading.attr="disabled" class="btn btn-primary w-full !py-4 disabled:opacity-60">
+                            <span wire:loading.remove wire:target="submit">Send message <i class="fas fa-paper-plane text-sm ml-1"></i></span>
+                            <span wire:loading wire:target="submit"><i class="fas fa-circle-notch fa-spin mr-2"></i>Sending…</span>
+                        </button>
+                    </form>
+                @endif
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- UK Office -->
-                <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-sky-700 text-white rounded-lg flex items-center justify-center mr-4">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-xl">London, UK</h3>
-                            <span class="text-sm text-sky-700">Headquarters</span>
-                        </div>
+            <aside class="lg:col-span-5 space-y-5">
+                <div class="card brand-band !p-0 !bg-[#1a1a4e] !border-transparent text-white overflow-hidden" data-reveal>
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="/homeassets/img/site/students-friends.webp" alt="Students smiling together" class="absolute inset-0 w-full h-full object-cover" data-img-zoom>
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#1a1a4e] to-transparent"></div>
                     </div>
-                    <p class="text-gray-600 mb-2">123 Education Street</p>
-                    <p class="text-gray-600 mb-2">London, WC1A 1AA</p>
-                    <p class="text-gray-600 mb-4">United Kingdom</p>
-                    <p class="text-gray-700"><i class="fas fa-phone mr-2 text-sky-700"></i> +44 (0) 20 1234 5678</p>
+                    <div class="p-7 -mt-8 relative">
+                        <h3 class="text-xl font-semibold">What happens next</h3>
+                        <ol class="mt-5 space-y-4">
+                            @foreach ([['We reply within one working day', 'A counsellor reviews your message and gets in touch.'], ['Free consultation call', 'We talk through your goals, budget and qualifications.'], ['Your shortlist & plan', 'Universities, courses, deadlines and the visa route that fit you.']] as $i => [$t, $d])
+                                <li class="flex gap-4">
+                                    <span class="grid place-items-center w-8 h-8 rounded-full bg-white/10 text-sky-300 text-sm font-semibold shrink-0">{{ $i + 1 }}</span>
+                                    <div><p class="font-medium">{{ $t }}</p><p class="text-sm text-white/60">{{ $d }}</p></div>
+                                </li>
+                            @endforeach
+                        </ol>
+                    </div>
                 </div>
 
-                <!-- USA Office -->
-                <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-blue-600 text-white rounded-lg flex items-center justify-center mr-4">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-xl">New York, USA</h3>
-                            <span class="text-sm text-blue-600">Regional Office</span>
-                        </div>
+                <div class="card" data-reveal>
+                    <h3 class="font-semibold text-ink">Follow us</h3>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        @foreach (['facebook' => 'facebook-f', 'twitter' => 'x-twitter', 'instagram' => 'instagram', 'linkedin' => 'linkedin-in', 'youtube' => 'youtube'] as $key => $icon)
+                            @if ($socialLinks[$key])
+                                <a href="{{ $socialLinks[$key] }}" target="_blank" rel="noopener" class="theme-toggle !w-11 !h-11" aria-label="{{ ucfirst($key) }}"><i class="fab fa-{{ $icon }}"></i></a>
+                            @endif
+                        @endforeach
+                        @if (! array_filter($socialLinks))
+                            <p class="text-sm text-muted">Social links coming soon.</p>
+                        @endif
                     </div>
-                    <p class="text-gray-600 mb-2">456 Fifth Avenue</p>
-                    <p class="text-gray-600 mb-2">New York, NY 10001</p>
-                    <p class="text-gray-600 mb-4">United States</p>
-                    <p class="text-gray-700"><i class="fas fa-phone mr-2 text-blue-600"></i> +1 (555) 123-4567</p>
+                    @if ($contactDetails->count() > 4)
+                        <ul class="mt-6 pt-6 border-t border-line space-y-3 text-sm">
+                            @foreach ($contactDetails->slice(4) as $contact)
+                                <li class="flex gap-3"><i class="{{ $contact->fa_icon }} text-accent mt-1"></i>
+                                    <span><span class="text-muted">{{ $contact->label }}:</span>
+                                    @if ($contact->is_clickable)<a href="{{ $contact->link }}" class="text-ink hover:text-accent">{{ $contact->value }}</a>@else<span class="text-ink">{!! $contact->formatted_value !!}</span>@endif</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
-
-                <!-- Canada Office -->
-                <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-red-600 text-white rounded-lg flex items-center justify-center mr-4">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-xl">Toronto, Canada</h3>
-                            <span class="text-sm text-red-600">Regional Office</span>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-2">789 Bay Street</p>
-                    <p class="text-gray-600 mb-2">Toronto, ON M5G 2C8</p>
-                    <p class="text-gray-600 mb-4">Canada</p>
-                    <p class="text-gray-700"><i class="fas fa-phone mr-2 text-red-600"></i> +1 (416) 123-4567</p>
-                </div>
-
-                <!-- India Office -->
-                <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-orange-600 text-white rounded-lg flex items-center justify-center mr-4">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-xl">Delhi, India</h3>
-                            <span class="text-sm text-orange-600">Regional Office</span>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-2">Connaught Place</p>
-                    <p class="text-gray-600 mb-2">New Delhi, 110001</p>
-                    <p class="text-gray-600 mb-4">India</p>
-                    <p class="text-gray-700"><i class="fas fa-phone mr-2 text-orange-600"></i> +91 11 1234 5678</p>
-                </div>
-
-                <!-- UAE Office -->
-                <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-green-600 text-white rounded-lg flex items-center justify-center mr-4">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-xl">Dubai, UAE</h3>
-                            <span class="text-sm text-green-600">Regional Office</span>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-2">Business Bay</p>
-                    <p class="text-gray-600 mb-2">Dubai</p>
-                    <p class="text-gray-600 mb-4">United Arab Emirates</p>
-                    <p class="text-gray-700"><i class="fas fa-phone mr-2 text-green-600"></i> +971 4 123 4567</p>
-                </div>
-
-                <!-- Australia Office -->
-                <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-[#1a1a4e] text-white rounded-lg flex items-center justify-center mr-4">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-xl">Sydney, Australia</h3>
-                            <span class="text-sm text-[#1a1a4e]">Regional Office</span>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-2">George Street</p>
-                    <p class="text-gray-600 mb-2">Sydney, NSW 2000</p>
-                    <p class="text-gray-600 mb-4">Australia</p>
-                    <p class="text-gray-700"><i class="fas fa-phone mr-2 text-[#1a1a4e]"></i> +61 2 1234 5678</p>
-                </div>
-            </div>
+            </aside>
         </div>
-    </section> --}}
+    </section>
 
-    <!-- FAQ Section -->
-    <section class="py-20 px-4 bg-gray-50">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Frequently Asked Questions</h2>
-                <p class="text-xl text-gray-600">Quick answers to common questions</p>
+    <section class="py-20 md:py-24 px-4 bg-page-alt" data-no-auto>
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-4">
+                <span class="eyebrow" data-reveal>FAQ</span>
+                <h2 class="h-display text-4xl md:text-5xl mt-4" data-reveal>Questions, answered.</h2>
+                <p class="mt-4 text-muted" data-reveal>Still unsure? <a href="#contact-form" class="text-accent font-medium">Send us a message</a> and a counsellor will help.</p>
             </div>
-
-            <div class="space-y-4">
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="font-bold text-lg mb-2">How long does the application process take?</h3>
-                    <p class="text-gray-600">Typically, the entire process takes 4-8 weeks, depending on the university and course. We'll guide you through each step to ensure timely submission.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="font-bold text-lg mb-2">Do you charge for consultation services?</h3>
-                    <p class="text-gray-600">Your initial consultation is completely free! We'll discuss your goals and provide guidance at no cost. Additional services may have fees, which we'll discuss transparently.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="font-bold text-lg mb-2">Can you help with visa applications?</h3>
-                    <p class="text-gray-600">Yes! We provide comprehensive visa assistance, including document preparation, application review, and interview preparation to maximize your chances of approval.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="font-bold text-lg mb-2">What if I don't meet the entry requirements?</h3>
-                    <p class="text-gray-600">We offer pathway programs and foundation courses that can help you meet university requirements. Our counsellors will find the best route for your situation.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="font-bold text-lg mb-2">Do you help with scholarships?</h3>
-                    <p class="text-gray-600">Absolutely! We have information on numerous scholarships and can help you identify and apply for opportunities that match your profile.</p>
-                </div>
-            </div>
-
-            <div class="text-center mt-12">
-                <p class="text-gray-600 mb-4">Still have questions?</p>
-                <a href="#contact-form" class="inline-block px-8 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">Contact Us Now</a>
+            <div class="lg:col-span-8 space-y-3">
+                @foreach ($faqs as $i => [$q, $a])
+                    <details class="faq card !p-0 group" data-reveal {{ $i === 0 ? 'open' : '' }}>
+                        <summary class="flex items-center justify-between gap-4 cursor-pointer list-none px-6 py-5 font-semibold text-ink">
+                            {{ $q }}
+                            <span class="grid place-items-center w-8 h-8 rounded-full bg-[var(--accent-soft)] text-accent shrink-0 transition-transform duration-300 group-open:rotate-45"><i class="fas fa-plus text-xs"></i></span>
+                        </summary>
+                        <div class="faq-body px-6 pb-6 -mt-1 text-muted leading-relaxed">{{ $a }}</div>
+                    </details>
+                @endforeach
             </div>
         </div>
     </section>

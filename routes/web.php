@@ -12,8 +12,10 @@ use Livewire\Volt\Volt;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/ 
- Volt::route('/', 'home.index')->name('home.index');
+*/
+Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
+
+Volt::route('/', 'home.index')->name('home.index');
 Volt::route('/about', 'home.about')->name('home.about');
 Volt::route('/contact', 'home.contact')->name('home.contact');
 #blog routes

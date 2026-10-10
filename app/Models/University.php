@@ -72,6 +72,41 @@ class University extends Model
         return null;
     }
 
+    /** Banner image, or a photo of the destination country when none was uploaded. */
+    public function getCoverUrlAttribute(): string
+    {
+        if ($this->banner_image_url) {
+            return $this->banner_image_url;
+        }
+        $key = match (strtolower((string) $this->country)) {
+            'united kingdom', 'uk', 'england', 'scotland', 'wales', 'northern ireland' => 'uk',
+            'canada' => 'canada',
+            'united states', 'usa', 'united states of america', 'us' => 'usa',
+            'australia' => 'australia',
+            'germany' => 'germany',
+            'ireland' => 'ireland',
+            'united arab emirates', 'uae', 'dubai' => 'dubai',
+            default => null,
+        };
+
+        // mix the country photo with campus shots so a grid of same-country cards doesn't repeat
+        $pool = ['campus', 'library-modern', 'lecture-hall', 'auditorium', 'students-library', 'seminar', 'library-shelves'];
+        $id = (int) $this->id;
+        $image = ($key && $id % 3 === 0) || ! $id ? ($key ? "dest-{$key}" : 'campus') : $pool[$id % count($pool)];
+
+        return asset("homeassets/img/site/{$image}.webp");
+    }
+
+    /** Up to two initials for logo-less universities, e.g. "University of Kent" → "UK". */
+    public function getInitialsAttribute(): string
+    {
+        $words = collect(preg_split('/[\s\-]+/', $this->name))
+            ->reject(fn ($w) => in_array(strtolower($w), ['of', 'the', 'and', 'in', 'for', 'at', '&']))
+            ->values();
+
+        return strtoupper(mb_substr($words[0] ?? '', 0, 1) . mb_substr($words[1] ?? '', 0, 1));
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

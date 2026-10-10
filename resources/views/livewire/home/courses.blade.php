@@ -83,7 +83,7 @@ class extends Component {
 
         $courses = $query->ordered()->paginate(12);
 
-        $categories = CourseCategory::active()->ordered()->get();
+        $categories = CourseCategory::active()->ordered()->withCount(['courses' => fn ($q) => $q->active()])->get();
         $universities = University::active()->ordered()->get();
 
         return [
@@ -125,95 +125,32 @@ class extends Component {
         </select>
     </x-filter-bar>
 
-    <!-- Courses Grid -->
-    <section class="py-16 px-4 bg-gray-50">
+    <!-- Courses grid -->
+    <section class="pt-14 pb-24 px-4" data-no-auto>
         <div class="max-w-7xl mx-auto">
             @if($courses->count() > 0)
-                <div class="mb-8">
-                    <p class="text-gray-600">{{ $courses->total() }} courses found</p>
+                <div class="results-bar">
+                    <p class="text-muted"><span class="text-ink font-semibold">{{ $courses->total() }}</span> {{ Str::plural('course', $courses->total()) }} found</p>
+                    <p class="text-sm text-muted hidden sm:block">Showing {{ $courses->firstItem() }}–{{ $courses->lastItem() }}</p>
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @foreach($courses as $course)
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <!-- Course Header -->
-                        <div class="p-6 bg-gradient-to-r from-{{ $course->courseCategory->color ?? 'sky' }}-500 to-{{ $course->courseCategory->color ?? 'sky' }}-700" style="background: linear-gradient(to right, {{ $course->courseCategory->color ?? '#0369a1' }}, {{ $course->courseCategory->color ?? '#1a1a4e' }});">
-                            <div class="flex items-start justify-between mb-4">
-                                <span class="px-3 py-1 bg-white bg-opacity-20 text-black rounded-full text-sm font-semibold">
-                                    {{ ucfirst($course->level) }}
-                                </span>
-                                @if($course->is_featured)
-                                    <span class="px-3 py-1 bg-yellow-400 text-gray-900 rounded-full text-sm font-bold">
-                                        Featured
-                                    </span>
-                                @endif
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-2">{{ $course->name }}</h3>
-                            <p class="text-white text-opacity-90 text-sm">{{ $course->university->name }}</p>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" wire:loading.class="opacity-50 pointer-events-none" style="transition: opacity .2s ease">
+                    @foreach($courses as $item)
+                        <div wire:key="course-{{ $item->id }}" class="card-in" style="--i: {{ $loop->index }}">
+                            <x-course-card :course="$item" />
                         </div>
-
-                        <!-- Course Body -->
-                        <div class="p-6">
-                            <!-- Category Badge -->
-                            <div class="mb-4">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold" style="background-color: {{ $course->courseCategory->color }}20; color: {{ $course->courseCategory->color }};">
-                                    @if($course->courseCategory->icon)
-                                        <i class="fas fa-{{ $course->courseCategory->icon }} mr-2"></i>
-                                    @endif
-                                    {{ $course->courseCategory->name }}
-                                </span>
-                            </div>
-
-                            @if($course->description)
-                                <p class="text-gray-600 text-sm mb-4 line-clamp-3">{!! Str::limit(strip_tags($course->description), 150) !!}</p>
-                            @endif
-
-                            <!-- Course Details -->
-                            <div class="space-y-2 mb-4 pb-4 border-b">
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-clock mr-2 text-sky-700"></i>
-                                    {{ $course->duration }}
-                                </div>
-                                @if($course->tuition_fee)
-                                    <div class="flex items-center text-sm text-gray-600">
-                                        <i class="fas fa-dollar-sign mr-2 text-sky-700"></i>
-                                        {{ $course->formatted_tuition_fee }}
-                                    </div>
-                                @endif
-                                @if($course->mode_of_study)
-                                    <div class="flex items-center text-sm text-gray-600">
-                                        <i class="fas fa-graduation-cap mr-2 text-sky-700"></i>
-                                        {{ $course->mode_of_study }}
-                                    </div>
-                                @endif
-                            </div>
-
-                            <!-- Actions -->
-                            <div class="flex gap-2">
-                                <button class="flex-1 px-4 py-2 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
-                                    View Details
-                                </button>
-                                <button class="px-4 py-2 border-2 border-sky-700 text-sky-700 rounded-lg font-semibold hover:bg-sky-50 transition">
-                                    <i class="fas fa-bookmark"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                     @endforeach
                 </div>
 
-                <!-- Pagination -->
-                <div class="mt-12">
+                <div class="mt-14">
                     {{ $courses->links() }}
                 </div>
             @else
-                <div class="text-center py-16">
-                    <i class="fas fa-book-open text-6xl text-gray-300 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-700 mb-2">No Courses Found</h3>
-                    <p class="text-gray-500 mb-4">Try adjusting your filters or search criteria</p>
-                    <button wire:click="clearFilters" class="px-6 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
-                        Clear All Filters
-                    </button>
+                <div class="card max-w-lg mx-auto text-center py-14">
+                    <span class="icon-tile w-16 h-16 mx-auto text-2xl"><i class="fas fa-book-open"></i></span>
+                    <h3 class="mt-6 text-2xl font-semibold text-ink">No courses found</h3>
+                    <p class="mt-2 text-muted">Try a different search, or clear your filters.</p>
+                    <button wire:click="clearFilters" class="btn btn-primary mt-6">Clear all filters</button>
                 </div>
             @endif
         </div>
@@ -221,25 +158,23 @@ class extends Component {
 
     <!-- Course Categories Section -->
     @if($categories->count() > 0)
-    <section class="py-16 px-4 bg-white">
+    <section class="py-24 px-4 bg-page-alt" data-no-auto>
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Browse by Field of Study</h2>
-                <p class="text-xl text-gray-600">Explore courses across different academic disciplines</p>
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+                <div>
+                    <span class="eyebrow" data-reveal>Fields of study</span>
+                    <h2 class="h-display text-4xl md:text-5xl mt-4" data-reveal>Browse by subject</h2>
+                </div>
+                <p class="text-muted max-w-sm" data-reveal>Tap a subject to filter the course list above.</p>
             </div>
 
-            <div class="grid md:grid-cols-4 gap-6">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 @foreach($categories as $cat)
-                <button
-                    wire:click="$set('category', '{{ $cat->id }}')"
-                    class="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-sky-700 hover:shadow-lg transition-all duration-300 text-center group">
-                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: {{ $cat->color }}20;">
-                        @if($cat->icon)
-                            <i class="fas fa-{{ $cat->icon }} text-3xl" style="color: {{ $cat->color }};"></i>
-                        @endif
-                    </div>
-                    <h3 class="font-bold text-gray-800 mb-2 group-hover:text-sky-700">{{ $cat->name }}</h3>
-                    <p class="text-sm text-gray-500">{{ $cat->courses_count ?? 0 }} courses</p>
+                <button type="button" wire:click="$set('category', '{{ $cat->id }}')" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+                    class="card !p-5 text-left group {{ (string) $category === (string) $cat->id ? '!border-[var(--accent)]' : '' }}" data-reveal data-spotlight>
+                    <span class="icon-tile group-hover:bg-[var(--accent)] group-hover:text-white transition-colors"><i class="fas fa-{{ $cat->icon ?: 'graduation-cap' }}"></i></span>
+                    <h3 class="mt-4 font-semibold text-ink">{{ $cat->name }}</h3>
+                    <p class="mt-1 text-sm text-muted">{{ $cat->courses_count }} {{ Str::plural('course', $cat->courses_count) }}</p>
                 </button>
                 @endforeach
             </div>
@@ -248,7 +183,7 @@ class extends Component {
     @endif
 
     <!-- CTA Section -->
-    <section style="--hero-img: url('/homeassets/img/site/students-cafe.webp')" class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
+    <section style="--hero-img: url('/homeassets/img/site/students-cafe.webp')" class="page-hero brand-band py-24 md:py-32 px-4">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Need Help Choosing the Right Course?</h2>
             <p class="text-xl mb-8">Our expert counsellors are here to guide you</p>
