@@ -336,3 +336,62 @@ main button:not(:disabled):active { transform: scale(0.97); }
 .site-nav.on-dark .logo-themed { filter: brightness(0) invert(1); }
 .site-nav.on-dark .theme-toggle, .site-nav.on-dark .btn-ghost { color: #fff; border-color: rgba(255,255,255,.25); background: transparent; }
 .site-nav.on-dark .btn-ghost:hover { border-color: #fff; color: #fff; }
+
+/* Compact filter bar (universities / courses / blog) */
+.filter-bar { box-shadow: var(--shadow-lg); }
+.filter-input { background: var(--surface-2) !important; border: 1px solid transparent !important; color: var(--ink); font-size: 15px; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
+.filter-input::placeholder { color: var(--muted); }
+.filter-input:focus { background: var(--surface) !important; border-color: var(--accent) !important; box-shadow: 0 0 0 4px var(--accent-soft) !important; outline: none; }
+.filter-select {
+    height: 2.75rem; padding: 0 2.25rem 0 1rem; border-radius: 9999px; font-size: 14px; font-weight: 500; cursor: pointer;
+    color: var(--ink-2); background-color: var(--surface-2) !important; border: 1px solid transparent !important;
+    appearance: none; -webkit-appearance: none; min-width: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%237b81a3' stroke-width='1.6'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important; background-position: right 1rem center !important;
+    transition: border-color .2s ease, background-color .2s ease;
+}
+@media (min-width: 768px) { .filter-select { max-width: 11.5rem; } }
+.filter-select:hover { border-color: var(--line) !important; }
+.filter-select:focus { outline: none; border-color: var(--accent) !important; box-shadow: 0 0 0 4px var(--accent-soft); }
+.filter-icon-btn { place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 9999px; background: var(--surface-2); color: var(--ink); flex-shrink: 0; }
+.filter-clear { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; height: 2.75rem; padding: 0 1rem; border-radius: 9999px; font-size: 14px; font-weight: 500; color: var(--accent-ink); background: var(--accent-soft); transition: background-color .2s ease, transform .16s var(--ease-out); }
+.filter-clear:hover { background: var(--accent); color: #fff; }
+
+/* ---------- Hero photo collage ---------- */
+.collage-item { position: absolute; margin: 0; border-radius: 28px; overflow: hidden; box-shadow: var(--shadow-lg); will-change: transform; z-index: 2; }
+.collage-item img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); transition: transform 1.4s var(--ease-out); }
+.collage-item:hover img { transform: scale(1.14); }
+.collage-badge {
+    position: absolute; z-index: 6; align-items: center; gap: .75rem; padding: .6rem 1rem .6rem .6rem; border-radius: 9999px;
+    background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--line); box-shadow: var(--shadow-lg); will-change: transform; white-space: nowrap;
+}
+@media (max-width: 640px) { .collage-badge { padding: .45rem .8rem .45rem .45rem; } .collage-badge p { font-size: 11px; } .collage-item { border-radius: 20px; } }
+
+/* ---------- Globe labels ---------- */
+.globe-labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.globe-label {
+    position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: 6px; margin: -11px 0 0 10px;
+    padding: 3px 9px 3px 6px; border-radius: 9999px; font-size: 12px; font-weight: 500; white-space: nowrap; color: #e0f2fe;
+    background: rgba(15, 15, 46, .62); border: 1px solid rgba(125, 211, 252, .25); backdrop-filter: blur(6px);
+    transition: background-color .3s ease, border-color .3s ease, color .3s ease, scale .4s var(--ease-out); cursor: pointer; will-change: transform, opacity;
+}
+.globe-label-dot { width: 6px; height: 6px; border-radius: 50%; background: #7dd3fc; }
+.globe-label.is-origin { color: #fde68a; border-color: rgba(251, 191, 36, .4); cursor: default; }
+.globe-label.is-origin .globe-label-dot { background: #fbbf24; }
+.globe-label:hover, .globe-label.is-active { background: #0284c7; border-color: #7dd3fc; color: #fff; scale: 1.08; }
+
+/* ---------- Destination list ---------- */
+.dest-row { transition: background-color .3s ease; }
+.dest-row:hover { background: rgba(255, 255, 255, .06); }
+.dest-row[aria-pressed="true"] { background: rgba(56, 189, 248, .16); box-shadow: inset 0 0 0 1px rgba(125, 211, 252, .35); }
+.dest-row img { transition: transform .5s var(--ease-out); }
+.dest-row[aria-pressed="true"] img, .dest-row:hover img { transform: scale(1.08) rotate(-2deg); }
+
+/* ---------- Page hero photos (inner pages) ---------- */
+.page-hero[style*="--hero-img"] {
+    background:
+        radial-gradient(60% 80% at 85% 10%, rgba(3, 105, 161, .45), transparent 60%),
+        linear-gradient(160deg, rgba(26, 26, 78, .9) 0%, rgba(18, 18, 58, .86) 60%, rgba(15, 15, 46, .94) 100%),
+        var(--hero-img) center / cover no-repeat !important;
+}

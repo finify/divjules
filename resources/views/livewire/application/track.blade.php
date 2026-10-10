@@ -40,7 +40,7 @@ class extends Component {
 
 <div class="min-h-screen bg-gray-50">
     <!-- Hero Section -->
-    <section class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
+    <section style="--hero-img: url('/homeassets/img/site/airport.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">Track Your Application</h1>
             <p class="text-xl">Enter your application number to check the status</p>

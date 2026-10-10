@@ -29,7 +29,7 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
+    <section style="--hero-img: url('/homeassets/img/site/library.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
         <div class="max-w-4xl mx-auto text-center text-white">
             <div class="flex flex-wrap gap-2 items-center justify-center mb-4">
                 @foreach($post->categories as $category)
@@ -155,7 +155,7 @@ class extends Component {
     </section>
 
     <!-- Newsletter Section -->
-    <section class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
+    <section style="--hero-img: url('/homeassets/img/site/graduates-caps.webp')" class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Subscribe to Our Newsletter</h2>
             <p class="text-xl mb-8">Get the latest articles, tips, and updates delivered to your inbox</p>

@@ -19,7 +19,7 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
+    <section style="--hero-img: url('/homeassets/img/site/study-group.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">About Divjules</h1>
             <p class="text-xl">Empowering students to achieve their global education dreams</p>
@@ -260,7 +260,7 @@ class extends Component {
     </section>
 
     <!-- CTA Section -->
-    <section class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
+    <section style="--hero-img: url('/homeassets/img/site/graduates-caps.webp')" class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
             <p class="text-xl mb-8">Join thousands of successful students who trusted us with their education</p>

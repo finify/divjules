@@ -356,7 +356,7 @@ class extends Component {
         </section>
     @else
         <!-- Hero Section -->
-        <section class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
+        <section style="--hero-img: url('/homeassets/img/site/students-books.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
             <div class="max-w-7xl mx-auto text-center text-white">
                 <h1 class="text-5xl font-bold mb-4">Start Your Application</h1>
                 <p class="text-xl">Complete your application in {{ $totalSteps }} simple steps</p>

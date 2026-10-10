@@ -105,7 +105,7 @@ class extends Component {
         </section>
     @else
         <!-- Review Form -->
-        <section class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
+        <section style="--hero-img: url('/homeassets/img/site/cap-toss.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
             <div class="max-w-7xl mx-auto text-center text-white">
                 <h1 class="text-5xl font-bold mb-4">Share Your Experience</h1>
                 <p class="text-xl">Help future students by sharing your journey with Divjules</p>

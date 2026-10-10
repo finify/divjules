@@ -1,4 +1,4 @@
-import { gsap, ScrollTrigger, reduce, EASE, stages } from './motion.js';
+import { gsap, ScrollTrigger, reduce, fine, EASE, stages, initImageZoom } from './motion.js';
 
 /* Rotating word in the hero headline */
 function initWordSwap() {
@@ -21,44 +21,103 @@ function initWordSwap() {
     }, 2600);
 }
 
-/* Destination chips drive the 3D globe + info card */
+/* Destination list + globe labels drive the 3D globe and the photo card */
 function initDestinations() {
-    const chips = document.querySelectorAll('[data-dest]');
+    const rows = document.querySelectorAll('[data-dest]');
     const cards = document.querySelectorAll('[data-dest-card]');
-    if (!chips.length) return;
     const globeEl = document.getElementById('hero-globe');
-    let auto = true, idx = -1, timer;
+    if (!rows.length || !globeEl || globeEl.dataset.destBound) return;
+    globeEl.dataset.destBound = '1';
+    let auto = true, idx = 0, timer = null, current = null;
 
     const show = (key, fromUser) => {
-        chips.forEach((c) => c.setAttribute('aria-pressed', c.dataset.dest === key ? 'true' : 'false'));
+        if (fromUser) { auto = false; clearInterval(timer); }
+        if (key === current) return;
+        current = key;
+        rows.forEach((r) => r.setAttribute('aria-pressed', r.dataset.dest === key ? 'true' : 'false'));
         cards.forEach((card) => {
             const on = card.dataset.destCard === key;
-            card.hidden = !on;
-            if (on && !reduce()) gsap.fromTo(card, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: EASE });
+            if (!on) { card.hidden = true; return; }
+            card.hidden = false;
+            if (reduce()) return;
+            gsap.fromTo(card, { y: 18, opacity: 0, scale: 0.97 }, { y: 0, opacity: 1, scale: 1, duration: 0.9, ease: EASE });
+            gsap.fromTo(card.querySelector('.dest-card-img'), { scale: 1.25 }, { scale: 1, duration: 1.6, ease: 'power3.out' });
         });
         stages['hero-globe']?.focus(key);
-        if (fromUser) { auto = false; clearInterval(timer); }
     };
-    chips.forEach((c) => {
-        c.addEventListener('click', () => {
-            if (c.getAttribute('aria-pressed') === 'true') {
-                c.setAttribute('aria-pressed', 'false');
-                cards.forEach((card) => (card.hidden = card.dataset.destCard !== 'default'));
-                stages['hero-globe']?.clearFocus();
-                return;
-            }
-            show(c.dataset.dest, true);
-        });
-        c.addEventListener('mouseenter', () => { if (!auto) stages['hero-globe']?.focus(c.dataset.dest); });
-    });
-    // tour the destinations once the globe is ready, until the visitor takes over
-    globeEl?.addEventListener('three:ready', () => {
-        if (reduce()) return;
+    rows.forEach((r, i) => r.addEventListener('click', () => { idx = i; show(r.dataset.dest, true); }));
+    globeEl.addEventListener('globe:pick', (e) => show(e.detail, true));
+
+    const startTour = () => {
+        if (reduce() || timer || !auto) return;
+        show(rows[idx].dataset.dest, false);
         timer = setInterval(() => {
             if (!auto) return;
-            idx = (idx + 1) % chips.length;
-            show(chips[idx].dataset.dest, false);
-        }, 4200);
+            idx = (idx + 1) % rows.length;
+            show(rows[idx].dataset.dest, false);
+        }, 4500);
+    };
+    const ready = new Promise((res) => globeEl.addEventListener('three:ready', res, { once: true }));
+    // tour only while the section is on screen
+    ScrollTrigger.create({
+        trigger: globeEl.closest('section'), start: 'top 60%', end: 'bottom 30%',
+        onToggle: (st) => { if (st.isActive) ready.then(startTour); else { clearInterval(timer); timer = null; } },
+    });
+}
+
+/* Hero collage: staggered clip reveal, idle floating, depth parallax on pointer */
+function initCollage() {
+    const wrap = document.querySelector('[data-collage]');
+    if (!wrap || wrap.dataset.bound || reduce()) return;
+    wrap.dataset.bound = '1';
+    const items = wrap.querySelectorAll('.collage-item');
+    const badges = wrap.querySelectorAll('.collage-badge');
+
+    gsap.fromTo(items, { clipPath: 'inset(100% 0% 0% 0% round 28px)' }, { clipPath: 'inset(0% 0% 0% 0% round 28px)', duration: 1.6, ease: 'expo.out', stagger: 0.12, delay: 0.3 });
+    gsap.fromTo(wrap.querySelectorAll('.collage-item img'), { scale: 1.35 }, { scale: 1.08, duration: 2.2, ease: 'expo.out', stagger: 0.12, delay: 0.3 });
+    gsap.from(badges, { opacity: 0, scale: 0.8, duration: 1.2, ease: 'back.out(1.6)', stagger: 0.15, delay: 1.1 });
+
+    // gentle continuous float — each piece on its own rhythm (yPercent, so it never fights the scroll y)
+    [...items, ...badges].forEach((el, i) => {
+        gsap.to(el, { yPercent: i % 2 ? 2.5 : -2.5, duration: 3.2 + i * 0.45, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.8 + i * 0.2 });
+    });
+
+    // scroll: pieces drift apart at different speeds
+    [...items, ...badges].forEach((el) => {
+        const d = Number(el.dataset.depth || 1);
+        gsap.to(el, { y: -70 * d, ease: 'none', scrollTrigger: { trigger: wrap, start: 'top top', end: 'bottom top', scrub: 1.2 } });
+    });
+
+    if (!fine()) return;
+    const movers = [...items, ...badges].map((el) => ({
+        d: Number(el.dataset.depth || 1),
+        x: gsap.quickTo(el, 'x', { duration: 1.4, ease: 'power3.out' }),
+        r: gsap.quickTo(el, 'rotation', { duration: 1.6, ease: 'power3.out' }),
+    }));
+    const hero = wrap.closest('section');
+    hero.addEventListener('pointermove', (e) => {
+        const r = hero.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        movers.forEach((m) => { m.x(px * 34 * m.d); m.r(px * 2 * (m.d > 1.3 ? -1 : 1)); });
+    });
+    hero.addEventListener('pointerleave', () => movers.forEach((m) => { m.x(0); m.r(0); }));
+}
+
+/* Gallery rows glide in opposite directions as you scroll */
+function initGallery() {
+    const section = document.querySelector('[data-gallery]');
+    if (!section || section.dataset.bound || reduce()) return;
+    section.dataset.bound = '1';
+    section.querySelectorAll('[data-gallery-row]').forEach((row) => {
+        const dir = Number(row.dataset.galleryRow);
+        gsap.fromTo(row, { x: () => (dir < 0 ? 0 : -row.scrollWidth * 0.25) }, {
+            x: () => (dir < 0 ? -row.scrollWidth * 0.25 : 0), ease: 'none',
+            scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 1.4, invalidateOnRefresh: true },
+        });
+    });
+    gsap.from(section.querySelectorAll('.gallery-item'), {
+        scale: 0.86, opacity: 0, duration: 1.4, ease: 'expo.out', stagger: { each: 0.05, from: 'center' },
+        scrollTrigger: { trigger: section, start: 'top 75%' },
     });
 }
 
@@ -75,7 +134,7 @@ function initHScroll() {
         const tween = gsap.to(track, {
             x: () => -dist(), ease: 'none',
             scrollTrigger: {
-                trigger: section, start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.6, invalidateOnRefresh: true,
+                trigger: section, start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 1.2, invalidateOnRefresh: true,
                 onUpdate: (st) => bar && gsap.set(bar, { scaleX: st.progress }),
             },
         });
@@ -83,7 +142,7 @@ function initHScroll() {
         track.querySelectorAll('.faculty-card').forEach((card) => {
             gsap.fromTo(card, { rotateY: -18, opacity: 0.35, transformPerspective: 900 }, {
                 rotateY: 0, opacity: 1, ease: 'none',
-                scrollTrigger: { trigger: card, containerAnimation: tween, start: 'left 100%', end: 'left 60%', scrub: true },
+                scrollTrigger: { trigger: card, containerAnimation: tween, start: 'left 100%', end: 'left 60%', scrub: 1 },
             });
         });
         return () => gsap.set(track, { clearProps: 'x' });
@@ -99,7 +158,7 @@ function initJourney() {
     const steps = wrap.querySelectorAll('.journey-step');
     const vertical = () => innerWidth < 1024;
     ScrollTrigger.create({
-        trigger: wrap, start: 'top 70%', end: 'bottom 55%', scrub: true,
+        trigger: wrap, start: 'top 70%', end: 'bottom 55%', scrub: 1,
         onUpdate: (st) => {
             const p = st.progress;
             if (fill) fill.style.transform = vertical() ? `scaleY(${p})` : `scaleX(${p})`;
@@ -147,12 +206,12 @@ function initHomeScenes() {
     if (hero && !hero.dataset.bound) {
         hero.dataset.bound = '1';
         gsap.from(hero.querySelectorAll('[data-hero-in]'), { y: 24, opacity: 0, duration: 1, ease: EASE, stagger: 0.08, delay: 0.5 });
-        gsap.to(hero.querySelector('[data-hero-copy]'), { yPercent: -18, opacity: 0.2, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+        gsap.to(hero.querySelector('[data-hero-copy]'), { yPercent: -14, opacity: 0.25, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 1.2 } });
     }
     const cta = document.querySelector('[data-cta-zoom]');
     if (cta && !cta.dataset.bound) {
         cta.dataset.bound = '1';
-        gsap.fromTo(cta, { clipPath: 'inset(8% 6% 8% 6% round 40px)' }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none', scrollTrigger: { trigger: cta, start: 'top 90%', end: 'top 20%', scrub: true } });
+        gsap.fromTo(cta, { clipPath: 'inset(8% 6% 8% 6% round 40px)' }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none', scrollTrigger: { trigger: cta, start: 'top 90%', end: 'top 20%', scrub: 1.2 } });
     }
     const why = document.querySelector('[data-why-stack]');
     if (why && !why.dataset.bound) {
@@ -165,6 +224,9 @@ export function initHome() {
     if (!document.querySelector('[data-home-hero]')) return;
     initWordSwap();
     initDestinations();
+    initCollage();
+    initGallery();
+    initImageZoom();
     initHScroll();
     initJourney();
     initMarquees();

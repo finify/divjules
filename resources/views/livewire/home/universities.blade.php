@@ -99,88 +99,32 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
+    <section style="--hero-img: url('/homeassets/img/site/campus.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">Partner Universities</h1>
             <p class="text-xl">Explore world-class institutions across the globe</p>
         </div>
     </section>
 
-    <!-- Mobile Filter Toggle Button -->
-    <div class="md:hidden sticky top-20 z-40 bg-white shadow-md px-4 py-3">
-        <button
-            wire:click="$toggle('showFilters')"
-            class="w-full flex items-center justify-between px-4 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
-            <span class="flex items-center">
-                <i class="fas fa-filter mr-2"></i>
-                Filters
-                @if($country || $type || $ranking || $search)
-                    <span class="ml-2 bg-white text-sky-700 text-xs px-2 py-1 rounded-full">
-                        Active
-                    </span>
-                @endif
-            </span>
-            <i class="fas fa-chevron-{{ $showFilters ? 'up' : 'down' }}"></i>
-        </button>
-    </div>
-
-    <!-- Filter Section -->
-    <section class="py-8 px-4 bg-white shadow-md {{ $showFilters ? '' : 'hidden md:block' }} sticky top-36 md:top-20 z-30">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-4 gap-4">
-                <!-- Search -->
-                <div class="md:col-span-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
-                    <input
-                        type="text"
-                        wire:model.live.debounce.300ms="search"
-                        placeholder="Search universities..."
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
-                </div>
-
-                <!-- Country -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Country</label>
-                    <select wire:model.live="country" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
-                        <option value="">All Countries</option>
-                        @foreach($countries as $key => $value)
-                            <option value="{{ $key }}">{{ $value }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Type -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">University Type</label>
-                    <select wire:model.live="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
-                        <option value="">All Types</option>
-                        <option value="research">Research University</option>
-                        <option value="public">Public University</option>
-                        <option value="private">Private University</option>
-                    </select>
-                </div>
-
-                <!-- Ranking -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Ranking</label>
-                    <select wire:model.live="ranking" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
-                        <option value="">All Rankings</option>
-                        <option value="top100">Top 100</option>
-                        <option value="top500">Top 500</option>
-                    </select>
-                </div>
-
-                <!-- Clear Filters -->
-                <div class="flex items-end">
-                    <button
-                        wire:click="clearFilters"
-                        class="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition">
-                        Clear Filters
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
+    <x-filter-bar placeholder="Search universities..." :active="$country || $type || $ranking || $search" :open="$showFilters">
+        <select wire:model.live="country" class="filter-select" aria-label="Country">
+            <option value="">All countries</option>
+            @foreach($countries as $key => $value)
+                <option value="{{ $key }}">{{ $value }}</option>
+            @endforeach
+        </select>
+        <select wire:model.live="type" class="filter-select" aria-label="University type">
+            <option value="">All types</option>
+            <option value="research">Research</option>
+            <option value="public">Public</option>
+            <option value="private">Private</option>
+        </select>
+        <select wire:model.live="ranking" class="filter-select" aria-label="Ranking">
+            <option value="">Any ranking</option>
+            <option value="top100">Top 100</option>
+            <option value="top500">Top 500</option>
+        </select>
+    </x-filter-bar>
 
     <!-- Universities Grid -->
     <section class="py-16 px-4 bg-gray-50">
@@ -281,7 +225,7 @@ class extends Component {
     </section>
 
     <!-- CTA Section -->
-    <section class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
+    <section style="--hero-img: url('/homeassets/img/site/dest-uk.webp')" class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Can't Find Your Ideal University?</h2>
             <p class="text-xl mb-8">Contact our expert counsellors for personalized recommendations</p>

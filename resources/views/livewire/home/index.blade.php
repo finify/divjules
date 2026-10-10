@@ -52,10 +52,10 @@ class extends Component {
 
 <div>
     {{-- ============================== HERO ============================== --}}
-    <section class="hero-home relative overflow-hidden pt-28 lg:pt-20 min-h-[100dvh] flex items-center" data-home-hero data-no-auto>
-        <div class="absolute inset-0 grid-fade opacity-70 pointer-events-none" aria-hidden="true"></div>
+    <section class="hero-home relative overflow-hidden pt-28 pb-16 lg:pt-24 lg:pb-10 min-h-[100dvh] flex items-center" data-home-hero data-no-auto>
+        <div class="absolute inset-0 grid-fade opacity-60 pointer-events-none" aria-hidden="true"></div>
 
-        <div class="container-x relative w-full grid lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+        <div class="container-x relative w-full grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             <div class="lg:col-span-6 relative z-10" data-hero-copy>
                 <span class="eyebrow" data-hero-in>Education consultancy · Study abroad</span>
 
@@ -82,48 +82,49 @@ class extends Component {
 
                 <div class="mt-10 flex items-center gap-5" data-hero-in>
                     <div class="flex -space-x-3">
-                        @foreach (['A', 'C', 'T', 'O'] as $i => $letter)
-                            <span class="grid place-items-center w-10 h-10 rounded-full text-sm font-semibold text-white ring-2 ring-[var(--bg)]" style="background: {{ ['#1a1a4e', '#0369a1', '#0ea5e9', '#334155'][$i] }}">{{ $letter }}</span>
+                        @foreach (['students-friends', 'graduate-gown', 'students-books', 'cap-toss'] as $img)
+                            <img src="/homeassets/img/site/{{ $img }}.webp" alt="" class="w-10 h-10 rounded-full object-cover ring-2 ring-[var(--bg)]" loading="eager">
                         @endforeach
                     </div>
                     <p class="text-sm text-muted leading-snug"><strong class="text-ink">10,000+ students</strong> placed across<br class="hidden sm:block"> 150+ partner universities</p>
                 </div>
             </div>
 
-            {{-- 3D globe + destination explorer --}}
+            {{-- Photo collage with floating 3D study objects --}}
             <div class="lg:col-span-6 relative">
-                <div class="relative h-[400px] sm:h-[520px] lg:h-[660px] -mx-4 lg:mx-0">
-                    <div id="hero-globe" class="three-stage is-interactive" data-three="globe" aria-label="Interactive globe showing study destinations"></div>
+                <div class="hero-collage relative h-[440px] sm:h-[560px] lg:h-[640px]" data-collage>
+                    <div class="three-stage" data-three="floaters" data-preset="collage" aria-hidden="true" style="z-index:5"></div>
 
-                    <div class="absolute left-4 right-4 lg:left-auto lg:right-0 bottom-2 lg:bottom-16 lg:w-80 z-10" data-hero-in>
-                        <div class="surface rounded-2xl p-5 backdrop-blur-md" style="background: color-mix(in srgb, var(--surface) 82%, transparent);">
-                            <div data-dest-card="default">
-                                <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">Explore destinations</p>
-                                <p class="mt-2 font-semibold text-ink">Pick a country to fly there.</p>
-                                <p class="mt-1 text-sm text-muted">Drag the globe to spin it. Every arc starts in Lagos.</p>
-                            </div>
-                            @foreach ($destinations as $key => [$name, $intakes, $popular, $blurb])
-                                <div data-dest-card="{{ $key }}" hidden>
-                                    <span class="font-mono text-[11px] uppercase tracking-wider text-accent">Intakes · {{ $intakes }}</span>
-                                    <p class="mt-1 font-semibold text-ink text-lg">{{ $name }}</p>
-                                    <p class="mt-1.5 text-sm text-muted">{{ $blurb }}</p>
-                                    <p class="mt-3 text-xs text-muted"><span class="text-ink font-medium">Popular:</span> {{ $popular }}</p>
-                                    <a href="/universities" class="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:gap-2.5 transition-all">See universities <i class="fas fa-arrow-right text-[10px]"></i></a>
-                                </div>
-                            @endforeach
-                        </div>
+                    <figure class="collage-item" style="top:3%; left:0; width:58%; height:58%;" data-depth="0.6">
+                        <img src="/homeassets/img/site/students-laptop.webp" alt="Students working together on laptops" loading="eager">
+                    </figure>
+                    <figure class="collage-item" style="top:12%; right:0; width:38%; height:50%;" data-depth="1.2">
+                        <img src="/homeassets/img/site/graduate-gown.webp" alt="Graduate in cap and gown" loading="eager">
+                    </figure>
+                    <figure class="collage-item" style="bottom:2%; left:8%; width:44%; height:34%;" data-depth="1">
+                        <img src="/homeassets/img/site/plane-wing.webp" alt="View from an aeroplane window" loading="eager">
+                    </figure>
+                    <figure class="collage-item" style="bottom:7%; right:3%; width:42%; height:30%;" data-depth="0.8">
+                        <img src="/homeassets/img/site/students-books.webp" alt="Students carrying books on campus" loading="eager">
+                    </figure>
+
+                    <div class="collage-badge flex" style="top:52%; left:-2%;" data-depth="1.6">
+                        <span class="grid place-items-center w-10 h-10 rounded-full bg-[var(--accent)] text-white"><i class="fas fa-calendar-check"></i></span>
+                        <div><p class="text-sm font-semibold text-ink leading-tight">Free consultation</p><p class="text-xs text-muted">Talk to a counsellor</p></div>
                     </div>
-                </div>
-
-                <div class="mt-4 flex flex-wrap gap-2 justify-center lg:justify-start relative z-10" data-hero-in role="group" aria-label="Study destinations">
-                    @foreach ($destinations as $key => $d)
-                        <button type="button" class="chip" data-dest="{{ $key }}" aria-pressed="false">{{ $d[0] }}</button>
-                    @endforeach
+                    <div class="collage-badge flex" style="top:2%; right:6%;" data-depth="1.8">
+                        <span class="grid place-items-center w-10 h-10 rounded-full bg-amber-400 text-[#1a1a4e]"><i class="fas fa-graduation-cap"></i></span>
+                        <div><p class="text-sm font-semibold text-ink leading-tight">150+ universities</p><p class="text-xs text-muted">in 15+ countries</p></div>
+                    </div>
+                    <div class="collage-badge hidden sm:flex" style="bottom:36%; right:-1%;" data-depth="2">
+                        <span class="grid place-items-center w-10 h-10 rounded-full bg-emerald-500 text-white"><i class="fas fa-passport"></i></span>
+                        <div><p class="text-sm font-semibold text-ink leading-tight">Visa guidance</p><p class="text-xs text-muted">Every step covered</p></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <a href="#stats" class="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-muted hover:text-accent transition" data-hero-in>
+        <a href="#destinations" class="hidden lg:flex absolute bottom-6 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-muted hover:text-accent transition" data-hero-in>
             Scroll
             <span class="block w-px h-10 bg-[var(--line)] relative overflow-hidden"><span class="absolute inset-x-0 top-0 h-4 bg-[var(--accent)] animate-[scrollcue_1.8s_ease-in-out_infinite]"></span></span>
         </a>
@@ -157,8 +158,58 @@ class extends Component {
         </div>
     </section>
 
+    {{-- ============================== DESTINATIONS (3D globe) ============================== --}}
+    <section id="destinations" class="brand-band relative overflow-hidden py-24 lg:py-32 text-white" data-no-auto
+        style="background: radial-gradient(50% 60% at 70% 40%, rgba(3,105,161,.35), transparent 70%), linear-gradient(180deg, #0f0f2e, #1a1a4e 60%, #0f0f2e);">
+        <div class="container-x grid lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+            <div class="lg:col-span-5 relative z-10">
+                <span class="eyebrow !text-sky-300" data-reveal>Destinations</span>
+                <h2 class="mt-5 text-4xl md:text-6xl font-semibold tracking-tight leading-[1.02]" data-reveal>Where will<br>you study?</h2>
+                <p class="mt-5 text-lg text-white/65 max-w-md" data-reveal>Every arc starts in Lagos. Pick a country — or drag the globe — to see where our students go.</p>
+
+                <ul class="mt-8 space-y-1.5" role="list" data-reveal>
+                    @foreach ($destinations as $key => [$name, $intakes])
+                        <li>
+                            <button type="button" class="dest-row group w-full flex items-center gap-4 p-2 pr-4 rounded-2xl text-left" data-dest="{{ $key }}" aria-pressed="false">
+                                <img src="/homeassets/img/site/dest-{{ $key }}.webp" alt="" class="w-12 h-12 rounded-xl object-cover" loading="lazy">
+                                <span class="flex-1 min-w-0">
+                                    <span class="block font-medium">{{ $name }}</span>
+                                    <span class="block text-xs font-mono uppercase tracking-wider text-white/45">Intakes · {{ $intakes }}</span>
+                                </span>
+                                <i class="fas fa-arrow-right text-xs text-white/40 group-hover:text-white group-hover:translate-x-1 transition"></i>
+                            </button>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div class="lg:col-span-7 relative">
+                <div class="relative h-[420px] sm:h-[560px] lg:h-[680px] -mx-4 lg:mx-0">
+                    <div id="hero-globe" class="three-stage is-interactive" data-three="globe" aria-label="Interactive globe showing study destinations"></div>
+                </div>
+
+                <div class="lg:absolute lg:left-0 lg:bottom-6 lg:w-[340px] mt-4 lg:mt-0 z-10">
+                    @foreach ($destinations as $key => [$name, $intakes, $popular, $blurb])
+                        <article class="dest-card overflow-hidden rounded-3xl bg-white/[0.07] border border-white/10 backdrop-blur-xl" data-dest-card="{{ $key }}" {{ $loop->first ? '' : 'hidden' }}>
+                            <div class="relative h-40 overflow-hidden">
+                                <img src="/homeassets/img/site/dest-{{ $key }}.webp" alt="{{ $name }}" class="dest-card-img absolute inset-0 w-full h-full object-cover" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f2e] to-transparent"></div>
+                                <p class="absolute bottom-3 left-5 text-xl font-semibold">{{ $name }}</p>
+                            </div>
+                            <div class="p-5 pt-3">
+                                <p class="text-sm text-white/70">{{ $blurb }}</p>
+                                <p class="mt-3 text-xs text-white/55"><span class="text-white font-medium">Popular:</span> {{ $popular }}</p>
+                                <a href="/universities" class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-sky-300 hover:gap-2.5 transition-all">See universities <i class="fas fa-arrow-right text-[10px]"></i></a>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- ============================== WHY DIVJULES (bento) ============================== --}}
-    <section class="pb-24 lg:pb-32 px-4" data-no-auto>
+    <section class="py-24 lg:py-32 px-4" data-no-auto>
         <div class="max-w-7xl mx-auto">
             <div class="grid lg:grid-cols-12 gap-6 items-end mb-12">
                 <div class="lg:col-span-7">
@@ -169,23 +220,28 @@ class extends Component {
             </div>
 
             <div class="grid md:grid-cols-6 gap-5" data-why-stack>
-                <div class="card md:col-span-4 md:row-span-2 overflow-hidden min-h-[420px] flex flex-col justify-end" data-tilt="4" data-spotlight>
-                    <div class="three-stage" data-three="floaters" data-preset="side" aria-hidden="true"></div>
-                    <div class="relative z-10 max-w-md">
-                        <div class="icon-tile mb-5"><i class="fas fa-user-graduate"></i></div>
-                        <h3 class="text-2xl md:text-3xl font-semibold tracking-tight text-ink">Expert guidance</h3>
-                        <p class="mt-3 text-muted leading-relaxed">Our certified counsellors provide personalised advice to help you choose the right university and course. <span class="text-ink">Tap the objects</span> — they spin.</p>
+                <div class="card !p-0 md:col-span-4 md:row-span-2 overflow-hidden min-h-[440px] flex flex-col justify-end text-white" data-tilt="3">
+                    <img src="/homeassets/img/site/consultation.webp" alt="Counsellor celebrating with a student" class="absolute inset-0 w-full h-full object-cover" data-img-zoom loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f2e] via-[#0f0f2e]/40 to-transparent"></div>
+                    <div class="relative z-10 p-8 max-w-lg">
+                        <div class="grid place-items-center w-12 h-12 rounded-2xl bg-white/15 backdrop-blur mb-5"><i class="fas fa-user-graduate"></i></div>
+                        <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">Expert guidance</h3>
+                        <p class="mt-3 text-white/75 leading-relaxed">Our certified counsellors provide personalised advice to help you choose the right university and course.</p>
                     </div>
                 </div>
-                <div class="card md:col-span-2" data-tilt data-spotlight>
-                    <div class="icon-tile mb-5"><i class="fas fa-earth-africa"></i></div>
-                    <h3 class="text-xl font-semibold text-ink">Global network</h3>
-                    <p class="mt-2 text-muted">Access to 150+ partner institutions across multiple countries for diverse opportunities.</p>
+                <div class="card !p-0 md:col-span-2 overflow-hidden" data-tilt data-spotlight>
+                    <img src="/homeassets/img/site/campus.webp" alt="University campus" class="w-full h-32 object-cover" loading="lazy">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-ink"><i class="fas fa-earth-africa text-accent mr-2"></i>Global network</h3>
+                        <p class="mt-2 text-muted">Access to 150+ partner institutions across multiple countries.</p>
+                    </div>
                 </div>
-                <div class="card md:col-span-2" data-tilt data-spotlight>
-                    <div class="icon-tile mb-5"><i class="fas fa-hand-holding-heart"></i></div>
-                    <h3 class="text-xl font-semibold text-ink">End-to-end support</h3>
-                    <p class="mt-2 text-muted">From application to visa assistance and pre-departure briefing, we’re with you every step.</p>
+                <div class="card !p-0 md:col-span-2 overflow-hidden" data-tilt data-spotlight>
+                    <img src="/homeassets/img/site/airport.webp" alt="Aeroplane at an airport" class="w-full h-32 object-cover" loading="lazy">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-ink"><i class="fas fa-hand-holding-heart text-accent mr-2"></i>End-to-end support</h3>
+                        <p class="mt-2 text-muted">From application to visa assistance and pre-departure briefing.</p>
+                    </div>
                 </div>
                 <a href="/application/track" class="card md:col-span-3 group flex items-center justify-between gap-6" data-tilt data-spotlight>
                     <div>
@@ -194,12 +250,12 @@ class extends Component {
                     </div>
                     <span class="grid place-items-center w-12 h-12 rounded-full border border-line text-accent group-hover:bg-[var(--accent)] group-hover:text-white group-hover:border-transparent transition"><i class="fas fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i></span>
                 </a>
-                <a href="/contact" class="card brand-band md:col-span-3 group flex items-center justify-between gap-6 !bg-[#1a1a4e] !border-transparent text-white" data-tilt data-spotlight>
-                    <div>
+                <a href="/contact" class="card brand-band md:col-span-3 group flex items-center justify-between gap-6 !bg-[#1a1a4e] !border-transparent text-white overflow-hidden" data-tilt data-spotlight>
+                    <div class="relative z-10">
                         <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">It’s free</p>
                         <p class="mt-2 text-xl font-semibold">Book a consultation</p>
                     </div>
-                    <span class="grid place-items-center w-12 h-12 rounded-full bg-white text-[#1a1a4e] group-hover:scale-110 transition-transform"><i class="fas fa-calendar-check"></i></span>
+                    <span class="relative z-10 grid place-items-center w-12 h-12 rounded-full group-hover:scale-110 transition-transform" style="background:#fff;color:#1a1a4e"><i class="fas fa-calendar-check"></i></span>
                 </a>
             </div>
         </div>
@@ -309,6 +365,34 @@ class extends Component {
                     @endforeach
                 </ol>
             </div>
+        </div>
+    </section>
+
+    {{-- ============================== LIFE ABROAD GALLERY ============================== --}}
+    <section class="py-24 lg:py-32 overflow-hidden" data-gallery data-no-auto>
+        <div class="container-x flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+                <span class="eyebrow" data-reveal>Life abroad</span>
+                <h2 class="h-display text-4xl md:text-6xl mt-5" data-reveal>Picture yourself there.</h2>
+            </div>
+            <p class="text-lg text-muted max-w-md" data-reveal>Lecture halls, libraries, new friends and graduation day — this is what we help you reach.</p>
+        </div>
+        @php
+            $rowA = [['campus', 'Campus life'], ['library-modern', 'Modern libraries'], ['students-friends', 'New friendships'], ['dest-uk', 'London'], ['lecture', 'World-class teaching'], ['dest-australia', 'Sydney']];
+            $rowB = [['cap-toss', 'Graduation day'], ['dest-canada', 'Canada'], ['students-cafe', 'Study groups'], ['dest-germany', 'Berlin'], ['students-library', 'Late-night revision'], ['dest-dubai', 'Dubai']];
+        @endphp
+        <div class="space-y-5">
+            @foreach ([$rowA, $rowB] as $r => $row)
+                <div class="gallery-row flex gap-5 w-max {{ $r ? 'pl-[18vw]' : '' }}" data-gallery-row="{{ $r ? 1 : -1 }}">
+                    @foreach (array_merge($row, $row) as [$img, $cap])
+                        <figure class="gallery-item group relative shrink-0 w-[68vw] sm:w-[360px] lg:w-[420px] aspect-[4/3] rounded-3xl overflow-hidden">
+                            <img src="/homeassets/img/site/{{ $img }}.webp" alt="{{ $cap }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.23,1,.32,1)] group-hover:scale-110" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                            <figcaption class="absolute bottom-4 left-5 text-white font-medium translate-y-1 group-hover:translate-y-0 transition-transform duration-500">{{ $cap }}</figcaption>
+                        </figure>
+                    @endforeach
+                </div>
+            @endforeach
         </div>
     </section>
 
@@ -445,7 +529,7 @@ class extends Component {
 
     {{-- ============================== CTA ============================== --}}
     <section class="brand-band relative overflow-hidden py-32 lg:py-44 px-4 text-white" data-cta-zoom data-no-auto
-        style="background: radial-gradient(60% 80% at 80% 0%, rgba(3,105,161,.55), transparent 60%), linear-gradient(160deg, #1a1a4e, #0f0f2e);">
+        style="background: radial-gradient(60% 80% at 80% 0%, rgba(3,105,161,.55), transparent 60%), linear-gradient(160deg, rgba(26,26,78,.93), rgba(15,15,46,.95)), url('/homeassets/img/site/graduates-caps.webp') center/cover;">
         <div class="three-stage" data-three="floaters" data-preset="cta" aria-hidden="true"></div>
         <div class="relative z-10 max-w-4xl mx-auto text-center">
             <span class="eyebrow !text-sky-300" data-reveal>Let’s begin</span>

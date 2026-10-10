@@ -44,7 +44,7 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="page-hero pt-40 md:pt-48 pb-20 md:pb-28">
+    <section style="--hero-img: url('/homeassets/img/site/students-friends.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center text-white">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">Student Reviews</h1>
@@ -175,7 +175,7 @@ class extends Component {
     </section>
 
     <!-- CTA Section -->
-    <section class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
+    <section style="--hero-img: url('/homeassets/img/site/graduates-caps.webp')" class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">Share Your Experience</h2>
             <p class="text-xl text-sky-100 mb-8">Had a great experience with Divjules? Let others know!</p>

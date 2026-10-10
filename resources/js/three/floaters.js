@@ -20,6 +20,8 @@ const PRESETS = {
     cta: [
         ['cap', -0.78, 0.4, 1], ['book2', 0.8, 0.45, 0.8], ['plane', 0.65, -0.55, 0.6], ['atom', -0.7, -0.5, 0.75],
     ],
+    collage: [['cap', -0.88, 0.82, 0.7], ['book2', 0.92, -0.88, 0.6], ['atom', 0.1, -0.95, 0.45], ['plane', -0.92, -0.35, 0.45]],
+    strip: [['cap', 0.42, 0.05, 1.1], ['atom', 0.72, 0.3, 0.7], ['pencil', 0.12, -0.35, 0.6]],
     side: [['cap', 0.45, 0.35, 1.1], ['book', 0.78, -0.35, 0.8], ['atom', -0.55, 0.6, 0.6], ['pencil', 0.2, -0.6, 0.5], ['globe', 0.85, 0.6, 0.45]],
 };
 
@@ -54,6 +56,7 @@ export function mountFloaters(el, preset = 'hero') {
     });
 
     const pointer = { x: 0, y: 0, active: false };
+    const sp = { x: 0, y: 0, s: 0 }; // smoothed pointer + scroll
     const scrollState = { p: 0 };
     let visible = true, w = 1, h = 1, halfW = 1, halfH = 1;
 
@@ -104,22 +107,25 @@ export function mountFloaters(el, preset = 'hero') {
         requestAnimationFrame(tick);
         if (!visible) return;
         const t = reduce ? 0 : clock.getElapsedTime();
+        sp.x += ((pointer.active ? pointer.x : 0) - sp.x) * 0.05;
+        sp.y += ((pointer.active ? pointer.y : 0) - sp.y) * 0.05;
+        sp.s += (scrollState.p - sp.s) * 0.08;
         objs.forEach((o, i) => {
             const b = o.userData.base;
-            const bx = b.x * halfW * 0.92, by = b.y * halfH * 0.85 - scrollState.p * (1.5 + i * 0.4);
+            const bx = b.x * halfW * 0.92, by = b.y * halfH * 0.85 - sp.s * (1.5 + i * 0.4);
             // push away from the pointer
             if (pointer.active) {
                 tmp.set(pointer.x * halfW - bx, pointer.y * halfH - by, 0);
                 const d = tmp.length();
                 const f = Math.max(0, 1 - d / 2.2);
-                o.userData.push.x += (-tmp.x / (d || 1) * f * 0.9 - o.userData.push.x) * 0.08;
-                o.userData.push.y += (-tmp.y / (d || 1) * f * 0.9 - o.userData.push.y) * 0.08;
+                o.userData.push.x += (-tmp.x / (d || 1) * f * 0.9 - o.userData.push.x) * 0.05;
+                o.userData.push.y += (-tmp.y / (d || 1) * f * 0.9 - o.userData.push.y) * 0.05;
             } else {
-                o.userData.push.multiplyScalar(0.92);
+                o.userData.push.multiplyScalar(0.96);
             }
             o.position.set(
-                bx + Math.sin(t * 0.6 + b.seed) * 0.15 + o.userData.push.x + pointer.x * 0.25 * (i % 2 ? 1 : -1),
-                by + Math.sin(t * 0.9 + b.seed) * 0.22 + o.userData.push.y + pointer.y * 0.2,
+                bx + Math.sin(t * 0.6 + b.seed) * 0.15 + o.userData.push.x + sp.x * 0.25 * (i % 2 ? 1 : -1),
+                by + Math.sin(t * 0.9 + b.seed) * 0.22 + o.userData.push.y + sp.y * 0.2,
                 Math.sin(t * 0.4 + b.seed) * 0.6
             );
             const spin = o.userData.spin || 0;

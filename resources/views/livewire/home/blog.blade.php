@@ -86,7 +86,7 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
+    <section style="--hero-img: url('/homeassets/img/site/library-modern.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">Blog & News</h1>
             <p class="text-xl">Stay updated with the latest insights, tips, and news about studying abroad</p>
@@ -94,28 +94,20 @@ class extends Component {
     </section>
 
     <!-- Filter Section -->
-    <section class="py-8 px-4 bg-white shadow-md">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-wrap gap-4 items-center justify-between">
-                <div class="flex flex-wrap gap-3">
-                    <button
-                        wire:click="filterCategory('all')"
-                        class="px-6 py-2 rounded-lg font-semibold {{ !$category ? 'bg-sky-700 text-white' : 'bg-gray-200 text-gray-700 hover:bg-sky-100' }}">
-                        All Posts
-                    </button>
+    <section class="relative z-20 -mt-9 px-4" data-no-auto>
+        <div class="max-w-5xl mx-auto">
+            <div class="filter-bar surface rounded-2xl md:rounded-full p-1.5 flex flex-col md:flex-row md:items-center gap-1.5">
+                <div class="flex gap-1.5 overflow-x-auto scrollbar-hide md:flex-1 min-w-0">
+                    <button wire:click="filterCategory('all')" class="chip shrink-0 !border-transparent" aria-pressed="{{ !$category ? 'true' : 'false' }}">All posts</button>
                     @foreach($categories as $cat)
-                        <button
-                            wire:click="filterCategory('{{ $cat->slug }}')"
-                            class="px-6 py-2 rounded-lg font-semibold {{ $category === $cat->slug ? 'bg-sky-700 text-white' : 'bg-gray-200 text-gray-700 hover:bg-sky-100' }}">
-                            {{ $cat->name }}
-                        </button>
+                        <button wire:click="filterCategory('{{ $cat->slug }}')" class="chip shrink-0 !border-transparent" aria-pressed="{{ $category === $cat->slug ? 'true' : 'false' }}">{{ $cat->name }}</button>
                     @endforeach
                 </div>
-                <input
-                    type="search"
-                    wire:model.live.debounce.500ms="search"
-                    placeholder="Search articles..."
-                    class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
+                <label class="relative md:w-72 shrink-0">
+                    <span class="sr-only">Search articles</span>
+                    <i class="fas fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-sm text-muted pointer-events-none"></i>
+                    <input type="search" wire:model.live.debounce.500ms="search" placeholder="Search articles..." class="filter-input w-full h-11 pl-10 pr-3 rounded-full">
+                </label>
             </div>
         </div>
     </section>
@@ -240,7 +232,7 @@ class extends Component {
     </section>
 
     <!-- Newsletter Section -->
-    <section class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
+    <section style="--hero-img: url('/homeassets/img/site/students-library.webp')" class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Subscribe to Our Newsletter</h2>
             <p class="text-xl mb-8">Get the latest articles, tips, and updates delivered to your inbox</p>

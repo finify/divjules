@@ -96,90 +96,34 @@ class extends Component {
 
 <div>
     <!-- Hero Section -->
-    <section class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
+    <section style="--hero-img: url('/homeassets/img/site/lecture.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
         <div class="max-w-7xl mx-auto text-center text-white">
             <h1 class="text-5xl font-bold mb-4">Explore Our Courses</h1>
             <p class="text-xl">Find the perfect program for your academic and career goals</p>
         </div>
     </section>
 
-    <!-- Mobile Filter Toggle Button -->
-    <div class="md:hidden sticky top-20 z-40 bg-white shadow-md px-4 py-3">
-        <button
-            wire:click="$toggle('showFilters')"
-            class="w-full flex items-center justify-between px-4 py-3 bg-sky-700 text-white rounded-lg font-semibold hover:bg-sky-800 transition">
-            <span class="flex items-center">
-                <i class="fas fa-filter mr-2"></i>
-                Filters
-                @if($level || $category || $university || $search)
-                    <span class="ml-2 bg-white text-sky-700 text-xs px-2 py-1 rounded-full">
-                        Active
-                    </span>
-                @endif
-            </span>
-            <i class="fas fa-chevron-{{ $showFilters ? 'up' : 'down' }}"></i>
-        </button>
-    </div>
-
-    <!-- Filter Section -->
-    <section class="py-8 px-4 bg-white shadow-md {{ $showFilters ? '' : 'hidden md:block' }} sticky top-36 md:top-20 z-30">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-4 gap-4">
-                <!-- Search -->
-                <div class="md:col-span-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
-                    <input
-                        type="text"
-                        wire:model.live.debounce.300ms="search"
-                        placeholder="Search courses..."
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
-                </div>
-
-                <!-- Level -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Course Level</label>
-                    <select wire:model.live="level" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
-                        <option value="">All Levels</option>
-                        <option value="undergraduate">Undergraduate</option>
-                        <option value="postgraduate">Postgraduate</option>
-                        <option value="diploma">Diploma</option>
-                        <option value="certificate">Certificate</option>
-                    </select>
-                </div>
-
-                <!-- Category -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Field of Study</label>
-                    <select wire:model.live="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
-                        <option value="">All Fields</option>
-                        @foreach($categories as $cat)
-                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- University -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">University</label>
-                    <select wire:model.live="university" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent">
-                        <option value="">All Universities</option>
-                        @foreach($universities as $uni)
-                            <option value="{{ $uni->id }}">{{ $uni->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Clear Filters -->
-                <div class="flex items-end">
-                    <button
-                        wire:click="clearFilters"
-                        class="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition">
-                        Clear Filters
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
+    <x-filter-bar placeholder="Search courses..." :active="$level || $category || $university || $search" :open="$showFilters">
+        <select wire:model.live="level" class="filter-select" aria-label="Course level">
+            <option value="">All levels</option>
+            <option value="undergraduate">Undergraduate</option>
+            <option value="postgraduate">Postgraduate</option>
+            <option value="diploma">Diploma</option>
+            <option value="certificate">Certificate</option>
+        </select>
+        <select wire:model.live="category" class="filter-select" aria-label="Field of study">
+            <option value="">All fields</option>
+            @foreach($categories as $cat)
+                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+            @endforeach
+        </select>
+        <select wire:model.live="university" class="filter-select" aria-label="University">
+            <option value="">All universities</option>
+            @foreach($universities as $uni)
+                <option value="{{ $uni->id }}">{{ $uni->name }}</option>
+            @endforeach
+        </select>
+    </x-filter-bar>
 
     <!-- Courses Grid -->
     <section class="py-16 px-4 bg-gray-50">
@@ -304,7 +248,7 @@ class extends Component {
     @endif
 
     <!-- CTA Section -->
-    <section class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
+    <section style="--hero-img: url('/homeassets/img/site/students-cafe.webp')" class="page-hero brand-band py-24 md:py-32 px-4" data-preset="cta">
         <div class="max-w-4xl mx-auto text-center text-white">
             <h2 class="text-4xl font-bold mb-4">Need Help Choosing the Right Course?</h2>
             <p class="text-xl mb-8">Our expert counsellors are here to guide you</p>

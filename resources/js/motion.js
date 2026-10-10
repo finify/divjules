@@ -1,11 +1,43 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine = () => window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-const EASE = 'expo.out';
+const EASE = 'power4.out';
+
+/* ---------------------------------------------------------------
+   Smooth (inertial) scrolling, driven by GSAP's ticker so ScrollTrigger
+   scrubs stay perfectly in sync. Skipped for reduced motion.
+---------------------------------------------------------------- */
+export let lenis = null;
+function initLenis() {
+    if (lenis || reduce()) return;
+    lenis = new Lenis({
+        duration: 1.15,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        // let modals, menus and inner scrollers keep native scrolling
+        prevent: (node) => !!node.closest?.('.review-modal, .video-modal, #mobile-menu, .overflow-y-auto, .overflow-auto, [data-lenis-prevent], select'),
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // pause smooth scrolling while a modal locks the page
+    const wrap = (name, fn) => {
+        const orig = window[name];
+        if (typeof orig !== 'function' || orig.__wrapped) return;
+        window[name] = function (...args) { const r = orig.apply(this, args); fn(); return r; };
+        window[name].__wrapped = true;
+    };
+    wrap('openVideoModal', () => lenis.stop());
+    wrap('openReviewModal', () => lenis.stop());
+    wrap('closeVideoModal', () => lenis.start());
+    wrap('closeReviewModal', () => lenis.start());
+}
 
 /* ---------------------------------------------------------------
    Header: scrolled state, hide on scroll down, scroll progress bar
@@ -104,7 +136,7 @@ function initSplit() {
         el.dataset.splitAnimated = '1';
         const words = splitWords(el);
         if (reduce()) return;
-        gsap.fromTo(words, { yPercent: 115, rotate: 4 }, { yPercent: 0, rotate: 0, duration: 1.1, ease: EASE, stagger: 0.05, delay: Number(el.dataset.delay || 0.1) });
+        gsap.fromTo(words, { yPercent: 115, rotate: 4 }, { yPercent: 0, rotate: 0, duration: 1.4, ease: 'expo.out', stagger: 0.06, delay: Number(el.dataset.delay || 0.1) });
     });
     document.querySelectorAll('.page-hero h1 ~ p, .page-hero h1 + *').forEach((el) => {
         if (el.dataset.introDone || reduce()) return;
@@ -127,7 +159,7 @@ function initReveals() {
         once: true,
         onEnter: (batch) => gsap.fromTo(batch,
             { opacity: 0, y: (i, el) => Number(el.dataset.revealY || 36), scale: (i, el) => (el.dataset.reveal === 'scale' ? 0.94 : 1) },
-            { opacity: 1, y: 0, scale: 1, duration: 1, ease: EASE, stagger: 0.08, clearProps: 'transform' }),
+            { opacity: 1, y: 0, scale: 1, duration: 1.3, ease: EASE, stagger: 0.09, clearProps: 'transform' }),
     });
 
     // Automatic reveals for pages that weren't hand-annotated
@@ -147,7 +179,7 @@ function initReveals() {
     ScrollTrigger.batch(auto.filter((el) => el.getBoundingClientRect().top >= innerHeight * 0.95), {
         start: 'top 92%',
         once: true,
-        onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.9, ease: EASE, stagger: 0.07, clearProps: 'transform,opacity' }),
+        onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 1.2, ease: EASE, stagger: 0.08, clearProps: 'transform,opacity' }),
     });
 }
 
@@ -178,7 +210,7 @@ function initParallax() {
     document.querySelectorAll('[data-speed]:not([data-par])').forEach((el) => {
         el.setAttribute('data-par', '');
         const s = Number(el.dataset.speed);
-        gsap.fromTo(el, { y: () => -s * 120 }, { y: () => s * 120, ease: 'none', scrollTrigger: { trigger: el.closest('section') || el, start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } });
+        gsap.fromTo(el, { y: () => -s * 120 }, { y: () => s * 120, ease: 'none', scrollTrigger: { trigger: el.closest('section') || el, start: 'top bottom', end: 'bottom top', scrub: 1, invalidateOnRefresh: true } });
     });
 }
 
@@ -203,8 +235,8 @@ function initPointer() {
     tiltTargets.forEach((el) => {
         el.setAttribute('data-tilted', '');
         const max = Number(el.dataset.tilt || 6);
-        const rx = gsap.quickTo(el, 'rotationX', { duration: 0.6, ease: 'power3.out' });
-        const ry = gsap.quickTo(el, 'rotationY', { duration: 0.6, ease: 'power3.out' });
+        const rx = gsap.quickTo(el, 'rotationX', { duration: 0.9, ease: 'power3.out' });
+        const ry = gsap.quickTo(el, 'rotationY', { duration: 0.9, ease: 'power3.out' });
         gsap.set(el, { transformPerspective: 900 });
         el.addEventListener('pointermove', (e) => {
             const r = el.getBoundingClientRect();
@@ -240,11 +272,12 @@ function initAnchors() {
             const t = document.querySelector(id);
             if (!t) return;
             e.preventDefault();
-            t.scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'start' });
+            if (lenis) lenis.scrollTo(t, { offset: -70, duration: 1.4 });
+            else t.scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'start' });
         });
     });
     document.querySelectorAll('[data-scroll-top]').forEach((b) => {
-        b.onclick = () => window.scrollTo({ top: 0, behavior: reduce() ? 'auto' : 'smooth' });
+        b.onclick = () => (lenis ? lenis.scrollTo(0, { duration: 1.6 }) : window.scrollTo({ top: 0, behavior: reduce() ? 'auto' : 'smooth' }));
     });
 }
 
@@ -283,13 +316,14 @@ function initThree() {
             el.dispatchEvent(new CustomEvent('three:ready', { detail: api }));
             gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 1.4, ease: 'power2.out' });
             const section = el.closest('section') || el.parentElement;
-            ScrollTrigger.create({ trigger: section, start: 'top top', end: 'bottom top', scrub: true, onUpdate: (st) => api.setScroll(st.progress) });
+            ScrollTrigger.create({ trigger: section, start: 'top top', end: 'bottom top', onUpdate: (st) => api.setScroll(st.progress) });
         });
     });
 }
 
 export function initMotion() {
     document.documentElement.classList.add('js-motion');
+    initLenis();
     initNav();
     initMobileMenu();
     initSplit();
@@ -303,3 +337,12 @@ export function initMotion() {
 }
 
 export { gsap, ScrollTrigger, reduce, fine, EASE };
+
+/* Slow zoom-out on photos as they scroll through ([data-img-zoom]) */
+export function initImageZoom() {
+    if (reduce()) return;
+    document.querySelectorAll('[data-img-zoom]:not([data-zoomed])').forEach((img) => {
+        img.setAttribute('data-zoomed', '');
+        gsap.fromTo(img, { scale: 1.2 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: 1 } });
+    });
+}
