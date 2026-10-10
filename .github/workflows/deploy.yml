@@ -46,6 +46,11 @@ jobs:
 
             # git remote set-url origin https://${{ secrets.GH_PAT }}@github.com/${{ github.repository }} .
 
+            # clear a stale lock left by a crashed git process (only when no git is running)
+            if [ -f .git/index.lock ] && ! pgrep -u "$(whoami)" -x git >/dev/null 2>&1; then
+              echo "Removing stale .git/index.lock"
+              rm -f .git/index.lock
+            fi
             git checkout $BRANCH
             git pull origin $BRANCH
 
@@ -111,6 +116,11 @@ jobs:
 
             
             cd $DIR
+            # clear a stale lock left by a crashed git process (only when no git is running)
+            if [ -f .git/index.lock ] && ! pgrep -u "$(whoami)" -x git >/dev/null 2>&1; then
+              echo "Removing stale .git/index.lock"
+              rm -f .git/index.lock
+            fi
             git checkout $BRANCH
             git pull origin $BRANCH
 
@@ -147,6 +157,11 @@ jobs:
             
             cd domains/$DIRROOT
             cd $DIR
+            # clear a stale lock left by a crashed git process (only when no git is running)
+            if [ -f .git/index.lock ] && ! pgrep -u "$(whoami)" -x git >/dev/null 2>&1; then
+              echo "Removing stale .git/index.lock"
+              rm -f .git/index.lock
+            fi
             git checkout $BRANCH
             git pull origin $BRANCH
             
