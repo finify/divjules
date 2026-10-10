@@ -25,7 +25,16 @@ use function Livewire\Volt\{state};
                     <x-logo class="h-10 sm:h-11" />
                 </a>
 
-                <div class="hidden lg:flex items-center gap-8">
+                {{-- Search pill that docks here when a page's filter bar scrolls away (see initDockSearch) --}}
+                <div class="nav-search" data-nav-search aria-hidden="true">
+                    <div class="nav-search-pill">
+                        <i class="fas fa-magnifying-glass text-sm text-muted"></i>
+                        <input type="search" class="nav-search-input" data-nav-search-input tabindex="-1" aria-label="Search" autocomplete="off">
+                        <button type="button" class="nav-search-btn" data-nav-search-filters tabindex="-1" aria-label="Show all filters"><i class="fas fa-sliders"></i></button>
+                    </div>
+                </div>
+
+                <div class="hidden lg:flex items-center gap-8 nav-links">
                     @foreach ($links as [$name, $label])
                         <a href="{{ route($name) }}" class="nav-link {{ request()->routeIs($name) || request()->routeIs(str_replace('home.', '', $name) . '.*') ? 'is-active' : '' }}">{{ $label }}</a>
                     @endforeach

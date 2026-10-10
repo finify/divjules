@@ -2,7 +2,7 @@
 
 {{-- Compact one-line filter bar that tucks into the bottom of the page hero.
      Desktop: search + selects + clear in a single pill. Mobile: search + a toggle that reveals the selects. --}}
-<section class="relative z-20 -mt-9 px-4" data-no-auto>
+<section class="relative z-20 -mt-9 px-4" data-no-auto data-dock-search>
     <div class="max-w-5xl mx-auto">
         <div class="filter-bar surface rounded-2xl md:rounded-full p-1.5 flex flex-col md:flex-row md:items-center gap-1.5">
             <div class="flex items-center gap-1.5 flex-1 min-w-0">

@@ -94,7 +94,7 @@ class extends Component {
     </section>
 
     <!-- Filter Section -->
-    <section class="relative z-20 -mt-9 px-4" data-no-auto>
+    <section class="relative z-20 -mt-9 px-4" data-no-auto data-dock-search>
         <div class="max-w-5xl mx-auto">
             <div class="filter-bar surface rounded-2xl md:rounded-full p-1.5 flex flex-col md:flex-row md:items-center gap-1.5">
                 <div class="flex gap-1.5 overflow-x-auto scrollbar-hide md:flex-1 min-w-0" data-lenis-prevent>

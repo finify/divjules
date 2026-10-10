@@ -24,6 +24,12 @@ class School extends Model
         'order' => 'integer',
     ];
 
+    /** Uploaded logo, or the logo bundled with the site for a matching university name. */
+    public function getLogoSrcAttribute(): ?string
+    {
+        return $this->logo_url ? '/storage/' . ltrim($this->logo_url, '/') : University::bundledLogo($this->name);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

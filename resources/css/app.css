@@ -426,8 +426,8 @@ main button:not(:disabled):active { transform: scale(0.97); }
 .uni-card-media > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
 .uni-card:hover .uni-card-media > img { transform: scale(1.07); }
 .uni-chip { display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .7rem; border-radius: 9999px; font-size: 12px; font-weight: 500; color: #fff; background: rgba(15, 15, 46, .55); backdrop-filter: blur(8px); }
-.uni-logo { display: grid; place-items: center; width: 3.25rem; height: 3.25rem; border-radius: 1rem; background: #fff; color: #1a1a4e; font-weight: 700; font-size: 1rem; letter-spacing: -.02em; box-shadow: 0 8px 20px -6px rgba(0,0,0,.4); overflow: hidden; flex-shrink: 0; }
-.uni-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+.uni-logo { display: grid; place-items: center; min-width: 3.25rem; max-width: 9rem; height: 3.25rem; border-radius: 1rem; background: #fff; color: #1a1a4e; font-weight: 700; font-size: 1rem; letter-spacing: -.02em; box-shadow: 0 8px 20px -6px rgba(0,0,0,.4); overflow: hidden; flex-shrink: 0; }
+.uni-logo img { height: 100%; width: auto; max-width: 100%; object-fit: contain; padding: 7px 10px; }
 .meta-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .25rem .65rem; border-radius: 9999px; font-size: 12px; font-weight: 500; color: var(--ink-2); background: var(--surface-2); }
 .meta-chip i { color: var(--accent-ink); font-size: 11px; }
 .level-badge { padding: .25rem .65rem; border-radius: 9999px; font-size: 12px; font-weight: 600; }
@@ -509,3 +509,31 @@ select.field { appearance: none; padding-right: 2.5rem; cursor: pointer; backgro
 @keyframes stepIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
 .fill-word { display: inline; }
 .stack-card { will-change: transform; }
+
+/* ---------- Search that docks into the header ---------- */
+.site-nav > div { position: relative; }
+.nav-links { transition: opacity .35s var(--ease-out), transform .45s var(--ease-out); }
+.nav-search {
+    position: absolute; left: 50%; top: 50%; width: min(520px, 42vw); transform: translate(-50%, -50%) translateY(14px) scale(.96);
+    opacity: 0; pointer-events: none; transition: opacity .35s var(--ease-out), transform .55s var(--ease-out); z-index: 5;
+}
+.nav-search-pill {
+    display: flex; align-items: center; gap: .6rem; height: 2.75rem; padding: 0 .35rem 0 1rem; border-radius: 9999px;
+    background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow);
+}
+.nav-search-pill:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.nav-search-input { flex: 1; min-width: 0; height: 100%; background: transparent !important; border: 0 !important; outline: none; color: var(--ink); font-size: 15px; }
+.nav-search-input::placeholder { color: var(--muted); }
+.nav-search-btn { display: grid; place-items: center; width: 2.15rem; height: 2.15rem; border-radius: 9999px; background: var(--accent-soft); color: var(--accent-ink); font-size: 13px; flex-shrink: 0; transition: background-color .2s ease, color .2s ease; }
+.nav-search-btn:hover { background: var(--accent); color: #fff; }
+.site-nav.has-search .nav-search { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+@media (min-width: 1024px) { .site-nav.has-search .nav-links { opacity: 0; transform: translateY(-12px); pointer-events: none; } }
+/* below lg the pill drops into its own row under the header bar */
+@media (max-width: 1023.98px) {
+    .nav-search { left: 0; right: 0; top: 100%; width: auto; transform: translateY(-10px); padding: 0 1rem .75rem; }
+    .site-nav.has-search .nav-search { transform: none; }
+    .site-nav.has-search { box-shadow: 0 10px 30px -18px rgba(15, 18, 54, .35); }
+    .site-nav.has-search::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 3.6rem; z-index: -1;
+        background: color-mix(in srgb, var(--surface) 85%, transparent); backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px); border-bottom: 1px solid var(--line); }
+}
+.site-nav.on-dark.has-search { background: color-mix(in srgb, var(--surface) 85%, transparent); }

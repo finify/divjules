@@ -314,8 +314,8 @@ class extends Component {
                 @php $loopSchools = $schools->count() ? $schools->concat($schools)->concat($schools)->concat($schools) : collect(); @endphp
                 @forelse ($loopSchools as $school)
                     <div class="uni-logo-card shrink-0 rounded-2xl p-5 h-40 w-60 flex flex-col items-center justify-center gap-3">
-                        @if ($school->logo_url)
-                            <img src="/storage/{{ $school->logo_url }}" alt="{{ $school->name }}" class="h-16 w-auto max-w-[160px] object-contain pointer-events-none" loading="lazy" draggable="false">
+                        @if ($school->logo_src)
+                            <img src="{{ $school->logo_src }}" alt="{{ $school->name }}" class="h-16 w-auto max-w-[160px] object-contain pointer-events-none" loading="lazy" draggable="false">
                         @else
                             @php $w = collect(preg_split('/[\s\-]+/', $school->name))->reject(fn ($x) => in_array(strtolower($x), ['of', 'the', 'and', 'in', 'for', 'at']))->values(); @endphp
                             <span class="grid place-items-center w-14 h-14 rounded-2xl bg-[var(--accent-soft)] text-accent font-bold text-lg">{{ strtoupper(mb_substr($w[0] ?? '', 0, 1) . mb_substr($w[1] ?? '', 0, 1)) }}</span>

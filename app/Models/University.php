@@ -61,6 +61,20 @@ class University extends Model
         if ($this->logo) {
             return asset(Storage::url($this->logo));
         }
+
+        return self::bundledLogo($this->name);
+    }
+
+    /** Logo shipped with the site in public/homeassets/img/logos/{slug}.(png|jpg|svg), if any. */
+    public static function bundledLogo(?string $name): ?string
+    {
+        $slug = Str::slug((string) $name);
+        foreach (['png', 'jpg', 'svg', 'webp'] as $ext) {
+            if ($slug && is_file(public_path("homeassets/img/logos/{$slug}.{$ext}"))) {
+                return asset("homeassets/img/logos/{$slug}.{$ext}");
+            }
+        }
+
         return null;
     }
 

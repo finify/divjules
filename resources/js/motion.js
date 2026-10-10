@@ -56,7 +56,9 @@ function initNav() {
         const menuOpen = document.getElementById('mobile-menu')?.classList.contains('is-open');
         // pages with sticky filter bars keep the header pinned so the bars never float under a gap
         const canHide = !document.querySelector('main .sticky');
-        if (canHide) nav.classList.toggle('is-hidden', y > 300 && y > last + 4 && !menuOpen);
+        // keep the header pinned while a search is docked in it
+        const docked = nav.classList.contains('has-search');
+        if (canHide) nav.classList.toggle('is-hidden', y > 300 && y > last + 4 && !menuOpen && !docked);
         if (y < last - 4) nav.classList.remove('is-hidden');
         last = y;
         if (bar) {
@@ -343,10 +345,79 @@ export function initMotion() {
     initThree();
     initImageZoom();
     initReadProgress();
+    initDockSearch();
     requestAnimationFrame(() => ScrollTrigger.refresh());
 }
 
 export { gsap, ScrollTrigger, reduce, fine, EASE };
+
+/* ---------------------------------------------------------------
+   Search bars dock into the header once the page's filter bar
+   ([data-dock-search]) scrolls away; both inputs stay in sync.
+---------------------------------------------------------------- */
+function initDockSearch() {
+    const nav = document.querySelector('[data-site-nav]');
+    const dock = nav?.querySelector('[data-nav-search]');
+    const bar = document.querySelector('[data-dock-search]');
+    initDockSearch.trigger?.kill();
+    nav?.classList.remove('has-search');
+    if (!nav || !dock || !bar) return;
+
+    const proxy = dock.querySelector('[data-nav-search-input]');
+    const source = () => bar.querySelector('input[type=search]');
+    if (!source()) return;
+    proxy.placeholder = source().placeholder || 'Search…';
+    proxy.value = source().value;
+
+    if (!dock.dataset.bound) {
+        dock.dataset.bound = '1';
+        // header → page: Livewire listens for "input" on the original field
+        proxy.addEventListener('input', () => {
+            const src = source();
+            if (!src) return;
+            src.value = proxy.value;
+            src.dispatchEvent(new Event('input', { bubbles: true }));
+            // once the filtered results render, make sure they're in view (the list may have shrunk)
+            clearTimeout(initDockSearch.t);
+            initDockSearch.t = setTimeout(() => {
+                const results = document.querySelector('[data-dock-search] ~ section');
+                if (!results) return;
+                const top = results.getBoundingClientRect().top;
+                if (top < 0 || top > innerHeight * 0.6) lenis ? lenis.scrollTo(results, { offset: -150, duration: 0.9 }) : results.scrollIntoView({ behavior: 'smooth' });
+            }, 700);
+        });
+        proxy.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter') return;
+            e.preventDefault();
+            const results = document.querySelector('[data-dock-search] + section, [data-dock-search] ~ section');
+            if (results) (lenis ? lenis.scrollTo(results, { offset: -90 }) : results.scrollIntoView({ behavior: 'smooth' }));
+        });
+        dock.querySelector('[data-nav-search-filters]').addEventListener('click', () => {
+            const target = document.querySelector('[data-dock-search]');
+            if (!target) return;
+            const focus = () => target.querySelector('input[type=search]')?.focus({ preventScroll: true });
+            if (lenis) lenis.scrollTo(target, { offset: -160, duration: 1.1, onComplete: focus });
+            else { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(focus, 600); }
+        });
+    }
+    // page → header
+    if (!bar.dataset.dockBound) {
+        bar.dataset.dockBound = '1';
+        bar.addEventListener('input', (e) => { if (e.target.matches('input[type=search]')) proxy.value = e.target.value; });
+    }
+
+    const setDocked = (on) => {
+        nav.classList.toggle('has-search', on);
+        dock.setAttribute('aria-hidden', on ? 'false' : 'true');
+        dock.querySelectorAll('input, button').forEach((el) => (el.tabIndex = on ? 0 : -1));
+        if (on) { proxy.value = source()?.value ?? proxy.value; nav.classList.remove('is-hidden'); }
+        else if (document.activeElement === proxy) source()?.focus({ preventScroll: true });
+    };
+    initDockSearch.trigger = ScrollTrigger.create({
+        trigger: bar, start: 'bottom 72px', end: 'max',
+        onToggle: (st) => setDocked(st.isActive),
+    });
+}
 
 /* Article reading progress ([data-read-progress]) */
 function initReadProgress() {
