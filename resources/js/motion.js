@@ -302,7 +302,7 @@ function initAnchors() {
 }
 
 /* ---------------------------------------------------------------
-   Three.js stages — loaded lazily so the 3D code never blocks paint
+   Three.js stages, loaded lazily so the 3D code never blocks paint
 ---------------------------------------------------------------- */
 function webglOK() {
     try {

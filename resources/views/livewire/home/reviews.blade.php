@@ -47,7 +47,7 @@ class extends Component {
         <div class="max-w-4xl mx-auto text-center text-white">
             <span class="eyebrow !text-sky-300 justify-center">Student reviews</span>
             <h1 class="mt-5">Real stories from real students</h1>
-            <p class="mt-5 text-xl">What it's like to study abroad with Divjules — in our students' own words.</p>
+            <p class="mt-5 text-xl">What it's like to study abroad with Divjules, in our students' own words.</p>
         </div>
     </section>
 

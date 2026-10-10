@@ -154,7 +154,7 @@ class extends Component {
                                 <span class="icon-tile shrink-0"><i class="fas fa-camera"></i></span>
                             @endif
                             <span class="min-w-0">
-                                <span class="block font-medium text-ink">{{ $photo ? 'Photo added — tap to change' : 'Add a photo of yourself' }}</span>
+                                <span class="block font-medium text-ink">{{ $photo ? 'Photo added. Tap to change' : 'Add a photo of yourself' }}</span>
                                 <span class="block text-xs text-muted">JPG or PNG, up to 5MB</span>
                             </span>
                             <span wire:loading wire:target="photo" class="ml-auto text-xs text-accent"><i class="fas fa-circle-notch fa-spin"></i></span>

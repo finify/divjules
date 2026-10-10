@@ -7,13 +7,13 @@
     @php
         // Per-page SEO. Detail pages pass $metaTitle / $metaDescription / $metaImage / $schema via layoutData().
         $seoPages = [
-            'home.index' => ['Study Abroad Consultants | Divjules Educational Consult', 'Divjules helps students study abroad in the UK, Canada, USA, Australia, Germany, Ireland and Dubai — free consultation, university selection, applications and visa guidance.'],
+            'home.index' => ['Study Abroad Consultants | Divjules Educational Consult', 'Divjules helps students study abroad in the UK, Canada, USA, Australia, Germany, Ireland and Dubai, with free consultation, university selection, applications and visa guidance.'],
             'home.universities' => ['Partner Universities Abroad | Divjules', 'Explore partner universities in the UK, Canada, USA, Australia, Germany, Ireland and Dubai. Compare locations and courses, then apply with expert support from Divjules.'],
-            'home.courses' => ['Courses to Study Abroad — Undergraduate, Masters & Diplomas | Divjules', 'Search undergraduate, postgraduate, diploma and certificate courses at universities abroad — business, computing, engineering, nursing, law and more.'],
-            'home.about' => ['About Divjules Educational Consult', 'Meet Divjules — an education consultancy guiding students from course choice to campus, with counsellors, a global university network and end-to-end support.'],
-            'home.blog' => ['Study Abroad Blog — Guides, Visas & Scholarships | Divjules', 'Practical guides on studying abroad: choosing a university, applications, scholarships, student visas and life as an international student.'],
-            'home.contact' => ['Contact Divjules — Book a Free Study Abroad Consultation', 'Talk to a Divjules counsellor about studying abroad. Book a free consultation by phone, email, WhatsApp or the contact form.'],
-            'home.apply' => ['Apply to Study Abroad | Divjules', 'Start your study abroad application with Divjules in four simple steps — personal details, contact information, course choice and documents.'],
+            'home.courses' => ['Courses to Study Abroad: Undergraduate, Masters & Diplomas | Divjules', 'Search undergraduate, postgraduate, diploma and certificate courses at universities abroad: business, computing, engineering, nursing, law and more.'],
+            'home.about' => ['About Divjules Educational Consult', 'Meet Divjules, an education consultancy guiding students from course choice to campus, with counsellors, a global university network and end-to-end support.'],
+            'home.blog' => ['Study Abroad Blog: Guides, Visas & Scholarships | Divjules', 'Practical guides on studying abroad: choosing a university, applications, scholarships, student visas and life as an international student.'],
+            'home.contact' => ['Contact Divjules | Book a Free Study Abroad Consultation', 'Talk to a Divjules counsellor about studying abroad. Book a free consultation by phone, email, WhatsApp or the contact form.'],
+            'home.apply' => ['Apply to Study Abroad | Divjules', 'Start your study abroad application with Divjules in four simple steps: personal details, contact information, course choice and documents.'],
             'home.reviews' => ['Student Reviews | Divjules Educational Consult', 'Read reviews from students who studied abroad with the help of Divjules.'],
             'home.submit-review' => ['Share Your Experience | Divjules', 'Studied abroad with Divjules? Share your experience to help future students.'],
             'application.track' => ['Track Your Application | Divjules', 'Check the status of your Divjules study abroad application with your application number.'],

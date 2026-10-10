@@ -89,7 +89,7 @@ class extends Component {
         <div class="max-w-4xl mx-auto text-center text-white">
             <span class="eyebrow !text-sky-300 justify-center">The Divjules blog</span>
             <h1 class="mt-5">Guides for studying abroad</h1>
-            <p class="mt-5 text-xl">Applications, scholarships, visas and student life — explained by our counsellors.</p>
+            <p class="mt-5 text-xl">Applications, scholarships, visas and student life, explained by our counsellors.</p>
         </div>
     </section>
 
@@ -178,7 +178,7 @@ class extends Component {
             <div>
                 <span class="eyebrow !text-sky-300">Newsletter</span>
                 <h2 class="mt-4 text-3xl md:text-4xl font-semibold tracking-tight">Study-abroad tips in your inbox</h2>
-                <p class="mt-3 text-white/70">Intake deadlines, scholarship alerts and visa updates — once a month, no spam.</p>
+                <p class="mt-3 text-white/70">Intake deadlines, scholarship alerts and visa updates, once a month, no spam.</p>
             </div>
             <form class="flex flex-col sm:flex-row gap-3">
                 <label class="sr-only" for="newsletter-email">Email address</label>

@@ -373,7 +373,7 @@ class extends Component {
                             <span class="text-2xl md:text-3xl font-semibold tracking-tight text-accent" id="app-number">{{ $applicationNumber }}</span>
                             <button type="button" class="theme-toggle" aria-label="Copy application number" onclick="navigator.clipboard.writeText('{{ $applicationNumber }}'); this.innerHTML='<i class=\'fas fa-check\'></i>'"><i class="fas fa-copy"></i></button>
                         </div>
-                        <p class="mt-2 text-sm text-muted">Save this number — you'll need it to track your application.</p>
+                        <p class="mt-2 text-sm text-muted">Save this number. You'll need it to track your application.</p>
                     </div>
 
                     <ol class="mt-8 text-left space-y-4">
@@ -394,15 +394,15 @@ class extends Component {
             <div class="max-w-4xl mx-auto text-center text-white">
                 <span class="eyebrow !text-sky-300 justify-center">Apply</span>
                 <h1 class="mt-5">Start your application</h1>
-                <p class="mt-5 text-xl">Four short steps — about 10 minutes. Your progress is saved on this device as you go.</p>
+                <p class="mt-5 text-xl">Four short steps, about 10 minutes. Your progress is saved on this device as you go.</p>
             </div>
         </section>
 
         <section id="apply-form" class="relative z-20 -mt-16 px-4 pb-24" data-no-auto>
-            <div class="max-w-6xl mx-auto grid lg:grid-cols-12 gap-6 items-start">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
                 {{-- Stepper (desktop) --}}
-                <aside class="hidden lg:block lg:col-span-4 lg:sticky lg:top-28 space-y-5">
+                <aside class="hidden lg:block lg:col-span-4 min-w-0 lg:sticky lg:top-28 space-y-5">
                     <nav class="card !p-3" aria-label="Application steps">
                         <ol>
                             @foreach ($steps as $i => [$title, $sub, $icon])
@@ -427,7 +427,7 @@ class extends Component {
                 </aside>
 
                 {{-- Form --}}
-                <div class="lg:col-span-8 card !p-6 md:!p-10" style="box-shadow: var(--shadow-lg)">
+                <div class="lg:col-span-8 min-w-0 card !p-6 md:!p-10" style="box-shadow: var(--shadow-lg)">
                     {{-- mobile progress --}}
                     <div class="lg:hidden mb-8">
                         <div class="flex items-center justify-between text-sm">
@@ -453,7 +453,7 @@ class extends Component {
                             </h2>
 
                             @if ($currentStep === 1)
-                                <div class="mt-8 grid sm:grid-cols-2 gap-5">
+                                <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5 [&>*]:min-w-0">
                                     <div><label for="a-first" class="field-label">First name *</label><input id="a-first" type="text" autocomplete="given-name" wire:model.blur="first_name" class="field @error('first_name') is-invalid @enderror">@error('first_name')<p class="field-error">{{ $message }}</p>@enderror</div>
                                     <div><label for="a-last" class="field-label">Last name *</label><input id="a-last" type="text" autocomplete="family-name" wire:model.blur="last_name" class="field @error('last_name') is-invalid @enderror">@error('last_name')<p class="field-error">{{ $message }}</p>@enderror</div>
                                     <div><label for="a-email" class="field-label">Email *</label><input id="a-email" type="email" autocomplete="email" wire:model.blur="email" class="field @error('email') is-invalid @enderror">@error('email')<p class="field-error">{{ $message }}</p>@enderror</div>
@@ -462,7 +462,7 @@ class extends Component {
                                     <div><label for="a-nat" class="field-label">Nationality *</label><input id="a-nat" type="text" wire:model.blur="nationality" placeholder="e.g. Nigerian" class="field @error('nationality') is-invalid @enderror">@error('nationality')<p class="field-error">{{ $message }}</p>@enderror</div>
                                 </div>
                             @elseif ($currentStep === 2)
-                                <div class="mt-8 grid sm:grid-cols-2 gap-5">
+                                <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5 [&>*]:min-w-0">
                                     <div class="sm:col-span-2"><label for="a-addr" class="field-label">Street address *</label><textarea id="a-addr" rows="2" autocomplete="street-address" wire:model.blur="address" class="field @error('address') is-invalid @enderror"></textarea>@error('address')<p class="field-error">{{ $message }}</p>@enderror</div>
                                     <div><label for="a-city" class="field-label">City *</label><input id="a-city" type="text" autocomplete="address-level2" wire:model.blur="city" class="field @error('city') is-invalid @enderror">@error('city')<p class="field-error">{{ $message }}</p>@enderror</div>
                                     <div><label for="a-state" class="field-label">State / region</label><input id="a-state" type="text" autocomplete="address-level1" wire:model.blur="state" class="field @error('state') is-invalid @enderror">@error('state')<p class="field-error">{{ $message }}</p>@enderror</div>
@@ -471,7 +471,7 @@ class extends Component {
                                 </div>
                             @elseif ($currentStep === 3)
                                 <div class="mt-8 space-y-5">
-                                    <div class="grid sm:grid-cols-2 gap-5">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 [&>*]:min-w-0">
                                         <div>
                                             <label for="a-uni" class="field-label">University *</label>
                                             <select id="a-uni" wire:model.live="university_id" class="field @error('university_id') is-invalid @enderror">
@@ -495,7 +495,7 @@ class extends Component {
                                     </div>
 
                                     @if ($selectedUniversity)
-                                        <div class="flex items-center gap-4 p-3 rounded-2xl bg-[var(--surface-2)] card-in">
+                                        <div class="flex items-center gap-4 p-3 rounded-2xl bg-[var(--surface-2)] card-in min-w-0">
                                             <img src="{{ $selectedUniversity->cover_url }}" alt="" class="w-20 h-16 rounded-xl object-cover shrink-0">
                                             <div class="min-w-0">
                                                 <p class="font-semibold text-ink truncate">{{ $selectedCourse?->name ?? $selectedUniversity->name }}</p>
@@ -511,8 +511,8 @@ class extends Component {
                                     <div><label for="a-eng" class="field-label">English proficiency</label><input id="a-eng" type="text" wire:model.blur="english_proficiency" placeholder="e.g. IELTS 7.0, or WAEC English B3" class="field"></div>
                                 </div>
                             @else
-                                <p class="mt-2 text-muted">PDF, JPG or PNG up to 2MB each. Everything is optional now — you can send documents later.</p>
-                                <div class="mt-8 grid sm:grid-cols-2 gap-4">
+                                <p class="mt-2 text-muted">PDF, JPG or PNG up to 2MB each. Everything is optional now, and you can send documents later.</p>
+                                <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 [&>*]:min-w-0">
                                     @foreach ($docs as $field => [$label, $hint, $icon])
                                         <div>
                                             <label class="dropzone {{ $this->{$field} ? 'is-done' : '' }}">
@@ -543,7 +543,7 @@ class extends Component {
                                             @endforeach
                                         </ul>
                                     @endif
-                                    <div class="mt-4 grid sm:grid-cols-[1fr_1fr_auto] gap-3 items-start">
+                                    <div class="mt-4 grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-3 items-start [&>*]:min-w-0">
                                         <div><input type="text" wire:model="newDocumentName" placeholder="Document name" aria-label="Document name" class="field @error('newDocumentName') is-invalid @enderror">@error('newDocumentName')<p class="field-error">{{ $message }}</p>@enderror</div>
                                         <div>
                                             <label class="dropzone !py-2.5 !rounded-2xl {{ $newDocumentFile ? 'is-done' : '' }}">
@@ -563,11 +563,11 @@ class extends Component {
                                 {{-- review before submitting --}}
                                 <div class="mt-8 rounded-2xl bg-[var(--surface-2)] p-5">
                                     <p class="font-semibold text-ink">Check your details</p>
-                                    <dl class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                                    <dl class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm [&>*]:min-w-0">
                                         @foreach ([['Name', trim($first_name . ' ' . $last_name), 1], ['Email', $email, 1], ['Phone', $phone, 1], ['City', trim($city . ($country ? ', ' . $country : ''), ', '), 2], ['University', $selectedUniversity?->name, 3], ['Course', $selectedCourse?->name, 3]] as [$k, $v, $step])
                                             <div class="flex justify-between gap-3 min-w-0">
                                                 <dt class="text-muted shrink-0">{{ $k }}</dt>
-                                                <dd class="text-ink font-medium truncate text-right">{{ $v ?: '—' }} <button type="button" wire:click="goToStep({{ $step }})" class="text-accent text-xs ml-1" aria-label="Edit {{ $k }}"><i class="fas fa-pen"></i></button></dd>
+                                                <dd class="text-ink font-medium truncate text-right">{{ $v ?: 'Not given' }} <button type="button" wire:click="goToStep({{ $step }})" class="text-accent text-xs ml-1" aria-label="Edit {{ $k }}"><i class="fas fa-pen"></i></button></dd>
                                             </div>
                                         @endforeach
                                     </dl>

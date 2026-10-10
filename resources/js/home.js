@@ -77,7 +77,7 @@ function initCollage() {
     gsap.fromTo(wrap.querySelectorAll('.collage-item img'), { scale: 1.35 }, { scale: 1.08, duration: 2.2, ease: 'expo.out', stagger: 0.12, delay: 0.3 });
     gsap.from(badges, { opacity: 0, scale: 0.8, duration: 1.2, ease: 'back.out(1.6)', stagger: 0.15, delay: 1.1 });
 
-    // gentle continuous float — each piece on its own rhythm (yPercent, so it never fights the scroll y)
+    // gentle continuous float: each piece on its own rhythm (yPercent, so it never fights the scroll y)
     [...items, ...badges].forEach((el, i) => {
         gsap.to(el, { yPercent: i % 2 ? 2.5 : -2.5, duration: 3.2 + i * 0.45, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.8 + i * 0.2 });
     });

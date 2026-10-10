@@ -24,7 +24,7 @@ class CatalogSeeder extends Seeder
     public function run(): void
     {
         if (Storage::disk('local')->exists(self::MARKER)) {
-            $this->command?->info('Catalog already seeded — skipping.');
+            $this->command?->info('Catalog already seeded, skipping.');
             return;
         }
 
@@ -142,7 +142,7 @@ class CatalogSeeder extends Seeder
                 "A recognised bachelor's degree (typically second class or equivalent)",
                 'IELTS Academic 6.5 overall (or equivalent English test)',
                 'Personal statement and academic references',
-                'Updated CV — relevant work experience is an advantage',
+                'Updated CV (relevant work experience is an advantage)',
             ],
             'certificate' => [
                 'A completed diploma or degree in a related field',

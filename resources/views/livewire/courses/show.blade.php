@@ -120,7 +120,7 @@ class extends Component {
                                 </li>
                             @endforeach
                         </ul>
-                        <p class="mt-4 text-sm text-muted">Requirements vary by applicant and change over time — a counsellor will confirm what applies to you.</p>
+                        <p class="mt-4 text-sm text-muted">Requirements vary by applicant and change over time, so a counsellor will confirm what applies to you.</p>
                     </div>
                 @endif
 
@@ -141,7 +141,7 @@ class extends Component {
                     <div data-reveal><x-university-card :university="$u" /></div>
                     <div class="card brand-band !bg-[#1a1a4e] !border-transparent text-white" data-reveal>
                         <h3 class="text-xl font-semibold">Ready to apply?</h3>
-                        <p class="mt-2 text-white/70 text-sm">We'll review your documents, help with your personal statement and guide you through the student visa — at no cost.</p>
+                        <p class="mt-2 text-white/70 text-sm">We'll review your documents, help with your personal statement and guide you through the student visa, at no cost.</p>
                         <a href="{{ route('home.apply', ['course' => $c->id]) }}" class="btn btn-light w-full mt-5">Start your application</a>
                         <a href="{{ route('home.contact') }}" class="btn btn-outline-light w-full mt-3">Book a free consultation</a>
                     </div>

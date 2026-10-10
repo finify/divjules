@@ -47,7 +47,7 @@ class extends Component {
     $journey = [
         ['fa-comments', 'Free consultation', 'Talk through your goals, budget and grades with an expert counsellor.'],
         ['fa-building-columns', 'University selection', 'Shortlist courses and partner institutions that fit you.'],
-        ['fa-file-signature', 'Application support', 'Statements, documents and submissions — handled with you.'],
+        ['fa-file-signature', 'Application support', 'Statements, documents and submissions, handled with you.'],
         ['fa-plane-departure', 'Visa & departure', 'Visa guidance and a pre-departure briefing before you fly.'],
     ];
 @endphp
@@ -74,7 +74,7 @@ class extends Component {
                 </h1>
 
                 <p class="mt-7 text-lg text-muted leading-relaxed max-w-[52ch]" data-hero-in>
-                    Expert guidance for your academic journey — from picking the right course to landing on campus. We connect you with top universities worldwide.
+                    Expert guidance for your academic journey, from picking the right course to landing on campus. We connect you with top universities worldwide.
                 </p>
 
                 <div class="mt-9 flex flex-col sm:flex-row gap-3" data-hero-in>
@@ -166,7 +166,7 @@ class extends Component {
             <div class="lg:col-span-5 relative z-10">
                 <span class="eyebrow !text-sky-300" data-reveal>Destinations</span>
                 <h2 class="mt-5 text-4xl md:text-6xl font-semibold tracking-tight leading-[1.02]" data-reveal>Where will<br>you study?</h2>
-                <p class="mt-5 text-lg text-white/65 max-w-md" data-reveal>Every arc starts in Lagos. Pick a country — or drag the globe — to see where our students go.</p>
+                <p class="mt-5 text-lg text-white/65 max-w-md" data-reveal>Every arc starts in Lagos. Pick a country, or drag the globe, to see where our students go.</p>
 
                 <ul class="mt-8 space-y-1.5" role="list" data-reveal>
                     @foreach ($destinations as $key => [$name, $intakes])
@@ -379,7 +379,7 @@ class extends Component {
                 <span class="eyebrow" data-reveal>Life abroad</span>
                 <h2 class="h-display text-4xl md:text-6xl mt-5" data-reveal>Picture yourself there.</h2>
             </div>
-            <p class="text-lg text-muted max-w-md" data-reveal>Lecture halls, libraries, new friends and graduation day — this is what we help you reach.</p>
+            <p class="text-lg text-muted max-w-md" data-reveal>Lecture halls, libraries, new friends and graduation day. This is what we help you reach.</p>
         </div>
         @php
             $rowA = [['campus', 'Campus life'], ['library-modern', 'Modern libraries'], ['students-friends', 'New friendships'], ['dest-uk', 'London'], ['lecture', 'World-class teaching'], ['dest-australia', 'Sydney']];

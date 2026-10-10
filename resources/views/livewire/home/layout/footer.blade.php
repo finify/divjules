@@ -13,7 +13,7 @@ use function Livewire\Volt\{state};
             <div class="grid lg:grid-cols-12 gap-12 pb-14 border-b border-white/10" data-reveal-group>
                 <div class="lg:col-span-5" data-reveal>
                     <x-logo variant="light" class="h-11" />
-                    <p class="mt-5 text-white/60 max-w-sm leading-relaxed">Your trusted partner for international education — from choosing a course to landing on campus.</p>
+                    <p class="mt-5 text-white/60 max-w-sm leading-relaxed">Your trusted partner for international education, from choosing a course to landing on campus.</p>
                     <a href="{{ route('home.contact') }}" class="btn btn-light mt-7" data-magnetic>Book a free consultation <i class="fas fa-arrow-right text-xs btn-arrow"></i></a>
                     <div class="flex gap-3 mt-8">
                         @foreach (['facebook-f', 'x-twitter', 'instagram', 'linkedin-in'] as $icon)

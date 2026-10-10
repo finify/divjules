@@ -140,7 +140,7 @@ class extends Component {
         <div class="max-w-4xl mx-auto text-center text-white">
             <span class="eyebrow !text-sky-300 justify-center">Contact us</span>
             <h1 class="mt-5">Let's plan your study abroad journey</h1>
-            <p class="mt-5 text-xl">Ask us anything — courses, costs, scholarships or visas. A counsellor will reply within one working day.</p>
+            <p class="mt-5 text-xl">Ask us anything: courses, costs, scholarships or visas. A counsellor will reply within one working day.</p>
         </div>
     </section>
 

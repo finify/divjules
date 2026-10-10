@@ -426,7 +426,7 @@ main button:not(:disabled):active { transform: scale(0.97); }
 .uni-card-media > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
 .uni-card:hover .uni-card-media > img { transform: scale(1.07); }
 .uni-chip { display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .7rem; border-radius: 9999px; font-size: 12px; font-weight: 500; color: #fff; background: rgba(15, 15, 46, .55); backdrop-filter: blur(8px); }
-.uni-logo { display: grid; place-items: center; min-width: 3.5rem; max-width: 10.5rem; height: 3.5rem; border-radius: 1rem; background: #fff; color: #1a1a4e; font-weight: 700; font-size: 1rem; letter-spacing: -.02em; box-shadow: 0 8px 20px -6px rgba(0,0,0,.4); overflow: hidden; flex-shrink: 0; }
+.uni-logo { display: flex; align-items: center; justify-content: center; min-width: 3.5rem; max-width: 10.5rem; height: 3.5rem; border-radius: 1rem; background: #fff; color: #1a1a4e; font-weight: 700; font-size: 1rem; letter-spacing: -.02em; box-shadow: 0 8px 20px -6px rgba(0,0,0,.4); overflow: hidden; flex-shrink: 0; }
 .uni-logo img { box-sizing: border-box; display: block; height: 100%; width: auto; max-width: 100%; object-fit: contain; padding: 7px 10px; }
 .uni-logo.is-lg { height: 5.5rem; min-width: 5.5rem; max-width: 16rem; border-radius: 1.5rem; font-size: 1.6rem; }
 .uni-logo.is-lg img { padding: 12px 16px; }
@@ -483,7 +483,7 @@ main button:not(:disabled):active { transform: scale(0.97); }
 .review-card:hover { box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); }
 
 /* ---------- Form fields (apply / review / contact) ---------- */
-.field { width: 100%; height: 3rem; padding: 0 1rem; border-radius: 1rem; border: 1px solid var(--line) !important; background: var(--surface-2) !important; color: var(--ink); font-size: 15px; transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease; }
+.field { width: 100%; min-width: 0; max-width: 100%; text-overflow: ellipsis; height: 3rem; padding: 0 1rem; border-radius: 1rem; border: 1px solid var(--line) !important; background: var(--surface-2) !important; color: var(--ink); font-size: 15px; transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease; }
 textarea.field { height: auto; padding: .85rem 1rem; line-height: 1.6; }
 .field::placeholder { color: var(--muted); opacity: .8; }
 .field:focus { outline: none; background: var(--surface) !important; border-color: var(--accent) !important; box-shadow: 0 0 0 4px var(--accent-soft); }
@@ -539,3 +539,12 @@ select.field { appearance: none; padding-right: 2.5rem; cursor: pointer; backgro
         background: color-mix(in srgb, var(--surface) 85%, transparent); backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px); border-bottom: 1px solid var(--line); }
 }
 .site-nav.on-dark.has-search { background: color-mix(in srgb, var(--surface) 85%, transparent); }
+
+/* University logo on a white pill that overlaps the card photo (flex keeps % heights resolvable) */
+.logo-pill {
+    position: relative; z-index: 2; display: flex; align-items: center; justify-content: center;
+    width: fit-content; min-width: 3.75rem; max-width: 12rem; height: 3.75rem; margin-top: -3.5rem; padding: .55rem .9rem;
+    background: #fff; border-radius: 1rem; box-shadow: 0 10px 24px -10px rgba(15, 18, 54, .45); border: 1px solid rgba(15, 18, 54, .06);
+}
+.logo-pill img { display: block; height: 100%; width: auto; max-width: 10.2rem; object-fit: contain; }
+.logo-initials { font-weight: 700; font-size: 1.05rem; letter-spacing: -.02em; color: #1a1a4e; }

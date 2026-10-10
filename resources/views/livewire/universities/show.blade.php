@@ -22,7 +22,7 @@ class extends Component {
         $place = trim(($u->city ? $u->city . ', ' : '') . $u->country);
         $view->layoutData([
             'title' => $u->name,
-            'metaTitle' => "{$u->name} — Courses, Admission & Fees | Divjules",
+            'metaTitle' => "{$u->name}: Courses, Admission & Fees | Divjules",
             'metaDescription' => $u->description
                 ? "Study at {$u->name} in {$place}. {$u->description}"
                 : "Study at {$u->name} in {$place}. Explore courses and apply with free guidance from Divjules.",

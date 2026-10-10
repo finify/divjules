@@ -161,7 +161,7 @@ class extends Component {
                 <div class="mt-6 card brand-band !bg-[#1a1a4e] !border-transparent text-white flex flex-col sm:flex-row sm:items-center justify-between gap-5">
                     <div>
                         <p class="text-lg font-semibold">Have questions about studying abroad?</p>
-                        <p class="text-white/70 text-sm mt-1">Talk to a counsellor — it's free.</p>
+                        <p class="text-white/70 text-sm mt-1">Talk to a counsellor. It's free.</p>
                     </div>
                     <a href="{{ route('home.contact') }}" class="btn btn-light shrink-0">Book a consultation</a>
                 </div>
