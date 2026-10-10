@@ -74,161 +74,102 @@ class extends Component {
 }; ?>
 
 <div>
-    @if($submitted)
-        <!-- Success Message -->
-        <section class="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-sky-50 to-[#e8eef5] py-32">
-            <div class="max-w-2xl w-full bg-white rounded-2xl shadow-2xl p-12 text-center">
-                <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                </div>
-                <h1 class="text-4xl font-bold text-gray-900 mb-4">Thank You!</h1>
-                <p class="text-xl text-gray-600 mb-8">Your review has been submitted successfully.</p>
+    <section style="--hero-img: url('/homeassets/img/site/cap-toss.webp')" class="page-hero pt-40 md:pt-48 pb-28 md:pb-36 px-4">
+        <div class="max-w-3xl mx-auto text-center text-white">
+            <span class="eyebrow !text-sky-300 justify-center">Share your story</span>
+            <h1 class="mt-5">How was your journey?</h1>
+            <p class="mt-5 text-xl">Your review helps the next student take the leap. It takes about two minutes.</p>
+        </div>
+    </section>
 
-                <div class="bg-sky-50 border-2 border-sky-200 rounded-xl p-6 mb-8">
-                    <p class="text-gray-700 mb-2">Your review is pending approval and will be published on our website soon.</p>
-                    <p class="text-sm text-gray-500">We appreciate you taking the time to share your experience!</p>
+    <section class="relative z-20 -mt-16 px-4 pb-24" data-no-auto>
+        <div class="max-w-3xl mx-auto card !p-7 md:!p-12" style="box-shadow: var(--shadow-lg)">
+            @if ($submitted)
+                <div class="text-center py-8 card-in">
+                    <span class="grid place-items-center w-20 h-20 mx-auto rounded-full bg-emerald-500/15 text-emerald-500 text-3xl"><i class="fas fa-heart"></i></span>
+                    <h2 class="mt-6 text-3xl font-semibold tracking-tight text-ink">Thank you!</h2>
+                    <p class="mt-3 text-muted max-w-md mx-auto">Your review has been received and will be published once our team has approved it.</p>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                        <a href="{{ route('home.reviews') }}" class="btn btn-ghost">Read other reviews</a>
+                        <button type="button" wire:click="submitAnother" class="btn btn-primary">Submit another review</button>
+                    </div>
                 </div>
+            @else
+                @if (session('error'))
+                    <div class="mb-6 p-4 rounded-2xl bg-red-500/10 text-red-600 dark:text-red-300 border border-red-500/20">{{ session('error') }}</div>
+                @endif
 
-                <div class="space-y-4">
-                    <button wire:click="submitAnother"
-                       class="block w-full bg-sky-700 hover:bg-sky-800 text-white font-bold py-4 px-6 rounded-lg transition-colors">
-                        Submit Another Review
+                <form wire:submit="submit" class="space-y-8" novalidate>
+                    <fieldset>
+                        <legend class="text-xl font-semibold text-ink">Your rating</legend>
+                        <div class="mt-4 flex items-center gap-2" role="radiogroup" aria-label="Rating">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <button type="button" wire:click="$set('rating', {{ $i }})" class="star-pick {{ $i <= $rating ? 'is-on' : '' }}" role="radio" aria-checked="{{ (int) $rating === $i ? 'true' : 'false' }}" aria-label="{{ $i }} {{ Str::plural('star', $i) }}"><i class="fas fa-star"></i></button>
+                            @endfor
+                            <span class="ml-3 text-sm text-muted">{{ ['', 'Poor', 'Fair', 'Good', 'Very good', 'Excellent'][(int) $rating] ?? '' }}</span>
+                        </div>
+                        @error('rating') <p class="field-error">{{ $message }}</p> @enderror
+                    </fieldset>
+
+                    <fieldset class="grid sm:grid-cols-2 gap-5">
+                        <legend class="text-xl font-semibold text-ink mb-4 sm:col-span-2">About you</legend>
+                        <div>
+                            <label for="r-name" class="field-label">Your name *</label>
+                            <input id="r-name" type="text" wire:model.blur="student_name" placeholder="e.g. Ada Okafor" class="field @error('student_name') is-invalid @enderror">
+                            @error('student_name') <p class="field-error">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label for="r-email" class="field-label">Email * <span class="text-muted font-normal">(not published)</span></label>
+                            <input id="r-email" type="email" wire:model.blur="email" placeholder="you@example.com" class="field @error('email') is-invalid @enderror">
+                            @error('email') <p class="field-error">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label for="r-uni" class="field-label">University / college *</label>
+                            <input id="r-uni" type="text" wire:model.blur="university" placeholder="e.g. University of Leeds" class="field @error('university') is-invalid @enderror">
+                            @error('university') <p class="field-error">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label for="r-course" class="field-label">Course <span class="text-muted font-normal">(optional)</span></label>
+                            <input id="r-course" type="text" wire:model.blur="course" placeholder="e.g. MSc Data Science" class="field @error('course') is-invalid @enderror">
+                            @error('course') <p class="field-error">{{ $message }}</p> @enderror
+                        </div>
+                    </fieldset>
+
+                    <div>
+                        <label for="r-review" class="text-xl font-semibold text-ink">Your review *</label>
+                        <p class="text-sm text-muted mt-1 mb-4">What did we help with, and how did it go? At least 50 characters.</p>
+                        <textarea id="r-review" wire:model.live.debounce.400ms="review" rows="6" placeholder="Share your experience with Divjules..." class="field @error('review') is-invalid @enderror"></textarea>
+                        <div class="mt-1.5 flex justify-between text-xs">
+                            @error('review') <p class="field-error !mt-0">{{ $message }}</p> @else <span></span> @enderror
+                            <span class="{{ strlen($review) >= 50 ? 'text-emerald-500' : 'text-muted' }} tabular-nums">{{ strlen($review) }}/50</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span class="field-label">Photo <span class="text-muted font-normal">(optional)</span></span>
+                        <label class="dropzone {{ $photo ? 'is-done' : '' }}">
+                            @if ($photo && method_exists($photo, 'temporaryUrl'))
+                                <img src="{{ $photo->temporaryUrl() }}" alt="" class="w-12 h-12 rounded-full object-cover">
+                            @else
+                                <span class="icon-tile shrink-0"><i class="fas fa-camera"></i></span>
+                            @endif
+                            <span class="min-w-0">
+                                <span class="block font-medium text-ink">{{ $photo ? 'Photo added — tap to change' : 'Add a photo of yourself' }}</span>
+                                <span class="block text-xs text-muted">JPG or PNG, up to 5MB</span>
+                            </span>
+                            <span wire:loading wire:target="photo" class="ml-auto text-xs text-accent"><i class="fas fa-circle-notch fa-spin"></i></span>
+                            <input type="file" wire:model="photo" accept="image/*">
+                        </label>
+                        @error('photo') <p class="field-error">{{ $message }}</p> @enderror
+                    </div>
+
+                    <button type="submit" wire:loading.attr="disabled" class="btn btn-primary w-full !py-4 disabled:opacity-60">
+                        <span wire:loading.remove wire:target="submit">Submit review <i class="fas fa-paper-plane text-sm ml-1"></i></span>
+                        <span wire:loading wire:target="submit"><i class="fas fa-circle-notch fa-spin mr-2"></i>Submitting…</span>
                     </button>
-                    <a href="{{ route('home.index') }}"
-                       class="block w-full border-2 border-gray-300 hover:border-gray-400 text-gray-700 font-bold py-4 px-6 rounded-lg transition-colors">
-                        Return to Homepage
-                    </a>
-                </div>
-            </div>
-        </section>
-    @else
-        <!-- Review Form -->
-        <section style="--hero-img: url('/homeassets/img/site/cap-toss.webp')" class="page-hero pt-40 md:pt-48 pb-20 md:pb-28 px-4">
-            <div class="max-w-7xl mx-auto text-center text-white">
-                <h1 class="text-5xl font-bold mb-4">Share Your Experience</h1>
-                <p class="text-xl">Help future students by sharing your journey with Divjules</p>
-            </div>
-        </section>
-
-        <section class="py-16 px-4 bg-gray-50">
-            <div class="max-w-3xl mx-auto">
-                <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg">
-                    <form wire:submit="submit">
-                        <!-- Personal Information -->
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold mb-6 text-gray-800">Personal Information</h2>
-
-                            <div class="grid md:grid-cols-2 gap-6 mb-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Your Name *</label>
-                                    <input type="text" wire:model="student_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('student_name') border-red-500 @enderror" placeholder="John Doe">
-                                    @error('student_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                                    <input type="email" wire:model="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('email') border-red-500 @enderror" placeholder="john@example.com">
-                                    @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">University/College *</label>
-                                    <input type="text" wire:model="university" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('university') border-red-500 @enderror" placeholder="University of London">
-                                    @error('university') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Course/Program (Optional)</label>
-                                    <input type="text" wire:model="course" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('course') border-red-500 @enderror" placeholder="MSc Computer Science">
-                                    @error('course') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Review Details -->
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold mb-6 text-gray-800">Your Review</h2>
-
-                            <div class="mb-6">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Rating *</label>
-                                <div class="flex gap-2" id="starRating" x-data="{ rating: @entangle('rating') }">
-                                    @for($i = 1; $i <= 5; $i++)
-                                    <button type="button" @click="rating = {{ $i }}" class="focus:outline-none">
-                                        <i class="fas fa-star text-4xl transition-colors"
-                                           :class="rating >= {{ $i }} ? 'text-yellow-500' : 'text-gray-300'"
-                                           @mouseenter="$el.classList.add('text-yellow-400')"
-                                           @mouseleave="rating < {{ $i }} && $el.classList.remove('text-yellow-400')"
-                                        ></i>
-                                    </button>
-                                    @endfor
-                                </div>
-                                @error('rating') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-
-                            <div class="mb-6">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Your Review * (Minimum 50 characters)</label>
-                                <textarea wire:model="review" rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('review') border-red-500 @enderror" placeholder="Share your experience with Divjules..."></textarea>
-                                <p class="text-xs text-gray-500 mt-1">{{ strlen($review) }} characters</p>
-                                @error('review') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Your Photo (Optional)</label>
-                                <input type="file" wire:model="photo" accept="image/*" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-700 focus:border-transparent @error('photo') border-red-500 @enderror">
-                                <p class="text-xs text-gray-500 mt-1">Upload a professional photo (max 5MB)</p>
-                                @error('photo') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                <div wire:loading wire:target="photo" class="text-sm text-blue-600 mt-1">Uploading...</div>
-
-                                @if ($photo)
-                                    <div class="mt-4">
-                                        <p class="text-sm text-gray-600 mb-2">Preview:</p>
-                                        <img src="{{ $photo->temporaryUrl() }}" class="w-32 h-32 rounded-full object-cover border-4 border-sky-200">
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="flex gap-4">
-                            <button type="submit" wire:loading.attr="disabled" class="flex-1 px-6 py-4 bg-sky-700 text-white rounded-lg font-bold text-lg hover:bg-sky-800 transition shadow-lg disabled:opacity-50">
-                                <span wire:loading.remove wire:target="submit">
-                                    <i class="fas fa-paper-plane mr-2"></i>Submit Review
-                                </span>
-                                <span wire:loading wire:target="submit">
-                                    <i class="fas fa-spinner fa-spin mr-2"></i>Submitting...
-                                </span>
-                            </button>
-                        </div>
-
-                        <p class="text-xs text-gray-500 mt-4 text-center">
-                            Your review will be published after approval by our team.
-                        </p>
-                    </form>
-                </div>
-
-                <!-- FAQ Section -->
-                <div class="mt-12 bg-white p-8 rounded-xl shadow-lg">
-                    <h3 class="text-xl font-bold mb-4 text-gray-800">Why share your review?</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Help future students make informed decisions</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Share your success story and inspire others</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Provide valuable feedback to improve our services</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    @endif
+                    <p class="text-xs text-muted text-center">Reviews are checked by our team before they appear on the site.</p>
+                </form>
+            @endif
+        </div>
+    </section>
 </div>

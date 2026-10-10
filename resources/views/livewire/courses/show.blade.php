@@ -83,7 +83,7 @@ class extends Component {
                 · {{ $u->city ? $u->city . ', ' : '' }}{{ $u->country }}
             </p>
             <div class="mt-8 flex flex-wrap gap-3">
-                <a href="{{ route('home.apply') }}" class="btn btn-light" data-magnetic>Apply for this course <i class="fas fa-arrow-right text-xs btn-arrow"></i></a>
+                <a href="{{ route('home.apply', ['course' => $c->id]) }}" class="btn btn-light" data-magnetic>Apply for this course <i class="fas fa-arrow-right text-xs btn-arrow"></i></a>
                 <a href="{{ route('home.contact') }}" class="btn btn-outline-light">Ask a counsellor</a>
             </div>
         </div>
@@ -142,7 +142,7 @@ class extends Component {
                     <div class="card brand-band !bg-[#1a1a4e] !border-transparent text-white" data-reveal>
                         <h3 class="text-xl font-semibold">Ready to apply?</h3>
                         <p class="mt-2 text-white/70 text-sm">We'll review your documents, help with your personal statement and guide you through the student visa — at no cost.</p>
-                        <a href="{{ route('home.apply') }}" class="btn btn-light w-full mt-5">Start your application</a>
+                        <a href="{{ route('home.apply', ['course' => $c->id]) }}" class="btn btn-light w-full mt-5">Start your application</a>
                         <a href="{{ route('home.contact') }}" class="btn btn-outline-light w-full mt-3">Book a free consultation</a>
                     </div>
                 </div>

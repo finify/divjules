@@ -15,7 +15,9 @@ class extends Component {
         return [
             'schools' => School::active()->ordered()->get(),
             'videoTestimonials' => VideoTestimonial::active()->ordered()->get(),
-            'testimonials' => Testimonial::approved()->ordered()->limit(6)->get(),
+            'testimonials' => Testimonial::approved()->ordered()->limit(8)->get(),
+            'reviewAvg' => round((float) Testimonial::approved()->avg('rating'), 1),
+            'reviewCount' => Testimonial::approved()->count(),
         ];
     }
 }; ?>
@@ -398,77 +400,40 @@ class extends Component {
         </div>
     </section>
 
-    {{-- ============================== VIDEO TESTIMONIALS ============================== --}}
+    {{-- ============================== VIDEO STORIES ============================== --}}
     @if ($videoTestimonials->count() > 0)
-        @php $chunkedTestimonials = $videoTestimonials->chunk(3); @endphp
-        <section class="py-24 lg:py-32 px-4 overflow-hidden" data-no-auto>
-            <div class="max-w-7xl mx-auto">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-                    <div>
-                        <span class="eyebrow" data-reveal>In their words</span>
-                        <h2 class="h-display text-4xl md:text-6xl mt-5" data-reveal>Student video stories</h2>
-                    </div>
-                    <p class="text-lg text-muted max-w-md" data-reveal>Watch success stories from students who achieved their dreams with Divjules.</p>
+        <section class="py-24 lg:py-32 overflow-hidden" data-no-auto>
+            <div class="container-x flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+                <div>
+                    <span class="eyebrow" data-reveal>In their words</span>
+                    <h2 class="h-display text-4xl md:text-6xl mt-5" data-reveal>Student video stories</h2>
+                    <p class="mt-4 text-lg text-muted max-w-md" data-reveal>Watch students who achieved their dreams with Divjules.</p>
                 </div>
-
-                <div class="hidden md:block">
-                    <div class="testimonial-slider relative">
-                        @foreach ($chunkedTestimonials as $slideIndex => $chunk)
-                            <div class="testimonial-slide {{ $slideIndex === 0 ? 'active' : '' }}">
-                                <div class="grid md:grid-cols-3 gap-6">
-                                    @foreach ($chunk as $testimonial)
-                                        <button type="button" class="group text-left" onclick="openVideoModal('{{ $testimonial->youtube_embed_url }}')" data-reveal>
-                                            <div class="relative overflow-hidden rounded-3xl aspect-[4/5]">
-                                                <img src="{{ $testimonial->display_thumbnail }}" alt="{{ $testimonial->student_name }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
-                                                <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f2e] via-[#0f0f2e]/20 to-transparent"></div>
-                                                <span class="absolute top-5 right-5 grid place-items-center w-14 h-14 rounded-full bg-white/90 text-[#1a1a4e] backdrop-blur group-hover:scale-110 group-hover:bg-white transition-transform duration-300"><i class="fas fa-play ml-0.5"></i></span>
-                                                <div class="absolute bottom-0 inset-x-0 p-6 text-white">
-                                                    <div class="flex text-amber-400 text-xs gap-0.5 mb-2">@for ($i = 0; $i < $testimonial->rating; $i++)<i class="fas fa-star"></i>@endfor</div>
-                                                    <h4 class="font-semibold text-xl">{{ $testimonial->student_name }}</h4>
-                                                    <p class="text-sm text-white/70">{{ $testimonial->course }}, {{ $testimonial->university }}</p>
-                                                </div>
-                                            </div>
-                                            @if ($testimonial->quote)
-                                                <p class="mt-4 text-muted text-sm leading-relaxed">“{{ $testimonial->quote }}”</p>
-                                            @endif
-                                        </button>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
-
-                        @if ($chunkedTestimonials->count() > 1)
-                            <div class="flex items-center justify-center gap-4 mt-10">
-                                <button onclick="changeSlide(-1)" class="theme-toggle" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
-                                <div class="flex gap-2">
-                                    @foreach ($chunkedTestimonials as $dotIndex => $chunk)
-                                        <button onclick="setSlide({{ $dotIndex }})" class="slider-dot w-2.5 h-2.5 rounded-full transition-colors {{ $dotIndex === 0 ? 'bg-sky-700' : 'bg-gray-300' }}" aria-label="Slide {{ $dotIndex + 1 }}"></button>
-                                    @endforeach
-                                </div>
-                                <button onclick="changeSlide(1)" class="theme-toggle" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
-                            </div>
-                        @endif
-                    </div>
+                <div class="hidden md:flex gap-2" data-reveal>
+                    <button type="button" class="theme-toggle !w-12 !h-12" data-scroller-prev="stories" aria-label="Previous stories"><i class="fas fa-arrow-left"></i></button>
+                    <button type="button" class="theme-toggle !w-12 !h-12" data-scroller-next="stories" aria-label="Next stories"><i class="fas fa-arrow-right"></i></button>
                 </div>
+            </div>
 
-                <div class="md:hidden -mx-4">
-                    <div class="flex overflow-x-auto gap-4 px-4 pb-4 snap-x snap-mandatory scrollbar-hide">
-                        @foreach ($videoTestimonials as $testimonial)
-                            <button type="button" class="flex-none w-[80%] snap-center text-left" onclick="openVideoModal('{{ $testimonial->youtube_embed_url }}')">
-                                <div class="relative overflow-hidden rounded-3xl aspect-[4/5]">
-                                    <img src="{{ $testimonial->display_thumbnail }}" alt="{{ $testimonial->student_name }}" class="absolute inset-0 w-full h-full object-cover">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f2e] to-transparent"></div>
-                                    <span class="absolute top-4 right-4 grid place-items-center w-12 h-12 rounded-full bg-white/90 text-[#1a1a4e]"><i class="fas fa-play ml-0.5"></i></span>
-                                    <div class="absolute bottom-0 inset-x-0 p-5 text-white">
-                                        <h4 class="font-semibold text-lg">{{ $testimonial->student_name }}</h4>
-                                        <p class="text-sm text-white/70">{{ $testimonial->course }}, {{ $testimonial->university }}</p>
-                                    </div>
-                                </div>
-                            </button>
-                        @endforeach
-                    </div>
-                    <p class="text-center mt-4 text-muted text-sm"><i class="fas fa-hand-pointer mr-2"></i>Swipe for more stories</p>
-                </div>
+            <div class="story-rail scrollbar-hide" data-scroller="stories" data-lenis-prevent>
+                @foreach ($videoTestimonials as $testimonial)
+                    <button type="button" class="story-card group" onclick="openVideoModal('{{ $testimonial->youtube_embed_url }}')" aria-label="Play {{ $testimonial->student_name }}'s story">
+                        <img src="{{ $testimonial->display_thumbnail }}" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.23,1,.32,1)] group-hover:scale-105">
+                        <span class="absolute inset-0 bg-gradient-to-t from-[#0f0f2e] via-[#0f0f2e]/30 to-transparent"></span>
+                        <span class="story-play"><i class="fas fa-play ml-0.5"></i></span>
+                        <span class="absolute bottom-0 inset-x-0 p-5 text-left text-white">
+                            <span class="flex text-amber-400 text-[11px] gap-0.5 mb-2">@for ($i = 0; $i < $testimonial->rating; $i++)<i class="fas fa-star"></i>@endfor</span>
+                            <span class="block font-semibold text-lg leading-tight">{{ $testimonial->student_name }}</span>
+                            <span class="block mt-1 text-sm text-white/70 line-clamp-1">{{ $testimonial->course }}{{ $testimonial->university ? ', ' . $testimonial->university : '' }}</span>
+                            @if ($testimonial->quote)
+                                <span class="block mt-3 text-sm text-white/85 line-clamp-2">“{{ $testimonial->quote }}”</span>
+                            @endif
+                        </span>
+                    </button>
+                @endforeach
+            </div>
+            <div class="container-x mt-6">
+                <div class="h-[3px] rounded-full bg-[var(--line)] overflow-hidden"><div class="h-full w-full origin-left scale-x-0 bg-[var(--accent)]" data-scroller-bar="stories"></div></div>
             </div>
         </section>
     @endif
@@ -484,47 +449,67 @@ class extends Component {
 
     {{-- ============================== REVIEWS ============================== --}}
     <section class="py-24 lg:py-32 px-4 bg-page-alt" data-no-auto>
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-2xl mx-auto mb-14">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            <div class="lg:col-span-4 min-w-0">
                 <span class="eyebrow" data-reveal>Reviews</span>
-                <h2 class="h-display text-4xl md:text-6xl mt-5" data-reveal>What our students say</h2>
-                <p class="mt-5 text-lg text-muted" data-reveal>Real experiences from students who trusted us with their future.</p>
+                <h2 class="h-display text-4xl md:text-5xl mt-5" data-reveal>What our students say</h2>
+                @if ($reviewCount)
+                    <div class="mt-8 flex items-center gap-4" data-reveal>
+                        <span class="text-6xl font-semibold tracking-tight text-ink tabular-nums">{{ number_format($reviewAvg, 1) }}</span>
+                        <div>
+                            <div class="flex text-amber-400 gap-0.5">@for ($i = 1; $i <= 5; $i++)<i class="{{ $i <= round($reviewAvg) ? 'fas' : 'far' }} fa-star"></i>@endfor</div>
+                            <p class="mt-1 text-sm text-muted">from {{ $reviewCount }} verified {{ Str::plural('review', $reviewCount) }}</p>
+                        </div>
+                    </div>
+                @endif
+                <div class="mt-8 flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3" data-reveal>
+                    <a href="{{ route('home.reviews') }}" class="btn btn-ghost" data-magnetic><i class="fas fa-comments text-sm"></i> All reviews</a>
+                    <a href="{{ route('home.submit-review') }}" class="btn btn-primary" data-magnetic><i class="fas fa-pen text-sm"></i> Write a review</a>
+                </div>
             </div>
 
-            @if ($testimonials->count() > 0)
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
-                    @foreach ($testimonials as $testimonial)
-                        <figure class="card flex flex-col" data-reveal data-tilt="3" data-spotlight>
-                            <i class="fas fa-quote-left text-2xl text-accent opacity-60"></i>
-                            <blockquote class="mt-4 text-ink-2 leading-relaxed flex-1" style="color: var(--ink-2)">“{{ $testimonial->review }}”</blockquote>
-                            <figcaption class="mt-6 pt-6 border-t border-line flex items-center gap-4">
-                                @if ($testimonial->photo)
-                                    <img src="{{ $testimonial->photo_url }}" alt="{{ $testimonial->student_name }}" class="w-12 h-12 rounded-full object-cover">
-                                @else
-                                    <span class="grid place-items-center w-12 h-12 rounded-full bg-[var(--accent-soft)] text-accent font-semibold">{{ substr($testimonial->student_name, 0, 1) }}</span>
-                                @endif
-                                <div class="min-w-0">
-                                    <p class="font-semibold text-ink truncate">{{ $testimonial->student_name }}</p>
-                                    <p class="text-sm text-muted truncate">{{ $testimonial->university }}@if ($testimonial->course) · {{ $testimonial->course }}@endif</p>
+            <div class="lg:col-span-8 min-w-0">
+                @if ($testimonials->count() > 0)
+                    <div class="quote-carousel" data-quotes data-reveal>
+                        <i class="fas fa-quote-left absolute top-7 right-8 text-6xl text-accent opacity-10" aria-hidden="true"></i>
+                        <div class="relative">
+                            @foreach ($testimonials as $t)
+                                <figure class="quote-slide" data-quote {{ $loop->first ? '' : 'hidden' }}>
+                                    <div class="flex text-amber-400 gap-0.5 text-sm">@for ($i = 1; $i <= 5; $i++)<i class="{{ $i <= $t->rating ? 'fas' : 'far' }} fa-star"></i>@endfor</div>
+                                    <blockquote class="mt-5 text-xl md:text-2xl leading-relaxed text-ink font-medium tracking-tight break-words">“{{ $t->review }}”</blockquote>
+                                    <figcaption class="mt-8 flex items-center gap-4 min-w-0">
+                                        @if ($t->photo)
+                                            <img src="{{ $t->photo_url }}" alt="{{ $t->student_name }}" class="w-14 h-14 rounded-full object-cover shrink-0">
+                                        @else
+                                            <span class="grid place-items-center w-14 h-14 rounded-full bg-[var(--accent)] text-white text-lg font-semibold shrink-0">{{ Str::upper(Str::substr($t->student_name, 0, 1)) }}</span>
+                                        @endif
+                                        <span class="min-w-0">
+                                            <span class="block font-semibold text-ink">{{ $t->student_name }}</span>
+                                            <span class="block text-sm text-muted">{{ $t->university }}@if ($t->course) · {{ $t->course }}@endif</span>
+                                        </span>
+                                    </figcaption>
+                                </figure>
+                            @endforeach
+                        </div>
+                        @if ($testimonials->count() > 1)
+                            <div class="mt-10 flex items-center gap-4">
+                                <button type="button" class="theme-toggle shrink-0" data-quote-prev aria-label="Previous review"><i class="fas fa-arrow-left"></i></button>
+                                <div class="flex-1 flex gap-1.5">
+                                    @foreach ($testimonials as $t)
+                                        <button type="button" class="quote-dot" data-quote-dot aria-label="Review {{ $loop->iteration }}"><span></span></button>
+                                    @endforeach
                                 </div>
-                                <div class="ml-auto flex text-amber-400 text-xs gap-0.5 shrink-0">
-                                    @for ($i = 0; $i < 5; $i++)<i class="{{ $i < $testimonial->rating ? 'fas' : 'far' }} fa-star"></i>@endfor
-                                </div>
-                            </figcaption>
-                        </figure>
-                    @endforeach
-                </div>
-            @else
-                <div class="card max-w-lg mx-auto text-center py-12 mb-12" data-reveal>
-                    <span class="icon-tile w-16 h-16 mx-auto text-2xl"><i class="fas fa-comments"></i></span>
-                    <h3 class="mt-6 text-2xl font-semibold text-ink">No reviews yet</h3>
-                    <p class="mt-2 text-muted">Be the first to share your experience with Divjules!</p>
-                </div>
-            @endif
-
-            <div class="flex flex-col sm:flex-row gap-3 justify-center" data-reveal>
-                <a href="{{ route('home.reviews') }}" class="btn btn-ghost" data-magnetic><i class="fas fa-comments text-sm"></i> See all reviews</a>
-                <a href="{{ route('home.submit-review') }}" class="btn btn-primary" data-magnetic><i class="fas fa-pen text-sm"></i> Share your experience</a>
+                                <button type="button" class="theme-toggle shrink-0" data-quote-next aria-label="Next review"><i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        @endif
+                    </div>
+                @else
+                    <div class="quote-carousel text-center" data-reveal>
+                        <span class="icon-tile w-16 h-16 mx-auto text-2xl"><i class="fas fa-comments"></i></span>
+                        <h3 class="mt-6 text-2xl font-semibold text-ink">No reviews yet</h3>
+                        <p class="mt-2 text-muted">Be the first to share your experience with Divjules!</p>
+                    </div>
+                @endif
             </div>
         </div>
     </section>

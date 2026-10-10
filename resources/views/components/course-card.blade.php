@@ -41,6 +41,6 @@
 
     <div class="mt-auto pt-5 flex items-center justify-between gap-3">
         <span class="text-sm font-medium text-accent inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-all">Course details <i class="fas fa-arrow-right text-xs"></i></span>
-        <a href="{{ route('home.apply') }}" class="relative z-10 btn btn-primary !py-2 !px-4 text-sm">Apply</a>
+        <a href="{{ route('home.apply', ['course' => $c->id]) }}" class="relative z-10 btn btn-primary !py-2 !px-4 text-sm">Apply</a>
     </div>
 </article>

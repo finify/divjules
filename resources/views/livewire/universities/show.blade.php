@@ -75,7 +75,7 @@ class extends Component {
                     </p>
                 </div>
                 <div class="flex gap-3">
-                    <a href="{{ route('home.apply') }}" class="btn btn-light" data-magnetic>Apply now <i class="fas fa-arrow-right text-xs btn-arrow"></i></a>
+                    <a href="{{ route('home.apply', ['university' => $u->id]) }}" class="btn btn-light" data-magnetic>Apply now <i class="fas fa-arrow-right text-xs btn-arrow"></i></a>
                     <a href="{{ route('home.contact') }}" class="btn btn-outline-light">Ask a counsellor</a>
                 </div>
             </div>
