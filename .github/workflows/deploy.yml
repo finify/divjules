@@ -54,9 +54,10 @@ jobs:
             git checkout $BRANCH
             git pull origin $BRANCH
 
+      # Only front-end assets are built here (public/build is uploaded via FTP);
+      # PHP dependencies are installed on the server in the SSH steps below.
       - name: Install Dependencies
         run: |
-          composer update --no-dev --optimize-autoloader
           npm install
 
       - name: Build Assets
